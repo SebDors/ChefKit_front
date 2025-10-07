@@ -1,0 +1,511 @@
+/* --- HEADER --- */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: var(--chefkit-background-white);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  padding: var(--spacing-md) 0;
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header__logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.header__logo-icon {
+  height: 30px;
+  width: 30px;
+  color: var(--chefkit-primary);
+  margin-right: var(--spacing-xs);
+}
+
+.header__logo-text {
+  font-size: 1.8rem;
+  font-weight: var(--chefkit-font-weight-bold);
+  color: var(--chefkit-text-dark);
+  font-family: var(--chefkit-font-display);
+}
+
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.button--text-only {
+    color: var(--chefkit-text-dark);
+    text-decoration: none;
+    padding: var(--spacing-sm);
+    font-weight: var(--chefkit-font-weight-medium);
+
+    &:hover {
+        color: var(--chefkit-primary);
+        text-decoration: underline;
+    }
+}
+
+/* --- SECTION HERO --- */
+.hero {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--spacing-xxl) var(--spacing-md);
+
+  background-image: url('/assets/images/hero-background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  color: var(--chefkit-background-white);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+  }
+}
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  padding: 0;
+}
+
+.hero__title {
+  color: var(--chefkit-background-white);
+  font-size: 3rem;
+  font-weight: var(--chefkit-font-weight-bold);
+  line-height: 1.1;
+  margin-bottom: var(--spacing-md);
+
+  @media (min-width: 768px) {
+    font-size: 4.5rem;
+    margin-bottom: var(--spacing-lg);
+  }
+}
+
+.hero__subtitle {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.1rem;
+  font-weight: var(--chefkit-font-weight-light);
+  margin-bottom: var(--spacing-xl);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+
+  @media (min-width: 768px) {
+    font-size: 1.35rem;
+  }
+}
+
+.hero__search-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centre les éléments horizontalement sur mobile */
+    justify-content: center;
+    gap: var(--spacing-sm); /* Garde l'écart pour la disposition mobile en colonne */
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: var(--spacing-lg);
+    position: relative;
+    z-index: 2;
+
+    @media (min-width: 768px) {
+        flex-direction: row; /* Aligne les éléments en ligne sur desktop */
+        gap: 0; /* Important : Supprime l'espace pour que l'input et le bouton se touchent */
+        align-items: center; /* Assure l'alignement vertical au centre en mode ligne */
+    }
+}
+
+.hero__search-input {
+  width: 100%;
+  max-width: 450px; /* Réduction légère de la largeur maximale */
+  padding: var(--spacing-sm) var(--spacing-md); /* Réduction du padding vertical pour moins de hauteur */
+  font-size: 1rem; /* Réduction de la taille de la police pour un aspect moins "gros" */
+  border-radius: var(--border-radius-lg); /* Rayon complet pour mobile */
+  border: 1px solid var(--chefkit-border-light);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04);
+  background-color: rgba(255, 255, 255, 0.95);
+  transition: all 0.2s ease-in-out;
+  color: var(--chefkit-text-dark);
+
+  &::placeholder {
+      color: var(--chefkit-text-light);
+      opacity: 0.7;
+      @media (max-width: 480px) {
+        font-size: 0.9rem; /* Police encore plus petite sur très petits écrans */
+      }
+  }
+
+  // Styles pour desktop : fusion visuelle avec le bouton
+  @media (min-width: 768px) {
+    border-top-right-radius: 0; /* Supprime le rayon du coin supérieur droit */
+    border-bottom-right-radius: 0; /* Supprime le rayon du coin inférieur droit */
+    border-right: none; /* Supprime la bordure droite pour une fusion visuelle */
+  }
+
+  &:focus {
+    outline: none; /* Supprime l'outline par défaut du navigateur */
+    border-color: var(--chefkit-primary); /* Met en évidence les bordures visibles (gauche, haut, bas) avec la couleur primaire */
+    box-shadow: 0 0 0 3px rgba(var(--chefkit-primary-rgb), 0.4); /* Conserve l'ombre de focus pour le champ de saisie */
+    background-color: var(--chefkit-background-white);
+  }
+}
+
+.hero__search-button {
+  width: 100%;
+  max-width: 150px; /* Réduction de la largeur max pour le bouton sur mobile */
+  padding: var(--spacing-sm) var(--spacing-lg); /* Ajustement du padding pour correspondre visuellement à la hauteur de l'input */
+  font-size: 1.05rem; /* Taille de police légèrement plus petite pour le bouton */
+  border-radius: var(--border-radius-lg); /* Rayon complet pour mobile */
+  background-color: var(--chefkit-primary); /* Utilise la couleur primaire du thème */
+  color: var(--chefkit-background-white); /* Texte blanc sur fond primaire */
+  box-shadow: 0 8px 20px rgba(var(--chefkit-primary-rgb), 0.25);
+  z-index: 2;
+  cursor: pointer; /* Indique que le bouton est cliquable */
+  border: none; /* Supprime la bordure par défaut du bouton */
+
+  // Styles pour desktop : fusion visuelle avec l'input
+  @media (min-width: 768px) {
+    border-top-left-radius: 0; /* Supprime le rayon du coin supérieur gauche */
+    border-bottom-left-radius: 0; /* Supprime le rayon du coin inférieur gauche */
+    border: 1px solid var(--chefkit-border-light); /* Définit une bordure explicite pour le bouton */
+    border-left: none; /* Supprime la bordure gauche pour compléter la fusion visuelle avec l'input */
+    box-shadow: 0 4px 10px rgba(var(--chefkit-primary-rgb), 0.15); /* Ombre plus douce pour une meilleure intégration */
+  }
+
+  &:hover {
+    background-color: #4CAF50, 5%; /* Assombrit légèrement le fond au survol */
+    box-shadow: 0 6px 15px rgba(var(--chefkit-primary-rgb), 0.2); /* Légère augmentation de l'ombre au survol */
+  }
+}
+
+.hero__filter-options {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    z-index: 2;
+
+    .hero__filter-label {
+        font-weight: var(--chefkit-font-weight-medium);
+        color: var(--chefkit-background-white);
+        margin-right: var(--spacing-xs);
+        white-space: nowrap;
+    }
+}
+
+.filter-chip {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--border-radius-xl);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.2);
+    color: var(--chefkit-background-white);
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+
+    &:hover {
+        border-color: var(--chefkit-primary);
+        color: var(--chefkit-primary);
+        background-color: var(--chefkit-background-white);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+
+    &.active {
+        background-color: var(--chefkit-primary);
+        color: var(--chefkit-background-white);
+        border-color: var(--chefkit-primary);
+        box-shadow: 0 2px 8px rgba(var(--chefkit-primary-rgb), 0.2);
+    }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+
+/* --- SECTION RECETTES MISES EN AVANT - CAROUSEL --- */
+.featured-recipes {
+  background-color: var(--chefkit-background-light);
+  text-align: center;
+  padding-bottom: var(--spacing-xxxl);
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: var(--spacing-xxxl);
+  @media (max-width: 768px) {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-xxl);
+  }
+}
+
+.carousel-wrapper {
+    position: relative;
+    padding: 0 var(--spacing-xl);
+
+    @media (max-width: 1200px) {
+        padding: 0;
+    }
+}
+
+.recipe-grid {
+    display: flex;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-md);
+}
+
+.recipe-grid::-webkit-scrollbar {
+    display: none;
+}
+
+.recipe-card {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+  width: 100%;
+
+  @media (min-width: 640px) {
+    width: calc(50% - var(--spacing-lg) / 2);
+  }
+
+  @media (min-width: 1024px) {
+    width: calc(33.333% - var(--spacing-lg) * 2 / 3);
+  }
+
+  display: block;
+  background-color: var(--chefkit-background-white);
+  border-radius: var(--border-radius-lg);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  }
+}
+
+.recipe-card__image-container {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    border-bottom: 1px solid var(--chefkit-border-light);
+}
+
+.recipe-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.recipe-card:hover .recipe-card__image {
+    transform: scale(1.05);
+}
+
+.recipe-card__content {
+  padding: var(--spacing-md);
+  text-align: left;
+}
+
+.recipe-card__title {
+  font-size: 1.25rem;
+  font-weight: var(--chefkit-font-weight-semibold);
+  color: var(--chefkit-text-dark);
+  margin-bottom: var(--spacing-sm);
+}
+
+.recipe-card__cta {
+    display: inline-block;
+    color: var(--chefkit-primary);
+    font-weight: var(--chefkit-font-weight-medium);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: text-decoration 0.2s ease;
+
+    .recipe-card:hover & {
+        text-decoration: underline;
+    }
+}
+
+.carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--chefkit-background-white);
+    border: none;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+        background-color: var(--chefkit-primary);
+        .carousel-arrow-icon {
+            color: var(--chefkit-background-white);
+        }
+    }
+
+    &--left {
+        left: 0;
+    }
+
+    &--right {
+        right: 0;
+    }
+
+    @media (min-width: 1200px) {
+        &--left {
+            left: -20px;
+        }
+        &--right {
+            right: -20px;
+        }
+    }
+}
+
+.carousel-arrow-icon {
+    width: 24px;
+    height: 24px;
+    color: var(--chefkit-text-dark);
+    transition: color 0.3s ease;
+}
+
+.carousel-indicators {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    margin-top: var(--spacing-md);
+}
+
+.indicator-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--chefkit-border-light);
+    border: 1px solid var(--chefkit-border-light);
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+
+    &:hover {
+        background-color: var(--chefkit-text-light);
+    }
+
+    &.active {
+        background-color: var(--chefkit-primary);
+        border-color: var(--chefkit-primary);
+    }
+}
+
+
+/* --- FOOTER --- */
+.app-footer {
+  background-color: var(--chefkit-footer-bg);
+  color: var(--chefkit-footer-text);
+  padding: var(--spacing-xxl) var(--spacing-lg);
+  font-size: 0.95rem;
+}
+
+.footer__inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  gap: var(--spacing-xxl);
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    text-align: left;
+    gap: var(--spacing-xl);
+  }
+}
+
+.footer__brand {
+  margin-bottom: var(--spacing-md);
+  @media (min-width: 768px) {
+    margin-bottom: 0;
+  }
+}
+
+.footer__logo-text {
+  font-size: 1.5rem;
+  font-weight: var(--chefkit-font-weight-bold);
+  color: var(--chefkit-background-white);
+  font-family: var(--chefkit-font-display);
+}
+
+.footer__slogan {
+  margin-top: var(--spacing-xs);
+  font-size: 0.8rem;
+  color: var(--chefkit-footer-text);
+}
+
+.footer__nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--spacing-sm) var(--spacing-lg);
+
+  @media (min-width: 768px) {
+    justify-content: flex-start;
+  }
+}
+
+.footer__nav-link {
+  color: var(--chefkit-footer-text);
+  &:hover {
+    color: var(--chefkit-background-white);
+  }
+}
+
+.footer__copyright {
+  font-size: 0.8rem;
+  color: var(--chefkit-footer-text);
+  margin-top: var(--spacing-md);
+
+  @media (min-width: 768px) {
+    margin-top: 0;
+  }
+}
