@@ -14,9 +14,9 @@
 </header>
 
 <!-- SECTION HERO : Titre principal, barre de recherche d'ingrédients, et section de filtres -->
+<!-- L'image de fond sera appliquée via CSS à la classe .hero -->
 <section class="hero section-padding">
     <div class="hero__content container text-center">
-        <!-- Les attributs d'animation sont retirés -->
         <h1 class="hero__title">
             Votre ingrédient. <br> Notre inspiration.
         </h1>
@@ -43,67 +43,21 @@
 
 <!-- SECTION RECETTES MISES EN AVANT -->
 <section class="featured-recipes section-padding">
-    <!-- Le titre de la section -->
     <h2 class="section-title">Nos Dernières Idées Recettes</h2>
     <div class="recipe-grid container">
-        <!-- Chaque carte de recette est un élément, sans animation -->
-        <a routerLink="/recipes/detail/1" class="recipe-card">
-            <div class="recipe-card__placeholder">
-                <svg class="recipe-card__placeholder-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2zm15 0L12 14L6 7m12 0l-4 4"/>
-                </svg>
-                <span>Image de la recette</span>
+        <!-- Utilisation de *ngFor pour boucler sur la liste de recettes du composant TS -->
+        <a *ngFor="let recipe of featuredRecipes"
+           [routerLink]="'/recipes/detail/' + recipe.id"
+           class="recipe-card">
+            <!-- Conteneur pour l'image -->
+            <div class="recipe-card__image-container">
+                <img [src]="recipe.imagePath" [alt]="'Image de la recette ' + recipe.title" class="recipe-card__image">
             </div>
             <div class="recipe-card__content">
-                <h3 class="recipe-card__title">Gratin Dauphinois Classique</h3>
-                <p class="recipe-card__meta">60 min | Facile</p>
+                <h3 class="recipe-card__title">{{ recipe.title }}</h3>
+                <!-- RETIRÉ : La difficulté de la recette (recipe.meta) -->
                 <span class="recipe-card__cta">Voir la recette</span>
             </div>
-        </a>
-        <a routerLink="/recipes/detail/2" class="recipe-card">
-            <div class="recipe-card__placeholder">
-                 <svg class="recipe-card__placeholder-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2zm15 0L12 14L6 7m12 0l-4 4"/>
-                </svg>
-                <span>Image de la recette</span>
-            </div>
-            <div class="recipe-card__content">
-                <h3 class="recipe-card__title">Curry de Poulet aux Légumes</h3>
-                <p class="recipe-card__meta">45 min | Intermédiaire</p>
-                <span class="recipe-card__cta">Voir la recette</span>
-            </div>
-        </a>
-        <a routerLink="/recipes/detail/3" class="recipe-card">
-            <div class="recipe-card__placeholder">
-                 <svg class="recipe-card__placeholder-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2zm15 0L12 14L6 7m12 0l-4 4"/>
-                </svg>
-                <span>Image de la recette</span>
-            </div>
-            <div class="recipe-card__content">
-                <h3 class="recipe-card__title">Salade César Revisité</h3>
-                <p class="recipe-card__meta">25 min | Facile</p>
-                <span class="recipe-card__cta">Voir la recette</span>
-            </div>
-        </a>
-        <a routerLink="/recipes/detail/4" class="recipe-card">
-            <div class="recipe-card__placeholder">
-                 <svg class="recipe-card__placeholder-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2zm15 0L12 14L6 7m12 0l-4 4"/>
-                </svg>
-                <span>Image de la recette</span>
-            </div>
-            <div class="recipe-card__content">
-                <h3 class="recipe-card__title">Soupe Froide de Concombre</h3>
-                <p class="recipe-card__meta">15 min | Très Facile</p>
-                <span class="recipe-card__cta">Voir la recette</span>
-            </div>
-        </a>
-    </div>
-    <!-- Bouton d'action "Voir toutes les recettes" -->
-    <div class="section__action-area text-center">
-        <a routerLink="/recipes" class="button button--secondary">
-            Voir toutes les recettes
         </a>
     </div>
 </section>

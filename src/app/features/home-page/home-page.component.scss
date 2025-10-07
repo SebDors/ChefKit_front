@@ -60,19 +60,40 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  background-color: var(--chefkit-background-white);
+  // background-color: var(--chefkit-background-white); // REMPLACÉ PAR L'IMAGE
   padding: var(--spacing-xxl) var(--spacing-md);
+
+  // STYLES POUR L'IMAGE DE FOND DU HERO
+  background-image: url('/assets/images/hero-background.jpg'); // **VÉRIFIEZ CE CHEMIN !**
+  background-size: cover; // L'image couvrira toute la zone
+  background-position: center; // Centre l'image
+  background-repeat: no-repeat;
+  position: relative; // Nécessaire pour le pseudo-élément d'overlay
+  color: var(--chefkit-background-white); // Texte en blanc par défaut sur l'image de fond sombre
+
+  // Overlay semi-transparent pour améliorer la lisibilité du texte
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4); // Overlay noir à 40% d'opacité
+    z-index: 1;
+  }
 }
 
 .hero__content {
   position: relative;
-  z-index: 2;
+  z-index: 2; // Assure que le contenu est au-dessus de l'overlay
   max-width: 900px;
   padding: 0;
 }
 
+// Assurez-vous que le texte reste lisible sur l'image de fond
 .hero__title {
-  color: var(--chefkit-text-dark);
+  color: var(--chefkit-background-white); // Le titre doit être blanc sur l'image de fond
   font-size: 3rem;
   font-weight: var(--chefkit-font-weight-bold);
   line-height: 1.1;
@@ -85,7 +106,7 @@
 }
 
 .hero__subtitle {
-  color: var(--chefkit-text-light);
+  color: rgba(255, 255, 255, 0.9); // Le sous-titre est légèrement transparent pour un effet plus doux
   font-size: 1.1rem;
   font-weight: var(--chefkit-font-weight-light);
   margin-bottom: var(--spacing-xl);
@@ -108,6 +129,7 @@
     max-width: 600px;
     margin-bottom: var(--spacing-lg);
     position: relative;
+    z-index: 2; // Assure que la barre de recherche est au-dessus de l'overlay
 
     @media (min-width: 768px) {
         flex-direction: row;
@@ -123,7 +145,7 @@
   border-radius: var(--border-radius-lg);
   border: 1px solid var(--chefkit-border-light);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04);
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: rgba(255, 255, 255, 0.95); // Légèrement transparent sur l'image de fond
   transition: all 0.2s ease-in-out;
   color: var(--chefkit-text-dark);
 
@@ -149,6 +171,7 @@
   font-size: 1.25rem;
   border-radius: var(--border-radius-lg);
   box-shadow: 0 8px 20px rgba(var(--chefkit-primary-rgb), 0.25);
+  z-index: 2; // Assure que le bouton est au-dessus de l'overlay
 
   @media (min-width: 768px) {
     width: auto;
@@ -161,10 +184,11 @@
     align-items: center;
     justify-content: center;
     gap: var(--spacing-xs);
+    z-index: 2; // Assure que les filtres sont au-dessus de l'overlay
 
     .hero__filter-label {
         font-weight: var(--chefkit-font-weight-medium);
-        color: var(--chefkit-text-dark);
+        color: var(--chefkit-background-white); // Couleur claire pour le label sur fond sombre
         margin-right: var(--spacing-xs);
         white-space: nowrap;
     }
@@ -173,15 +197,16 @@
 .filter-chip {
     padding: var(--spacing-xs) var(--spacing-sm);
     border-radius: var(--border-radius-xl);
-    border: 1px solid var(--chefkit-border-light);
-    background-color: var(--chefkit-background-white);
-    color: var(--chefkit-text-light);
+    border: 1px solid rgba(255, 255, 255, 0.5); // Bordure plus claire pour le fond sombre
+    background-color: rgba(255, 255, 255, 0.2); // Fond semi-transparent
+    color: var(--chefkit-background-white); // Texte blanc
     font-size: 0.9rem;
     transition: all 0.2s ease;
 
     &:hover {
         border-color: var(--chefkit-primary);
         color: var(--chefkit-primary);
+        background-color: var(--chefkit-background-white); // Revenir à blanc au hover
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
     }
 
@@ -253,24 +278,34 @@
   }
 }
 
-.recipe-card__placeholder {
+// NOUVELLES CLASSES POUR LES IMAGES DE RECETTES
+.recipe-card__image-container {
     width: 100%;
-    height: 180px;
-    background-color: var(--chefkit-border-light);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: var(--chefkit-text-light);
-    font-size: 0.9rem;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
+    height: 180px; // Hauteur fixe pour toutes les images de carte
+    overflow: hidden; // Cache les parties de l'image qui dépassent
+    border-bottom: 1px solid var(--chefkit-border-light);
+}
+
+.recipe-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; // L'image couvrira le conteneur, rognant si nécessaire
+    object-position: center; // Centre l'image dans le conteneur
+    display: block; // Enlève l'espace en dessous de l'image (si inline)
+    transition: transform 0.3s ease; // Animation de zoom au survol (optionnel)
+}
+
+.recipe-card:hover .recipe-card__image {
+    transform: scale(1.05); // Zoom léger de l'image au survol
+}
+
+// ANCIENNES CLASSES DE PLACEHOLDER - MASQUÉES
+.recipe-card__placeholder {
+    display: none; // Cache l'ancien placeholder SVG
 }
 
 .recipe-card__placeholder-icon {
-    height: 48px;
-    width: 48px;
-    color: var(--chefkit-text-light);
-    margin-bottom: var(--spacing-xs);
+    display: none; // Cache l'ancien placeholder SVG
 }
 
 .recipe-card__content {
@@ -282,12 +317,7 @@
   font-size: 1.25rem;
   font-weight: var(--chefkit-font-weight-semibold);
   color: var(--chefkit-text-dark);
-  margin-bottom: var(--spacing-xs);
-}
-
-.recipe-card__meta {
-  color: var(--chefkit-text-light);
-  font-size: 0.9rem;
+  // Ajout d'une marge-bottom pour compenser la suppression de .recipe-card__meta
   margin-bottom: var(--spacing-sm);
 }
 
@@ -304,8 +334,10 @@
     }
 }
 
+// Styles pour le bouton "Voir toutes les recettes" - RÉACTIVÉS
 .section__action-area {
     margin-top: var(--spacing-xl);
+    text-align: center; // S'assurer que le bouton est centré
 }
 
 
@@ -379,7 +411,3 @@
     margin-top: 0;
   }
 }
-
-
-/* --- ANIMATIONS (État initial caché et déclenchement unique via .is-animated) --- */
-// TOUTES LES CLASSES D'ANIMATION ONT ÉTÉ RETIRÉES

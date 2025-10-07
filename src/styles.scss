@@ -1,4 +1,6 @@
+@use "sass:color";
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap');
+
 
 /* ---- COULEURS DE BASE BRUTES SASS POUR LES CALCULS ---- */
 // Ces variables SASS (avec $) sont utilisées UNIQUEMENT par Sass pour les calculs
@@ -6,9 +8,10 @@ $primary-color-base: #4CAF50; // Vert olive élégant
 $secondary-btn-bg-base: #E8E8E8; // Gris clair pour le bouton secondaire
 
 // Couleurs dérivées calculées par Sass (seront exposées comme variables CSS)
-$primary-color-hover-sass: darken($primary-color-base, 5%);
-$secondary-btn-bg-hover-sass: darken($secondary-btn-bg-base, 5%);
-$secondary-btn-bg-rgb-for-shadow-sass: red($secondary-btn-bg-base), green($secondary-btn-bg-base), blue($secondary-btn-bg-base);
+// Correction des fonctions dépréciées : darken(), red(), green(), blue()
+$primary-color-hover-sass: color.adjust($primary-color-base, $lightness: -5%);
+$secondary-btn-bg-hover-sass: color.adjust($secondary-btn-bg-base, $lightness: -5%);
+$secondary-btn-bg-rgb-for-shadow-sass: color.red($secondary-btn-bg-base), color.green($secondary-btn-bg-base), color.blue($secondary-btn-bg-base);
 
 
 /* Variables globales CSS (exposées via :root) */
@@ -16,7 +19,7 @@ $secondary-btn-bg-rgb-for-shadow-sass: red($secondary-btn-bg-base), green($secon
   // Couleurs Primaires / Accent
   --chefkit-primary: #{$primary-color-base};
   --chefkit-primary-hover: #{$primary-color-hover-sass};
-  --chefkit-primary-rgb: #{red($primary-color-base)}, #{green($primary-color-base)}, #{blue($primary-color-base)};
+  --chefkit-primary-rgb: #{color.red($primary-color-base)}, #{color.green($primary-color-base)}, #{color.blue($primary-color-base)};
 
   // Couleurs Bouton Secondaire
   --chefkit-secondary-btn-bg: #{$secondary-btn-bg-base};
@@ -184,9 +187,3 @@ button {
     }
   }
 }
-
-/* Important : Le [class*="animate-"] ne fait plus que cibler la portée des classes.
-   Les propriétés d'animation complètes sont définies DANS chaque classe d'animation individuelle ci-dessous
-   pour assurer la propriété `animation-fill-mode: forwards;` */
-
-// TOUTES LES DÉFINITIONS D'ANIMATIONS ONT ÉTÉ RETIRÉES
