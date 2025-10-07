@@ -1,0 +1,385 @@
+/* --- HEADER --- */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: var(--chefkit-background-white);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  padding: var(--spacing-md) 0;
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header__logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.header__logo-icon {
+  height: 30px;
+  width: 30px;
+  color: var(--chefkit-primary);
+  margin-right: var(--spacing-xs);
+}
+
+.header__logo-text {
+  font-size: 1.8rem;
+  font-weight: var(--chefkit-font-weight-bold);
+  color: var(--chefkit-text-dark);
+  font-family: var(--chefkit-font-display);
+}
+
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.button--text-only {
+    color: var(--chefkit-text-dark);
+    text-decoration: none;
+    padding: var(--spacing-sm);
+    font-weight: var(--chefkit-font-weight-medium);
+
+    &:hover {
+        color: var(--chefkit-primary);
+        text-decoration: underline;
+    }
+}
+
+/* --- SECTION HERO --- */
+.hero {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: var(--chefkit-background-white);
+  padding: var(--spacing-xxl) var(--spacing-md);
+}
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  padding: 0;
+}
+
+.hero__title {
+  color: var(--chefkit-text-dark);
+  font-size: 3rem;
+  font-weight: var(--chefkit-font-weight-bold);
+  line-height: 1.1;
+  margin-bottom: var(--spacing-md);
+
+  @media (min-width: 768px) {
+    font-size: 4.5rem;
+    margin-bottom: var(--spacing-lg);
+  }
+}
+
+.hero__subtitle {
+  color: var(--chefkit-text-light);
+  font-size: 1.1rem;
+  font-weight: var(--chefkit-font-weight-light);
+  margin-bottom: var(--spacing-xl);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+
+  @media (min-width: 768px) {
+    font-size: 1.35rem;
+  }
+}
+
+.hero__search-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: var(--spacing-lg);
+    position: relative;
+
+    @media (min-width: 768px) {
+        flex-direction: row;
+        gap: var(--spacing-md);
+    }
+}
+
+.hero__search-input {
+  width: 100%;
+  max-width: 500px;
+  padding: var(--spacing-md);
+  font-size: 1.125rem;
+  border-radius: var(--border-radius-lg);
+  border: 1px solid var(--chefkit-border-light);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04);
+  background-color: rgba(255, 255, 255, 0.95);
+  transition: all 0.2s ease-in-out;
+  color: var(--chefkit-text-dark);
+
+  &::placeholder {
+      color: var(--chefkit-text-light);
+      opacity: 0.7;
+      @media (max-width: 480px) {
+        font-size: 0.95rem;
+      }
+  }
+
+  &:focus {
+    border-color: transparent;
+    box-shadow: 0 0 0 3px rgba(var(--chefkit-primary-rgb), 0.4);
+    background-color: var(--chefkit-background-white);
+  }
+}
+
+.hero__search-button {
+  width: 100%;
+  max-width: 180px;
+  padding: var(--spacing-md) var(--spacing-xl);
+  font-size: 1.25rem;
+  border-radius: var(--border-radius-lg);
+  box-shadow: 0 8px 20px rgba(var(--chefkit-primary-rgb), 0.25);
+
+  @media (min-width: 768px) {
+    width: auto;
+  }
+}
+
+.hero__filter-options {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+
+    .hero__filter-label {
+        font-weight: var(--chefkit-font-weight-medium);
+        color: var(--chefkit-text-dark);
+        margin-right: var(--spacing-xs);
+        white-space: nowrap;
+    }
+}
+
+.filter-chip {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--border-radius-xl);
+    border: 1px solid var(--chefkit-border-light);
+    background-color: var(--chefkit-background-white);
+    color: var(--chefkit-text-light);
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+
+    &:hover {
+        border-color: var(--chefkit-primary);
+        color: var(--chefkit-primary);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+
+    &.active {
+        background-color: var(--chefkit-primary);
+        color: var(--chefkit-background-white);
+        border-color: var(--chefkit-primary);
+        box-shadow: 0 2px 8px rgba(var(--chefkit-primary-rgb), 0.2);
+    }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+
+/* --- SECTION RECETTES MISES EN AVANT --- */
+.featured-recipes {
+  background-color: var(--chefkit-background-light);
+  text-align: center;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: var(--spacing-xxxl);
+  @media (max-width: 768px) {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-xxl);
+  }
+}
+
+.recipe-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-xxl);
+
+  @media (min-width: 640px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-lg);
+  }
+}
+
+.recipe-card {
+  display: block;
+  background-color: var(--chefkit-background-white);
+  border-radius: var(--border-radius-lg);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  }
+}
+
+.recipe-card__placeholder {
+    width: 100%;
+    height: 180px;
+    background-color: var(--chefkit-border-light);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--chefkit-text-light);
+    font-size: 0.9rem;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.recipe-card__placeholder-icon {
+    height: 48px;
+    width: 48px;
+    color: var(--chefkit-text-light);
+    margin-bottom: var(--spacing-xs);
+}
+
+.recipe-card__content {
+  padding: var(--spacing-md);
+  text-align: left;
+}
+
+.recipe-card__title {
+  font-size: 1.25rem;
+  font-weight: var(--chefkit-font-weight-semibold);
+  color: var(--chefkit-text-dark);
+  margin-bottom: var(--spacing-xs);
+}
+
+.recipe-card__meta {
+  color: var(--chefkit-text-light);
+  font-size: 0.9rem;
+  margin-bottom: var(--spacing-sm);
+}
+
+.recipe-card__cta {
+    display: inline-block;
+    color: var(--chefkit-primary);
+    font-weight: var(--chefkit-font-weight-medium);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: text-decoration 0.2s ease;
+
+    .recipe-card:hover & {
+        text-decoration: underline;
+    }
+}
+
+.section__action-area {
+    margin-top: var(--spacing-xl);
+}
+
+
+/* --- FOOTER --- */
+.app-footer {
+  background-color: var(--chefkit-footer-bg);
+  color: var(--chefkit-footer-text);
+  padding: var(--spacing-xxl) var(--spacing-lg);
+  font-size: 0.95rem;
+}
+
+.footer__inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  gap: var(--spacing-xxl);
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    text-align: left;
+    gap: var(--spacing-xl);
+  }
+}
+
+.footer__brand {
+  margin-bottom: var(--spacing-md);
+  @media (min-width: 768px) {
+    margin-bottom: 0;
+  }
+}
+
+.footer__logo-text {
+  font-size: 1.5rem;
+  font-weight: var(--chefkit-font-weight-bold);
+  color: var(--chefkit-background-white);
+  font-family: var(--chefkit-font-display);
+}
+
+.footer__slogan {
+  margin-top: var(--spacing-xs);
+  font-size: 0.8rem;
+  color: var(--chefkit-footer-text);
+}
+
+.footer__nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--spacing-sm) var(--spacing-lg);
+
+  @media (min-width: 768px) {
+    justify-content: flex-start;
+  }
+}
+
+.footer__nav-link {
+  color: var(--chefkit-footer-text);
+  &:hover {
+    color: var(--chefkit-background-white);
+  }
+}
+
+.footer__copyright {
+  font-size: 0.8rem;
+  color: var(--chefkit-footer-text);
+  margin-top: var(--spacing-md);
+
+  @media (min-width: 768px) {
+    margin-top: 0;
+  }
+}
+
+
+/* --- ANIMATIONS (État initial caché et déclenchement unique via .is-animated) --- */
+// TOUTES LES CLASSES D'ANIMATION ONT ÉTÉ RETIRÉES

@@ -1,0 +1,126 @@
+<!-- HEADER : Minimaliste avec logo et bouton de connexion -->
+<header class="app-header">
+    <div class="header__inner container">
+        <a routerLink="/" class="header__logo-link">
+            <svg class="header__logo-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+            </svg>
+            <span class="header__logo-text">ChefKit</span>
+        </a>
+        <div class="header__actions">
+            <a routerLink="/login" class="header__nav-link button--text-only">Connexion</a>
+        </div>
+    </div>
+</header>
+
+<!-- SECTION HERO : Titre principal, barre de recherche d'ingrédients, et section de filtres -->
+<section class="hero section-padding">
+    <div class="hero__content container text-center">
+        <!-- Les attributs d'animation sont retirés -->
+        <h1 class="hero__title">
+            Votre ingrédient. <br> Notre inspiration.
+        </h1>
+        <p class="hero__subtitle">
+            Dites-nous ce que vous avez, et ChefKit fera le reste. Trouvez des recettes qui vous ressemblent.
+        </p>
+
+        <div class="hero__search-area">
+            <input type="text" placeholder="Ajouter des ingrédients (ex: poulet, riz, brocoli)"
+                   class="hero__search-input" aria-label="Recherche de recettes par ingrédients">
+            <button class="button button--primary hero__search-button">
+                Rechercher <span class="visually-hidden">une recette</span>
+            </button>
+        </div>
+
+        <div class="hero__filter-options">
+            <span class="hero__filter-label">Filtres rapides :</span>
+            <button class="filter-chip" [class.active]="selectedFilters.vegetarian" (click)="toggleFilter('vegetarian')">Végétarien</button>
+            <button class="filter-chip" [class.active]="selectedFilters.vegan" (click)="toggleFilter('vegan')">Vegan</button>
+            <button class="filter-chip" [class.active]="selectedFilters.glutenFree" (click)="toggleFilter('glutenFree')">Sans Gluten</button>
+        </div>
+    </div>
+</section>
+
+<!-- SECTION RECETTES MISES EN AVANT -->
+<section class="featured-recipes section-padding">
+    <!-- Le titre de la section -->
+    <h2 class="section-title">Nos Dernières Idées Recettes</h2>
+    <div class="recipe-grid container">
+        <!-- Chaque carte de recette est un élément, sans animation -->
+        <a routerLink="/recipes/detail/1" class="recipe-card">
+            <div class="recipe-card__placeholder">
+                <svg class="recipe-card__placeholder-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2zm15 0L12 14L6 7m12 0l-4 4"/>
+                </svg>
+                <span>Image de la recette</span>
+            </div>
+            <div class="recipe-card__content">
+                <h3 class="recipe-card__title">Gratin Dauphinois Classique</h3>
+                <p class="recipe-card__meta">60 min | Facile</p>
+                <span class="recipe-card__cta">Voir la recette</span>
+            </div>
+        </a>
+        <a routerLink="/recipes/detail/2" class="recipe-card">
+            <div class="recipe-card__placeholder">
+                 <svg class="recipe-card__placeholder-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2zm15 0L12 14L6 7m12 0l-4 4"/>
+                </svg>
+                <span>Image de la recette</span>
+            </div>
+            <div class="recipe-card__content">
+                <h3 class="recipe-card__title">Curry de Poulet aux Légumes</h3>
+                <p class="recipe-card__meta">45 min | Intermédiaire</p>
+                <span class="recipe-card__cta">Voir la recette</span>
+            </div>
+        </a>
+        <a routerLink="/recipes/detail/3" class="recipe-card">
+            <div class="recipe-card__placeholder">
+                 <svg class="recipe-card__placeholder-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2zm15 0L12 14L6 7m12 0l-4 4"/>
+                </svg>
+                <span>Image de la recette</span>
+            </div>
+            <div class="recipe-card__content">
+                <h3 class="recipe-card__title">Salade César Revisité</h3>
+                <p class="recipe-card__meta">25 min | Facile</p>
+                <span class="recipe-card__cta">Voir la recette</span>
+            </div>
+        </a>
+        <a routerLink="/recipes/detail/4" class="recipe-card">
+            <div class="recipe-card__placeholder">
+                 <svg class="recipe-card__placeholder-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2zm15 0L12 14L6 7m12 0l-4 4"/>
+                </svg>
+                <span>Image de la recette</span>
+            </div>
+            <div class="recipe-card__content">
+                <h3 class="recipe-card__title">Soupe Froide de Concombre</h3>
+                <p class="recipe-card__meta">15 min | Très Facile</p>
+                <span class="recipe-card__cta">Voir la recette</span>
+            </div>
+        </a>
+    </div>
+    <!-- Bouton d'action "Voir toutes les recettes" -->
+    <div class="section__action-area text-center">
+        <a routerLink="/recipes" class="button button--secondary">
+            Voir toutes les recettes
+        </a>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="app-footer">
+    <div class="footer__inner container">
+        <div class="footer__brand">
+            <span class="footer__logo-text">ChefKit</span>
+            <p class="footer__slogan">Simplifiez votre quotidien.</p>
+        </div>
+        <nav class="footer__nav">
+            <a href="#" class="footer__nav-link">Conditions d'utilisation</a>
+            <a href="#" class="footer__nav-link">Politique de confidentialité</a>
+        </nav>
+        <div class="footer__copyright">
+            &copy; {{ currentYear }} ChefKit. Tous droits réservés.
+        </div>
+    </div>
+</footer>
