@@ -120,7 +120,7 @@
     flex-direction: column;
     align-items: center; /* Centre les éléments horizontalement sur mobile */
     justify-content: center;
-    gap: var(--spacing-sm);
+    gap: var(--spacing-sm); /* Garde l'écart pour la disposition mobile en colonne */
     width: 100%;
     max-width: 600px;
     margin-bottom: var(--spacing-lg);
@@ -129,7 +129,7 @@
 
     @media (min-width: 768px) {
         flex-direction: row; /* Aligne les éléments en ligne sur desktop */
-        gap: var(--spacing-md);
+        gap: 0; /* Important : Supprime l'espace pour que l'input et le bouton se touchent */
         align-items: center; /* Assure l'alignement vertical au centre en mode ligne */
     }
 }
@@ -139,7 +139,7 @@
   max-width: 450px; /* Réduction légère de la largeur maximale */
   padding: var(--spacing-sm) var(--spacing-md); /* Réduction du padding vertical pour moins de hauteur */
   font-size: 1rem; /* Réduction de la taille de la police pour un aspect moins "gros" */
-  border-radius: var(--border-radius-lg);
+  border-radius: var(--border-radius-lg); /* Rayon complet pour mobile */
   border: 1px solid var(--chefkit-border-light);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04);
   background-color: rgba(255, 255, 255, 0.95);
@@ -154,9 +154,17 @@
       }
   }
 
+  // Styles pour desktop : fusion visuelle avec le bouton
+  @media (min-width: 768px) {
+    border-top-right-radius: 0; /* Supprime le rayon du coin supérieur droit */
+    border-bottom-right-radius: 0; /* Supprime le rayon du coin inférieur droit */
+    border-right: none; /* Supprime la bordure droite pour une fusion visuelle */
+  }
+
   &:focus {
-    border-color: transparent;
-    box-shadow: 0 0 0 3px rgba(var(--chefkit-primary-rgb), 0.4);
+    outline: none; /* Supprime l'outline par défaut du navigateur */
+    border-color: var(--chefkit-primary); /* Met en évidence les bordures visibles (gauche, haut, bas) avec la couleur primaire */
+    box-shadow: 0 0 0 3px rgba(var(--chefkit-primary-rgb), 0.4); /* Conserve l'ombre de focus pour le champ de saisie */
     background-color: var(--chefkit-background-white);
   }
 }
@@ -166,14 +174,26 @@
   max-width: 150px; /* Réduction de la largeur max pour le bouton sur mobile */
   padding: var(--spacing-sm) var(--spacing-lg); /* Ajustement du padding pour correspondre visuellement à la hauteur de l'input */
   font-size: 1.05rem; /* Taille de police légèrement plus petite pour le bouton */
-  border-radius: var(--border-radius-lg);
+  border-radius: var(--border-radius-lg); /* Rayon complet pour mobile */
+  background-color: var(--chefkit-primary); /* Utilise la couleur primaire du thème */
+  color: var(--chefkit-background-white); /* Texte blanc sur fond primaire */
   box-shadow: 0 8px 20px rgba(var(--chefkit-primary-rgb), 0.25);
   z-index: 2;
+  cursor: pointer; /* Indique que le bouton est cliquable */
+  border: none; /* Supprime la bordure par défaut du bouton */
 
+  // Styles pour desktop : fusion visuelle avec l'input
   @media (min-width: 768px) {
-    width: auto; /* Laisser le bouton s'adapter à son contenu sur desktop */
-    min-width: 120px; /* Assurer une largeur minimale pour le texte du bouton */
-    max-width: none; /* Supprimer la contrainte de largeur maximale sur desktop */
+    border-top-left-radius: 0; /* Supprime le rayon du coin supérieur gauche */
+    border-bottom-left-radius: 0; /* Supprime le rayon du coin inférieur gauche */
+    border: 1px solid var(--chefkit-border-light); /* Définit une bordure explicite pour le bouton */
+    border-left: none; /* Supprime la bordure gauche pour compléter la fusion visuelle avec l'input */
+    box-shadow: 0 4px 10px rgba(var(--chefkit-primary-rgb), 0.15); /* Ombre plus douce pour une meilleure intégration */
+  }
+
+  &:hover {
+    background-color: #4CAF50, 5%; /* Assombrit légèrement le fond au survol */
+    box-shadow: 0 6px 15px rgba(var(--chefkit-primary-rgb), 0.2); /* Légère augmentation de l'ombre au survol */
   }
 }
 
