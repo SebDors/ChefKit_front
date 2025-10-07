@@ -60,18 +60,15 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  // background-color: var(--chefkit-background-white); // REMPLACÉ PAR L'IMAGE
   padding: var(--spacing-xxl) var(--spacing-md);
 
-  // STYLES POUR L'IMAGE DE FOND DU HERO
-  background-image: url('/assets/images/hero-background.jpg'); // **VÉRIFIEZ CE CHEMIN !**
-  background-size: cover; // L'image couvrira toute la zone
-  background-position: center; // Centre l'image
+  background-image: url('/assets/images/hero-background.jpg');
+  background-size: cover;
+  background-position: center;
   background-repeat: no-repeat;
-  position: relative; // Nécessaire pour le pseudo-élément d'overlay
-  color: var(--chefkit-background-white); // Texte en blanc par défaut sur l'image de fond sombre
+  position: relative;
+  color: var(--chefkit-background-white);
 
-  // Overlay semi-transparent pour améliorer la lisibilité du texte
   &::before {
     content: '';
     position: absolute;
@@ -79,21 +76,20 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.4); // Overlay noir à 40% d'opacité
+    background-color: rgba(0, 0, 0, 0.4);
     z-index: 1;
   }
 }
 
 .hero__content {
   position: relative;
-  z-index: 2; // Assure que le contenu est au-dessus de l'overlay
+  z-index: 2;
   max-width: 900px;
   padding: 0;
 }
 
-// Assurez-vous que le texte reste lisible sur l'image de fond
 .hero__title {
-  color: var(--chefkit-background-white); // Le titre doit être blanc sur l'image de fond
+  color: var(--chefkit-background-white);
   font-size: 3rem;
   font-weight: var(--chefkit-font-weight-bold);
   line-height: 1.1;
@@ -106,7 +102,7 @@
 }
 
 .hero__subtitle {
-  color: rgba(255, 255, 255, 0.9); // Le sous-titre est légèrement transparent pour un effet plus doux
+  color: rgba(255, 255, 255, 0.9);
   font-size: 1.1rem;
   font-weight: var(--chefkit-font-weight-light);
   margin-bottom: var(--spacing-xl);
@@ -122,30 +118,31 @@
 .hero__search-area {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: center; /* Centre les éléments horizontalement sur mobile */
     justify-content: center;
     gap: var(--spacing-sm);
     width: 100%;
     max-width: 600px;
     margin-bottom: var(--spacing-lg);
     position: relative;
-    z-index: 2; // Assure que la barre de recherche est au-dessus de l'overlay
+    z-index: 2;
 
     @media (min-width: 768px) {
-        flex-direction: row;
+        flex-direction: row; /* Aligne les éléments en ligne sur desktop */
         gap: var(--spacing-md);
+        align-items: center; /* Assure l'alignement vertical au centre en mode ligne */
     }
 }
 
 .hero__search-input {
   width: 100%;
-  max-width: 500px;
-  padding: var(--spacing-md);
-  font-size: 1.125rem;
+  max-width: 450px; /* Réduction légère de la largeur maximale */
+  padding: var(--spacing-sm) var(--spacing-md); /* Réduction du padding vertical pour moins de hauteur */
+  font-size: 1rem; /* Réduction de la taille de la police pour un aspect moins "gros" */
   border-radius: var(--border-radius-lg);
   border: 1px solid var(--chefkit-border-light);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04);
-  background-color: rgba(255, 255, 255, 0.95); // Légèrement transparent sur l'image de fond
+  background-color: rgba(255, 255, 255, 0.95);
   transition: all 0.2s ease-in-out;
   color: var(--chefkit-text-dark);
 
@@ -153,7 +150,7 @@
       color: var(--chefkit-text-light);
       opacity: 0.7;
       @media (max-width: 480px) {
-        font-size: 0.95rem;
+        font-size: 0.9rem; /* Police encore plus petite sur très petits écrans */
       }
   }
 
@@ -166,15 +163,17 @@
 
 .hero__search-button {
   width: 100%;
-  max-width: 180px;
-  padding: var(--spacing-md) var(--spacing-xl);
-  font-size: 1.25rem;
+  max-width: 150px; /* Réduction de la largeur max pour le bouton sur mobile */
+  padding: var(--spacing-sm) var(--spacing-lg); /* Ajustement du padding pour correspondre visuellement à la hauteur de l'input */
+  font-size: 1.05rem; /* Taille de police légèrement plus petite pour le bouton */
   border-radius: var(--border-radius-lg);
   box-shadow: 0 8px 20px rgba(var(--chefkit-primary-rgb), 0.25);
-  z-index: 2; // Assure que le bouton est au-dessus de l'overlay
+  z-index: 2;
 
   @media (min-width: 768px) {
-    width: auto;
+    width: auto; /* Laisser le bouton s'adapter à son contenu sur desktop */
+    min-width: 120px; /* Assurer une largeur minimale pour le texte du bouton */
+    max-width: none; /* Supprimer la contrainte de largeur maximale sur desktop */
   }
 }
 
@@ -184,11 +183,11 @@
     align-items: center;
     justify-content: center;
     gap: var(--spacing-xs);
-    z-index: 2; // Assure que les filtres sont au-dessus de l'overlay
+    z-index: 2;
 
     .hero__filter-label {
         font-weight: var(--chefkit-font-weight-medium);
-        color: var(--chefkit-background-white); // Couleur claire pour le label sur fond sombre
+        color: var(--chefkit-background-white);
         margin-right: var(--spacing-xs);
         white-space: nowrap;
     }
@@ -197,16 +196,16 @@
 .filter-chip {
     padding: var(--spacing-xs) var(--spacing-sm);
     border-radius: var(--border-radius-xl);
-    border: 1px solid rgba(255, 255, 255, 0.5); // Bordure plus claire pour le fond sombre
-    background-color: rgba(255, 255, 255, 0.2); // Fond semi-transparent
-    color: var(--chefkit-background-white); // Texte blanc
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.2);
+    color: var(--chefkit-background-white);
     font-size: 0.9rem;
     transition: all 0.2s ease;
 
     &:hover {
         border-color: var(--chefkit-primary);
         color: var(--chefkit-primary);
-        background-color: var(--chefkit-background-white); // Revenir à blanc au hover
+        background-color: var(--chefkit-background-white);
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
     }
 
@@ -230,10 +229,11 @@
 }
 
 
-/* --- SECTION RECETTES MISES EN AVANT --- */
+/* --- SECTION RECETTES MISES EN AVANT - CAROUSEL --- */
 .featured-recipes {
   background-color: var(--chefkit-background-light);
   text-align: center;
+  padding-bottom: var(--spacing-xxxl);
 }
 
 .section-title {
@@ -246,24 +246,44 @@
   }
 }
 
+.carousel-wrapper {
+    position: relative;
+    padding: 0 var(--spacing-xl);
+
+    @media (max-width: 1200px) {
+        padding: 0;
+    }
+}
+
 .recipe-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--spacing-md);
-  margin-bottom: var(--spacing-xxl);
-
-  @media (min-width: 640px) {
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
     gap: var(--spacing-lg);
-  }
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-md);
+}
 
-  @media (min-width: 1024px) {
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--spacing-lg);
-  }
+.recipe-grid::-webkit-scrollbar {
+    display: none;
 }
 
 .recipe-card {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+  width: 100%;
+
+  @media (min-width: 640px) {
+    width: calc(50% - var(--spacing-lg) / 2);
+  }
+
+  @media (min-width: 1024px) {
+    width: calc(33.333% - var(--spacing-lg) * 2 / 3);
+  }
+
   display: block;
   background-color: var(--chefkit-background-white);
   border-radius: var(--border-radius-lg);
@@ -278,34 +298,24 @@
   }
 }
 
-// NOUVELLES CLASSES POUR LES IMAGES DE RECETTES
 .recipe-card__image-container {
     width: 100%;
-    height: 180px; // Hauteur fixe pour toutes les images de carte
-    overflow: hidden; // Cache les parties de l'image qui dépassent
+    height: 180px;
+    overflow: hidden;
     border-bottom: 1px solid var(--chefkit-border-light);
 }
 
 .recipe-card__image {
     width: 100%;
     height: 100%;
-    object-fit: cover; // L'image couvrira le conteneur, rognant si nécessaire
-    object-position: center; // Centre l'image dans le conteneur
-    display: block; // Enlève l'espace en dessous de l'image (si inline)
-    transition: transform 0.3s ease; // Animation de zoom au survol (optionnel)
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: transform 0.3s ease;
 }
 
 .recipe-card:hover .recipe-card__image {
-    transform: scale(1.05); // Zoom léger de l'image au survol
-}
-
-// ANCIENNES CLASSES DE PLACEHOLDER - MASQUÉES
-.recipe-card__placeholder {
-    display: none; // Cache l'ancien placeholder SVG
-}
-
-.recipe-card__placeholder-icon {
-    display: none; // Cache l'ancien placeholder SVG
+    transform: scale(1.05);
 }
 
 .recipe-card__content {
@@ -317,7 +327,6 @@
   font-size: 1.25rem;
   font-weight: var(--chefkit-font-weight-semibold);
   color: var(--chefkit-text-dark);
-  // Ajout d'une marge-bottom pour compenser la suppression de .recipe-card__meta
   margin-bottom: var(--spacing-sm);
 }
 
@@ -334,10 +343,79 @@
     }
 }
 
-// Styles pour le bouton "Voir toutes les recettes" - RÉACTIVÉS
-.section__action-area {
-    margin-top: var(--spacing-xl);
-    text-align: center; // S'assurer que le bouton est centré
+.carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--chefkit-background-white);
+    border: none;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+        background-color: var(--chefkit-primary);
+        .carousel-arrow-icon {
+            color: var(--chefkit-background-white);
+        }
+    }
+
+    &--left {
+        left: 0;
+    }
+
+    &--right {
+        right: 0;
+    }
+
+    @media (min-width: 1200px) {
+        &--left {
+            left: -20px;
+        }
+        &--right {
+            right: -20px;
+        }
+    }
+}
+
+.carousel-arrow-icon {
+    width: 24px;
+    height: 24px;
+    color: var(--chefkit-text-dark);
+    transition: color 0.3s ease;
+}
+
+.carousel-indicators {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    margin-top: var(--spacing-md);
+}
+
+.indicator-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--chefkit-border-light);
+    border: 1px solid var(--chefkit-border-light);
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+
+    &:hover {
+        background-color: var(--chefkit-text-light);
+    }
+
+    &.active {
+        background-color: var(--chefkit-primary);
+        border-color: var(--chefkit-primary);
+    }
 }
 
 
