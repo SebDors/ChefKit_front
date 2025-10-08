@@ -1,29 +1,35 @@
 <div class="login-container">
   <h2>Connexion</h2>
-  <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
-    <div>
-      <label for="username">Nom d'utilisateur</label>
-      <input
-        type="text"
-        id="username"
-        name="username"
-        [(ngModel)]="username"
-        required
-      />
+
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="nomUtilisateur">Nom d'utilisateur:</label>
+      <input type="text" id="nomUtilisateur" formControlName="nomUtilisateur">
+      <div *ngIf="loginForm.get('nomUtilisateur')?.invalid && (loginForm.get('nomUtilisateur')?.dirty || loginForm.get('nomUtilisateur')?.touched)" class="error-message">
+        <div *ngIf="loginForm.get('nomUtilisateur')?.errors?.['required']">Le nom d'utilisateur est requis.</div>
+        <div *ngIf="loginForm.get('nomUtilisateur')?.errors?.['minlength']">Le nom d'utilisateur doit contenir au moins 3 caractères.</div>
+      </div>
     </div>
-    <div>
-      <label for="password">Mot de passe</label>
-      <input
-        type="password"
-        id="password"
-        name="password"
-        [(ngModel)]="password"
-        required
-      />
+
+    <div class="form-group">
+      <label for="password">Mot de passe:</label>
+      <input type="password" id="password" formControlName="password">
+      <div *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)" class="error-message">
+        <div *ngIf="loginForm.get('password')?.errors?.['required']">Le mot de passe est requis.</div>
+      </div>
     </div>
-    <button type="submit" [disabled]="loginForm.invalid">Se connecter</button>
+
+    <button type="submit" [disabled]="loginForm.invalid || isLoading()">
+      <span *ngIf="!isLoading()">Se connecter</span>
+      <span *ngIf="isLoading()">Chargement...</span>
+    </button>
+
+    <div *ngIf="errorMessage()" class="api-error-message">
+      {{ errorMessage() }}
+    </div>
+
+    <div class="register-link">
+      Pas encore de compte ? <a routerLink="/register">S'inscrire</a>
+    </div>
   </form>
-  <div *ngIf="errorMessage" class="error">
-    {{ errorMessage }}
-  </div>
 </div>

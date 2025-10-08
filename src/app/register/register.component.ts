@@ -52,7 +52,13 @@ export class RegisterComponent {
 
     if (this.registerForm.valid) {
       const { nomUtilisateur, email, password } = this.registerForm.value;
-      this.authService.register({ nomUtilisateur, email, password }).subscribe({
+      const userDataToSend = {
+        nomUtilisateur: nomUtilisateur, 
+        email: email,
+        motDePasse: password // Le champ du DTO est 'motDePasse'
+      };
+
+      this.authService.register(userDataToSend).subscribe({
         next: (response) => {
           this.isLoading.set(false);
           console.log('Inscription réussie', response);
