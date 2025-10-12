@@ -4,7 +4,8 @@ import {
   OnDestroy,
   AfterViewInit,
   ViewChild,
-  ElementRef
+  ElementRef,
+  HostListener // <-- NOUVEAU : Importez HostListener
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -25,6 +26,8 @@ interface Recipe {
 })
 export class HomePageComponent implements OnInit, AfterViewInit, OnDestroy {
   currentYear: number = new Date().getFullYear();
+
+  isScrolled = false; // <-- NOUVEAU : Propriété pour suivre l'état du défilement
 
   selectedFilters = {
     vegetarian: false,
@@ -91,6 +94,14 @@ export class HomePageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.stopAutoPlay();
     window.removeEventListener('resize', this.calculateTotalSlides.bind(this));
   }
+
+  // <-- NOUVEAU : Méthode pour gérer le défilement de la fenêtre
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    const scrollThreshold = 50; // Définissez ici le nombre de pixels après lequel la barre se rétracte
+    this.isScrolled = window.pageYOffset > scrollThreshold;
+  }
+  // FIN NOUVEAU
 
   toggleFilter(filterName: 'vegetarian' | 'vegan' | 'glutenFree'): void {
     this.selectedFilters[filterName] = !this.selectedFilters[filterName];
