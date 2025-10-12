@@ -1,0 +1,89 @@
+/* Conteneur principal */
+:host {
+  display: block;
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #fff8f0;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* Titre de la recette */
+h1 {
+  font-size: 2.2em;
+  color: #333;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Image principale */
+.recette-img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin: 15px auto;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+/* Description */
+p {
+  font-size: 1.1em;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+/* Liste des temps et portions */
+ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+ul li {
+  padding: 5px 0;
+  font-weight: 500;
+  color: #444;
+}
+
+/* Ingrédients */
+h3 {
+  color: #d35400;
+  margin-top: 25px;
+  margin-bottom: 10px;
+}
+
+ul li img.ingredient-img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  margin-right: 10px;
+  border-radius: 6px;
+  vertical-align: middle;
+}
+
+/* Carte ingrédient */
+ul li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+/* Instructions */
+h3 + p, p.instructions {
+  margin-top: 10px;
+  line-height: 1.7;
+  font-size: 1.05em;
+  color: #555;
+}
+
+/* Chargement */
+div[ng-reflect-ng-if="true"] {
+  text-align: center;
+  font-size: 1.3em;
+  color: #888;
+  margin-top: 50px;
+}
