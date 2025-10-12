@@ -53,10 +53,14 @@ export class RegisterComponent {
     if (this.registerForm.valid) {
       const { nomUtilisateur, email, password } = this.registerForm.value;
       const userDataToSend = {
+        idUtilisateur: 0, // ou null, selon ce que le backend attend
         nomUtilisateur: nomUtilisateur, 
         email: email,
-        motDePasse: password // Le champ du DTO est 'motDePasse'
+        motDePasse: password,
+        dateCreation: new Date().toISOString() // ou une autre valeur par défaut appropriée
       };
+
+      console.log('Données envoyées au backend:', userDataToSend);
 
       this.authService.register(userDataToSend).subscribe({
         next: (response) => {
