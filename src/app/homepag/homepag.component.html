@@ -1,1 +1,6 @@
-<p>homepag works!</p>
+<h2>Liste des recettes</h2>
+<div *ngFor="let recette of recettes" class="recette-card" (click)="ouvrirRecette(recette.id_recette)">
+  <h3>{{ recette.titre }}</h3>
+  <p>{{ recette.description }}</p>
+  <small>Préparation : {{ recette.temps_preparation_minutes }} min | Cuisson : {{ recette.temps_cuisson_minutes }} min</small>
+</div>
