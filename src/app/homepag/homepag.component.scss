@@ -1,0 +1,13 @@
+/* homepag.component.scss */
+.recette-card {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: box-shadow 0.2s;
+}
+
+.recette-card:hover {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
