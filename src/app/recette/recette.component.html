@@ -1,4 +1,4 @@
-<div *ngIf="isLoading">Chargement...</div>
+<div *ngIf="isLoading" class="loading">Chargement...</div>
 
 <div *ngIf="!isLoading && recette">
   <h1>{{ recette.titre }}</h1>
@@ -22,5 +22,5 @@
   </ul>
 
   <h3>Instructions :</h3>
-  <p>{{ recette.instructions }}</p>
+  <p class="instructions">{{ recette.instructions }}</p>
 </div>
