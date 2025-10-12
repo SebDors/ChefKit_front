@@ -2,7 +2,8 @@ import {
   Component,
   OnInit,
   OnDestroy,
-  HostListener
+  HostListener,
+  AfterViewInit,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -21,7 +22,7 @@ interface Recipe {
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss'
 })
-export class HomePageComponent implements OnInit, OnDestroy { // AfterViewInit et d'autres sont supprimés car inutilisés
+export class HomePageComponent implements OnInit, OnDestroy, AfterViewInit {
   currentYear: number = new Date().getFullYear();
 
   isScrolled = false; // Propriété pour suivre l'état du défilement
@@ -31,13 +32,6 @@ export class HomePageComponent implements OnInit, OnDestroy { // AfterViewInit e
     vegan: false,
     glutenFree: false
   };
-
-  // Les propriétés et méthodes du carrousel ont été entièrement supprimées :
-  // @ViewChild('recipeGrid') recipeGrid!: ElementRef<HTMLElement>;
-  // autoPlayInterval: any;
-  // autoPlayDelay = 10000;
-  // currentSlideIndex = 0;
-  // totalSlidesArray: number[] = [];
 
   // VOTRE LISTE COMPLÈTE DE RECETTES AVEC LES CHEMINS D'IMAGES
   featuredRecipes: Recipe[] = [
@@ -73,17 +67,25 @@ export class HomePageComponent implements OnInit, OnDestroy { // AfterViewInit e
     { id: 30, title: 'Vegan Poke Bowl Fraîcheur', imagePath: 'assets/images/recipe-vegan_poke_bowl.jpg' },
   ];
 
+  // Propriétés du carrousel
+  currentSlideIndex = 0;
+  recipesPerSlide = 3; // Valeur par défaut, sera mise à jour en fonction de la taille de l'écran
+
+  // Rendre 'Array' accessible dans le template pour la boucle des indicateurs
+  public Array = Array;
+
   constructor() { }
 
   ngOnInit(): void {
-    // Aucune logique complexe ici pour le moment.
+    this.updateRecipesPerSlide(); // Définir la valeur initiale au chargement
   }
 
-  // ngAfterViewInit est entièrement supprimé
-  // ngAfterViewInit(): void { }
+  ngAfterViewInit(): void {
+    // Si besoin d'initialisation dépendant du DOM, elle irait ici.
+  }
 
   ngOnDestroy(): void {
-    // Aucune logique de nettoyage du carrousel n'est plus nécessaire ici.
+    // Nettoyage si des intervalles étaient définis (ex: pour l'auto-play, non implémenté ici)
   }
 
   @HostListener('window:scroll', [])
@@ -92,18 +94,46 @@ export class HomePageComponent implements OnInit, OnDestroy { // AfterViewInit e
     this.isScrolled = window.pageYOffset > scrollThreshold;
   }
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.updateRecipesPerSlide(); // Mettre à jour en cas de redimensionnement
+  }
+
+  // Met à jour le nombre de recettes affichées par slide en fonction de la largeur de l'écran
+  updateRecipesPerSlide(): void {
+    const width = window.innerWidth;
+    if (width >= 1024) { // Large screens
+      this.recipesPerSlide = 3;
+    } else if (width >= 768) { // Medium screens
+      this.recipesPerSlide = 2;
+    } else { // Small screens
+      this.recipesPerSlide = 1;
+    }
+    // S'assurer que l'index de la slide actuelle reste valide après un redimensionnement
+    if (this.currentSlideIndex >= this.totalSlides) {
+      this.currentSlideIndex = this.totalSlides > 0 ? this.totalSlides - 1 : 0;
+    }
+  }
+
   toggleFilter(filterName: 'vegetarian' | 'vegan' | 'glutenFree'): void {
     this.selectedFilters[filterName] = !this.selectedFilters[filterName];
     console.log(`Filtre ${filterName} : ${this.selectedFilters[filterName] ? 'actif' : 'inactif'}`);
   }
 
-  // Toutes les méthodes liées au carrousel sont supprimées
-  // calculateTotalSlides(): void { ... }
-  // startAutoPlay(): void { ... }
-  // stopAutoPlay(): void { ... }
-  // nextSlide(): void { ... }
-  // prevSlide(): void { ... }
-  // goToSlide(index: number): void { ... }
-  // onScroll(): void { ... }
-  // updateCurrentSlideIndex(): void { ... }
+  // Méthodes du carrousel
+  get totalSlides(): number {
+    return Math.ceil(this.featuredRecipes.length / this.recipesPerSlide);
+  }
+
+  nextSlide(): void {
+    this.currentSlideIndex = (this.currentSlideIndex + 1) % this.totalSlides;
+  }
+
+  prevSlide(): void {
+    this.currentSlideIndex = (this.currentSlideIndex - 1 + this.totalSlides) % this.totalSlides;
+  }
+
+  goToSlide(index: number): void {
+    this.currentSlideIndex = index;
+  }
 }

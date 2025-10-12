@@ -44,26 +44,52 @@
     </div>
 </section>
 
-<!-- SECTION RECETTES MISES EN AVANT - GRILLE STATIQUE -->
+<!-- SECTION RECETTES MISES EN AVANT - CARROUSEL -->
 <section class="featured-recipes section-padding">
     <h2 class="section-title">Nos Dernières Idées Recettes</h2>
-    <!-- REMPLACEMENT DE TOUT LE CARROUSEL PAR UNE GRILLE SIMPLE ET STATIQUE -->
-    <div class="recipes-grid-static container">
-        <!-- Utilisation de *ngFor pour boucler sur la liste de recettes -->
-        <a *ngFor="let recipe of featuredRecipes"
-           [routerLink]="'/recipes/detail/' + recipe.id"
-           class="recipe-card">
-            <div class="recipe-card__image-container">
-                <img [src]="recipe.imagePath" [alt]="'Image de la recette ' + recipe.title" class="recipe-card__image">
+
+    <div class="carousel-container container">
+        <!-- Flèche Gauche -->
+        <button class="carousel-arrow carousel-arrow--left" (click)="prevSlide()" aria-label="Recette précédente">
+            <svg class="carousel-arrow-icon" fill="currentColor" viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6z"/></svg>
+        </button>
+
+        <div class="carousel-wrapper">
+            <div class="carousel-track" [style.transform]="'translateX(-' + (currentSlideIndex * (100 / recipesPerSlide)) + '%)'">
+                <!-- Utilisation de *ngFor pour boucler sur la liste de recettes -->
+                <a *ngFor="let recipe of featuredRecipes"
+                   [routerLink]="'/recipes/detail/' + recipe.id"
+                   class="recipe-card carousel-item"
+                   [style.flexBasis]="'calc(100% / ' + recipesPerSlide + ')'"
+                   [style.maxWidth]="'calc(100% / ' + recipesPerSlide + ')'">
+                    <div class="recipe-card__image-container">
+                        <img [src]="recipe.imagePath" [alt]="'Image de la recette ' + recipe.title" class="recipe-card__image">
+                    </div>
+                    <div class="recipe-card__content">
+                        <h3 class="recipe-card__title">{{ recipe.title }}</h3>
+                        <span class="recipe-card__cta">Voir la recette</span>
+                    </div>
+                </a>
             </div>
-            <div class="recipe-card__content">
-                <h3 class="recipe-card__title">{{ recipe.title }}</h3>
-                <span class="recipe-card__cta">Voir la recette</span>
-            </div>
-        </a>
+        </div>
+
+        <!-- Flèche Droite -->
+        <button class="carousel-arrow carousel-arrow--right" (click)="nextSlide()" aria-label="Recette suivante">
+            <svg class="carousel-arrow-icon" fill="currentColor" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12l-4.58-4.59L10 6l6 6-6 6z"/></svg>
+        </button>
     </div>
-    <!-- FIN GRILLE STATIQUE -->
+
+    <!-- Indicateurs de Carrousel (dots) -->
+    <div class="carousel-indicators">
+        <button *ngFor="let i of Array(totalSlides).keys()"
+                class="indicator-dot"
+                [class.active]="i === currentSlideIndex"
+                (click)="goToSlide(i)"
+                [attr.aria-label]="'Aller à la diapositive ' + (i + 1)">
+        </button>
+    </div>
 </section>
+<!-- FIN CARROUSEL -->
 
 <!-- FOOTER -->
 <footer class="app-footer">

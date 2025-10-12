@@ -303,7 +303,7 @@
 }
 
 
-/* --- SECTION RECETTES MISES EN AVANT - GRILLE STATIQUE --- */
+/* --- SECTION RECETTES MISES EN AVANT - CARROUSEL --- */
 .featured-recipes {
   background-color: var(--chefkit-background-light);
   text-align: center;
@@ -325,63 +325,62 @@
   }
 }
 
-/* NOUVEAU : Styles pour la grille statique */
-.recipes-grid-static {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: var(--spacing-md);
-
-    max-width: 1120px;
+/* Styles Carrousel */
+.carousel-container {
+    position: relative;
+    max-width: 1120px; /* Largeur maximale identique à l'ancienne grille */
     margin: var(--spacing-lg) auto 0;
-    padding: 0 var(--spacing-md);
-
-
-    @media (min-width: 1024px) {
-        grid-template-columns: repeat(3, 1fr);
-        gap: var(--spacing-lg);
-    }
-    @media (min-width: 768px) and (max-width: 1023px) {
-        grid-template-columns: repeat(2, 1fr);
-        gap: var(--spacing-lg);
-    }
-    @media (max-width: 639px) {
-        grid-template-columns: 1fr;
-        padding: 0 var(--spacing-sm);
-    }
+    padding: 0 var(--spacing-md); /* Rembourrage pour laisser de la place aux flèches */
+    display: flex; /* Pour aligner les flèches et le wrapper */
+    align-items: center;
+    justify-content: center;
 }
 
+.carousel-wrapper {
+    overflow: hidden; /* Cache les éléments qui débordent du conteneur visible */
+    width: 100%;
+    border-radius: var(--border-radius-xl); /* Optionnel : arrondir les coins de la zone visible */
+}
 
-/* NOUVEAU/MODIFIÉ : Styles de la carte de recette, adaptée pour la grille statique */
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out; /* Animation de glissement fluide */
+}
+
+.carousel-item {
+    flex-shrink: 0; /* Empêche les éléments de rétrécir */
+    padding: var(--spacing-xs); /* Espace entre les cartes de recettes au sein d'une slide */
+    box-sizing: border-box; /* Inclure le rembourrage dans le calcul de la largeur */
+
+    /* Hérite des styles de base de recipe-card */
+    margin: 0;
+}
+
+/* Styles de la carte de recette, adaptés pour le carrousel */
 .recipe-card {
   display: flex;
   flex-direction: column;
   background-color: var(--chefkit-background-white);
-  border-radius: var(--border-radius-xl); // Très arrondi
-  box-shadow: none; /* L'ombre est supprimée par défaut, n'apparaîtra qu'au survol */
-  overflow: hidden; // ESSENTIEL ici pour que les border-radius coupent correctement l'image et tout le contenu.
-
-  // Supprime tous les positionnements et z-index spécifiques au carrousel qui ne sont plus nécessaires
-  // position: relative;
-  // z-index: 1;
-
+  border-radius: var(--border-radius-xl);
+  box-shadow: none;
+  overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
   text-decoration: none;
   border: none;
+  width: 100%; /* S'assure qu'elle remplit son parent carousel-item */
 
   &:hover {
-    transform: translateY(-8px); // Elevé un peu plus la carte pour l'effet flottant
-    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1); // Nouvelle ombre au survol, plus subtile
-    // z-index: 2; // Plus nécessaire en grille statique pour éviter des comportements inattendus de stacking avec flex/grid
+    transform: translateY(-8px);
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
   }
 }
 
 .recipe-card__image-container {
     width: 100%;
     height: 190px;
-    overflow: hidden; // ESSENTIEL pour que l'image enfant respecte les bordures parentes arrondies (au cas où).
-    // Les arrondis sont désormais principalement gérés par .recipe-card
-    border-radius: inherit; /* NOUVEAU : héritera les arrondis du parent (.recipe-card) */
+    overflow: hidden;
+    border-radius: inherit;
     border-bottom: none;
     flex-shrink: 0;
 }
@@ -389,11 +388,11 @@
 .recipe-card__image {
     width: 100%;
     height: 100%;
-    object-fit: cover; // S'assure que l'image remplit sans distorsion et est bien rognée si nécessaire.
+    object-fit: cover;
     object-position: center;
     display: block;
     transition: transform 0.3s ease;
-    border-radius: inherit; /* NOUVEAU : l'image elle-même hérite de ses parents pour un arrondi parfait */
+    border-radius: inherit;
 }
 
 .recipe-card:hover .recipe-card__image {
@@ -404,10 +403,6 @@
   padding: var(--spacing-md);
   text-align: left;
   flex-grow: 1;
-  // Les border-radius ici sont redondants/inappropriés si overflow: hidden; est sur .recipe-card.
-  // Ils ont été supprimés pour éviter tout conflit.
-  // border-bottom-left-radius: var(--border-radius-xl);
-  // border-bottom-right-radius: var(--border-radius-xl);
 }
 
 .recipe-card__title {
@@ -433,96 +428,86 @@
     }
 }
 
-/* Suppression complète de tous les styles du carrousel pour éviter tout artefact visuel */
-.carousel-wrapper,
-.carousel-arrow,
-.carousel-arrow--left,
-.carousel-arrow--right,
-.carousel-arrow-icon,
-.carousel-indicators {
-    display: none !important; // !important pour s'assurer qu'ils sont bien cachés et ne prennent pas de place
-    width: 0 !important;
-    height: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow: hidden !important;
-    visibility: hidden !important;
-    pointer-events: none !important; // S'assure qu'ils ne sont pas interactifs
-}
-
-
-/* --- FOOTER --- */
-.app-footer {
-  background-color: var(--chefkit-footer-bg);
-  color: var(--chefkit-footer-text);
-  padding: var(--spacing-lg) var(--spacing-md);
-  font-size: 0.9rem;
-  font-family: var(--chefkit-font-family-sans);
-}
-
-.footer__inner {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  text-align: center;
-  gap: var(--spacing-lg);
-
-  @media (min-width: 768px) {
-    flex-direction: row;
-    text-align: left;
-    gap: var(--spacing-md);
-  }
-}
-
-.footer__brand {
-  margin-bottom: var(--spacing-sm);
-  @media (min-width: 768px) {
-    margin-bottom: 0;
-  }
-}
-
-.footer__logo-text {
-  font-size: 1.5rem;
-  font-weight: var(--chefkit-font-weight-bold);
-  color: var(--chefkit-background-white);
-  font-family: var(--chefkit-font-display);
-}
-
-.footer__slogan {
-  margin-top: var(--spacing-xxs);
-  font-size: 0.75rem;
-  color: var(--chefkit-footer-text);
-  font-family: var(--chefkit-font-family-sans);
-}
-
-.footer__nav {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--spacing-xs) var(--spacing-sm);
-
-  @media (min-width: 768px) {
-    justify-content: flex-start;
-  }
-}
-
-.footer__nav-link {
-  color: var(--chefkit-footer-text);
-  font-family: var(--chefkit-font-family-sans);
-  font-size: 0.85rem;
-  &:hover {
+.carousel-arrow {
+    background-color: rgba(var(--chefkit-primary-rgb), 0.9);
+    border: none;
     color: var(--chefkit-background-white);
-  }
+    font-size: 2rem;
+    padding: var(--spacing-xxs);
+    border-radius: 50%;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+
+    &:hover {
+        background-color: var(--chefkit-primary-hover);
+        transform: translateY(-50%) scale(1.05);
+    }
+
+    &:active {
+        transform: translateY(-50%) scale(0.95);
+    }
 }
 
-.footer__copyright {
-  font-size: 0.75rem;
-  color: var(--chefkit-footer-text);
-  margin-top: var(--spacing-sm);
-  font-family: var(--chefkit-font-family-sans);
+.carousel-arrow--left {
+    left: var(--spacing-sm); /* Positionnement relatif au conteneur */
+    @media (min-width: 768px) {
+        left: var(--spacing-md);
+    }
+}
 
-  @media (min-width: 768px) {
-    margin-top: 0;
-  }
+.carousel-arrow--right {
+    right: var(--spacing-sm); /* Positionnement relatif au conteneur */
+    @media (min-width: 768px) {
+        right: var(--spacing-md);
+    }
+}
+
+.carousel-arrow-icon {
+    width: 28px;
+    height: 28px;
+}
+
+.carousel-indicators {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--spacing-lg);
+    gap: var(--spacing-xs);
+}
+
+.indicator-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--chefkit-text-light);
+    border: 1px solid var(--chefkit-text-light);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+
+    &.active {
+        background-color: var(--chefkit-primary);
+        border-color: var(--chefkit-primary);
+        transform: scale(1.2);
+    }
+
+    &:hover {
+        transform: scale(1.1);
+        background-color: var(--chefkit-primary-hover);
+        border-color: var(--chefkit-primary-hover);
+    }
+}
+
+/* Masque l'ancienne grille statique */
+.recipes-grid-static {
+    display: none;
 }
