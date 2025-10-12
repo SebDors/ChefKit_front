@@ -2,10 +2,7 @@ import {
   Component,
   OnInit,
   OnDestroy,
-  AfterViewInit,
-  ViewChild,
-  ElementRef,
-  HostListener // <-- NOUVEAU : Importez HostListener
+  HostListener
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -24,10 +21,10 @@ interface Recipe {
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss'
 })
-export class HomePageComponent implements OnInit, AfterViewInit, OnDestroy {
+export class HomePageComponent implements OnInit, OnDestroy { // AfterViewInit et d'autres sont supprimés car inutilisés
   currentYear: number = new Date().getFullYear();
 
-  isScrolled = false; // <-- NOUVEAU : Propriété pour suivre l'état du défilement
+  isScrolled = false; // Propriété pour suivre l'état du défilement
 
   selectedFilters = {
     vegetarian: false,
@@ -35,13 +32,12 @@ export class HomePageComponent implements OnInit, AfterViewInit, OnDestroy {
     glutenFree: false
   };
 
-  @ViewChild('recipeGrid') recipeGrid!: ElementRef<HTMLElement>;
-
-  autoPlayInterval: any;
-  autoPlayDelay = 10000; // 10 secondes pour le défilement automatique
-
-  currentSlideIndex = 0;
-  totalSlidesArray: number[] = [];
+  // Les propriétés et méthodes du carrousel ont été entièrement supprimées :
+  // @ViewChild('recipeGrid') recipeGrid!: ElementRef<HTMLElement>;
+  // autoPlayInterval: any;
+  // autoPlayDelay = 10000;
+  // currentSlideIndex = 0;
+  // totalSlidesArray: number[] = [];
 
   // VOTRE LISTE COMPLÈTE DE RECETTES AVEC LES CHEMINS D'IMAGES
   featuredRecipes: Recipe[] = [
@@ -83,127 +79,31 @@ export class HomePageComponent implements OnInit, AfterViewInit, OnDestroy {
     // Aucune logique complexe ici pour le moment.
   }
 
-  ngAfterViewInit(): void {
-    this.calculateTotalSlides();
-    this.startAutoPlay();
-    window.addEventListener('resize', this.calculateTotalSlides.bind(this));
-    setTimeout(() => this.updateCurrentSlideIndex(), 0);
-  }
+  // ngAfterViewInit est entièrement supprimé
+  // ngAfterViewInit(): void { }
 
   ngOnDestroy(): void {
-    this.stopAutoPlay();
-    window.removeEventListener('resize', this.calculateTotalSlides.bind(this));
+    // Aucune logique de nettoyage du carrousel n'est plus nécessaire ici.
   }
 
-  // <-- NOUVEAU : Méthode pour gérer le défilement de la fenêtre
   @HostListener('window:scroll', [])
   onWindowScroll() {
-    const scrollThreshold = 50; // Définissez ici le nombre de pixels après lequel la barre se rétracte
+    const scrollThreshold = 50;
     this.isScrolled = window.pageYOffset > scrollThreshold;
   }
-  // FIN NOUVEAU
 
   toggleFilter(filterName: 'vegetarian' | 'vegan' | 'glutenFree'): void {
     this.selectedFilters[filterName] = !this.selectedFilters[filterName];
     console.log(`Filtre ${filterName} : ${this.selectedFilters[filterName] ? 'actif' : 'inactif'}`);
   }
 
-  /** Logique du carrousel **/
-
-  calculateTotalSlides(): void {
-    if (!this.recipeGrid?.nativeElement) return;
-
-    const totalScrollableWidth = this.recipeGrid.nativeElement.scrollWidth;
-    const viewPortWidth = this.recipeGrid.nativeElement.offsetWidth;
-
-    let numberOfPages = Math.floor(totalScrollableWidth / viewPortWidth);
-    const remainder = totalScrollableWidth % viewPortWidth;
-
-    // Si le reste est supérieur à une petite marge (ex: 10 pixels),
-    // nous considérons qu'il y a une page partielle significative
-    // à laquelle un indicateur doit être attribué.
-    // Sinon, le dernier "bout" de contenu est absorbé par la dernière page affichée complète.
-    if (remainder > 10) { // Ajustez la valeur '10' si vous souhaitez une sensibilité différente.
-        numberOfPages++;
-    }
-    // S'assurer qu'il y a au moins une page s'il y a du contenu
-    this.totalSlidesArray = Array(numberOfPages > 0 ? numberOfPages : 1).fill(0);
-    this.updateCurrentSlideIndex();
-  }
-
-
-  startAutoPlay(): void {
-    this.stopAutoPlay();
-    this.autoPlayInterval = setInterval(() => {
-      this.nextSlide();
-    }, this.autoPlayDelay);
-  }
-
-  stopAutoPlay(): void {
-    if (this.autoPlayInterval) {
-      clearInterval(this.autoPlayInterval);
-      this.autoPlayInterval = null;
-    }
-  }
-
-  nextSlide(): void {
-    if (!this.recipeGrid?.nativeElement) return;
-    const scrollAmount = this.recipeGrid.nativeElement.offsetWidth;
-    const currentScroll = this.recipeGrid.nativeElement.scrollLeft;
-    const maxScroll = this.recipeGrid.nativeElement.scrollWidth - scrollAmount;
-
-    // Ajustement de la tolérance pour la fin du défilement
-    if (currentScroll + scrollAmount >= maxScroll - 5) {
-      this.recipeGrid.nativeElement.scrollLeft = 0; // Revenir au début
-    } else {
-      this.recipeGrid.nativeElement.scrollLeft += scrollAmount;
-    }
-    this.updateCurrentSlideIndex();
-  }
-
-  prevSlide(): void {
-    if (!this.recipeGrid?.nativeElement) return;
-    const scrollAmount = this.recipeGrid.nativeElement.offsetWidth;
-    const currentScroll = this.recipeGrid.nativeElement.scrollLeft;
-    const maxScroll = this.recipeGrid.nativeElement.scrollWidth - scrollAmount;
-
-    // Ajustement de la tolérance pour le début du défilement
-    if (currentScroll <= 5) {
-      this.recipeGrid.nativeElement.scrollLeft = maxScroll; // Aller à la fin
-    } else {
-      this.recipeGrid.nativeElement.scrollLeft -= scrollAmount;
-    }
-    this.updateCurrentSlideIndex();
-  }
-
-  goToSlide(index: number): void {
-    if (!this.recipeGrid?.nativeElement) return;
-    const scrollAmount = this.recipeGrid.nativeElement.offsetWidth;
-    this.recipeGrid.nativeElement.scrollLeft = index * scrollAmount;
-    this.updateCurrentSlideIndex();
-    this.stopAutoPlay();
-    this.startAutoPlay();
-  }
-
-  onScroll(): void {
-    this.stopAutoPlay();
-    this.startAutoPlay();
-    this.updateCurrentSlideIndex();
-  }
-
-  updateCurrentSlideIndex(): void {
-    if (!this.recipeGrid?.nativeElement) return;
-    const scrollLeft = this.recipeGrid.nativeElement.scrollLeft;
-    const offsetWidth = this.recipeGrid.nativeElement.offsetWidth;
-
-    this.currentSlideIndex = Math.round(scrollLeft / offsetWidth);
-    
-    // S'assurer que l'index ne dépasse pas le nombre d'indicateurs réellement générés
-    if (this.currentSlideIndex >= this.totalSlidesArray.length) {
-      this.currentSlideIndex = this.totalSlidesArray.length - 1;
-    }
-    if (this.currentSlideIndex < 0) {
-      this.currentSlideIndex = 0;
-    }
-  }
+  // Toutes les méthodes liées au carrousel sont supprimées
+  // calculateTotalSlides(): void { ... }
+  // startAutoPlay(): void { ... }
+  // stopAutoPlay(): void { ... }
+  // nextSlide(): void { ... }
+  // prevSlide(): void { ... }
+  // goToSlide(index: number): void { ... }
+  // onScroll(): void { ... }
+  // updateCurrentSlideIndex(): void { ... }
 }

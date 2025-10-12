@@ -10,8 +10,8 @@ $primary-color-hover-sass: color.adjust($primary-color-base, $lightness: -7%);
 $secondary-btn-bg-hover-sass: color.adjust($secondary-btn-bg-base, $lightness: -5%);
 $secondary-btn-bg-rgb-for-shadow-sass: color.red($secondary-btn-bg-base), color.green($secondary-btn-bg-base), color.blue($secondary-btn-bg-base);
 
-// Palette de couleurs plus moderne et neutre.
-$modern-off-white-base: #F8FBFD; // "blanc" (un blanc très léger, tirant vers un gris très très pâle)
+// Palette de couleurs plus moderne et neutre (hors bleu/vert/terracotta).
+$modern-off-white-base: #F8FBFD; // Nouveau "blanc" (un blanc très léger, tirant vers un gris très très pâle)
 $modern-light-gray-bg-base: #EFF3F7; // Gris clair pour les fonds de section
 $modern-dark-text-base: #2D3A4B; // Gris foncé très élégant pour le texte principal
 $modern-mid-text-base: #7E8DA1; // Gris moyen pour les textes secondaires

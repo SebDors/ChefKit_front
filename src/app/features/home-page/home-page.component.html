@@ -44,37 +44,25 @@
     </div>
 </section>
 
-<!-- SECTION RECETTES MISES EN AVANT - CAROUSEL -->
+<!-- SECTION RECETTES MISES EN AVANT - GRILLE STATIQUE -->
 <section class="featured-recipes section-padding">
     <h2 class="section-title">Nos Dernières Idées Recettes</h2>
-    <div class="carousel-wrapper container" (mouseenter)="stopAutoPlay()" (mouseleave)="startAutoPlay()">
-        <button class="carousel-arrow carousel-arrow--left" (click)="prevSlide()" aria-label="Recette précédente">
-            <svg class="carousel-arrow-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-            </svg>
-        </button>
-        <div class="recipe-grid" #recipeGrid (scroll)="onScroll()">
-            <!-- Utilisation de *ngFor pour boucler sur la liste de recettes du composant TS -->
-            <a *ngFor="let recipe of featuredRecipes"
-               [routerLink]="'/recipes/detail/' + recipe.id"
-               class="recipe-card">
-                <div class="recipe-card__image-container">
-                    <img [src]="recipe.imagePath" [alt]="'Image de la recette ' + recipe.title" class="recipe-card__image">
-                </div>
-                <div class="recipe-card__content">
-                    <h3 class="recipe-card__title">{{ recipe.title }}</h3>
-                    <span class="recipe-card__cta">Voir la recette</span>
-                </div>
-            </a>
-        </div>
-        <button class="carousel-arrow carousel-arrow--right" (click)="nextSlide()" aria-label="Recette suivante">
-            <svg class="carousel-arrow-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-            </svg>
-        </button>
+    <!-- REMPLACEMENT DE TOUT LE CARROUSEL PAR UNE GRILLE SIMPLE ET STATIQUE -->
+    <div class="recipes-grid-static container">
+        <!-- Utilisation de *ngFor pour boucler sur la liste de recettes -->
+        <a *ngFor="let recipe of featuredRecipes"
+           [routerLink]="'/recipes/detail/' + recipe.id"
+           class="recipe-card">
+            <div class="recipe-card__image-container">
+                <img [src]="recipe.imagePath" [alt]="'Image de la recette ' + recipe.title" class="recipe-card__image">
+            </div>
+            <div class="recipe-card__content">
+                <h3 class="recipe-card__title">{{ recipe.title }}</h3>
+                <span class="recipe-card__cta">Voir la recette</span>
+            </div>
+        </a>
     </div>
-    <!-- NOUVEAU : Le div .carousel-indicators est présent mais sera complètement caché par CSS -->
-    <div class="carousel-indicators"></div>
+    <!-- FIN GRILLE STATIQUE -->
 </section>
 
 <!-- FOOTER -->

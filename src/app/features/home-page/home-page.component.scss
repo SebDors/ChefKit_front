@@ -21,7 +21,7 @@
     font-size: 1.5rem;
   }
 
-  .header__actions .button { /* Cible tous les boutons dans les actions */
+  .header__actions .button {
     font-size: 0.85rem;
     padding: var(--spacing-xxs) var(--spacing-sm);
   }
@@ -62,7 +62,6 @@
   gap: var(--spacing-sm);
 }
 
-// NOUVEAU CHANGEMENT : Styles pour les boutons "Se connecter" (secondaire) et "S'inscrire" (primaire)
 .header__actions .button--secondary {
     background-color: transparent;
     border: 1px solid var(--chefkit-border-light);
@@ -71,7 +70,7 @@
     transition: all 0.2s ease;
 
     &:hover {
-        background-color: rgba(var(--chefkit-border-light-rgb), 0.5); // Utilise la version RGB du border-light
+        background-color: rgba(var(--chefkit-border-light-rgb), 0.5);
         color: var(--chefkit-primary);
         border-color: var(--chefkit-primary);
         text-decoration: none;
@@ -151,17 +150,15 @@
 
 // Conteneur intégré pour la recherche et les filtres (effet verre dépoli amélioré)
 .hero__integrated-search-container {
-    // Utilise le nouveau "blanc" avec plus d'opacité
     background-color: rgba(var(--chefkit-background-white-rgb), 0.95);
 
-    // Effet "verre dépoli" renforcé
     backdrop-filter: blur(20px) saturate(2.5);
     -webkit-backdrop-filter: blur(20px) saturate(2.5);
 
     border-radius: var(--border-radius-xl);
-    box-shadow: 0 30px 100px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15); /* Ombre légère et diffuse */
 
-    padding: var(--spacing-md);
+    padding: var(--spacing-md) var(--spacing-md) var(--spacing-lg); /* Top, côtés, Bottom (spacing-lg est plus grand que md) */
     max-width: 700px;
     width: 100%;
     margin-left: auto;
@@ -172,7 +169,7 @@
     z-index: 2;
 
     @media (max-width: 767px) {
-      padding: var(--spacing-sm);
+      padding: var(--spacing-sm) var(--spacing-sm) var(--spacing-md);
       gap: var(--spacing-xs);
     }
 }
@@ -306,7 +303,7 @@
 }
 
 
-/* --- SECTION RECETTES MISES EN AVANT - CAROUSEL --- */
+/* --- SECTION RECETTES MISES EN AVANT - GRILLE STATIQUE --- */
 .featured-recipes {
   background-color: var(--chefkit-background-light);
   text-align: center;
@@ -328,85 +325,75 @@
   }
 }
 
-.carousel-wrapper {
-    position: relative;
-    padding: 0 var(--spacing-md);
-    margin-top: var(--spacing-xl);
-    // Assurez-vous que l'overflow n'est pas caché si les flèches sont censées dépasser.
-    // Ou si le carousel-wrapper ne contient pas un container déjà padded.
-    // overflow: hidden; /* D'habitude utile si les items doivent rester à l'intérieur */
-
-    @media (max-width: 1200px) {
-        padding: 0; // Remettre padding à 0 pour éviter un double padding si container parent est padded
-    }
-}
-
-.recipe-grid {
-    display: flex;
-    overflow-x: scroll;
-    scroll-behavior: smooth;
-    scroll-snap-type: x mandatory;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+/* NOUVEAU : Styles pour la grille statique */
+.recipes-grid-static {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: var(--spacing-md);
-    margin-bottom: var(--spacing-xl); /* NOUVEAU CHANGEMENT : Marge du bas généreuse pour éviter le clipping sur hover */
-    padding-bottom: var(--spacing-md); /* NOUVEAU CHANGEMENT : Padding inférieur du grid pour compenser le transform */
-    padding-left: var(--spacing-md); /* NOUVEAU : Padding pour les bords gauche/droite si le wrapper n'a pas déjà de padding ou de max-width limité par rapport aux flèches */
-    padding-right: var(--spacing-md); /* NOUVEAU : Idem */
 
-    @media (max-width: 768px) {
-      padding-left: var(--spacing-sm);
-      padding-right: var(--spacing-sm);
+    max-width: 1120px;
+    margin: var(--spacing-lg) auto 0;
+    padding: 0 var(--spacing-md);
+
+
+    @media (min-width: 1024px) {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--spacing-lg);
+    }
+    @media (min-width: 768px) and (max-width: 1023px) {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-lg);
+    }
+    @media (max-width: 639px) {
+        grid-template-columns: 1fr;
+        padding: 0 var(--spacing-sm);
     }
 }
 
-.recipe-grid::-webkit-scrollbar {
-    display: none;
-}
 
+/* NOUVEAU/MODIFIÉ : Styles de la carte de recette, adaptée pour la grille statique */
 .recipe-card {
-  scroll-snap-align: start;
-  flex-shrink: 0;
-  width: 100%;
-
-  @media (min-width: 640px) {
-    width: calc(50% - var(--spacing-md) / 2);
-  }
-
-  @media (min-width: 1024px) {
-    width: calc(33.333% - var(--spacing-md) * 2 / 3);
-  }
-
-  display: block;
+  display: flex;
+  flex-direction: column;
   background-color: var(--chefkit-background-white);
-  border-radius: var(--border-radius-xl);
-  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.08);
-  overflow: hidden; // Important pour les bords arrondis de l'image
+  border-radius: var(--border-radius-xl); // Très arrondi
+  box-shadow: none; /* L'ombre est supprimée par défaut, n'apparaîtra qu'au survol */
+  overflow: hidden; // ESSENTIEL ici pour que les border-radius coupent correctement l'image et tout le contenu.
+
+  // Supprime tous les positionnements et z-index spécifiques au carrousel qui ne sont plus nécessaires
+  // position: relative;
+  // z-index: 1;
+
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
   text-decoration: none;
-  border: none; // Assure l'absence de bordure ("cadre moche")
+  border: none;
 
   &:hover {
-    transform: translateY(-8px); /* NOUVEAU CHANGEMENT : Elevé un peu plus la carte pour l'effet flottant */
-    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.18); /* NOUVEAU CHANGEMENT : Ombre au survol plus prononcée */
+    transform: translateY(-8px); // Elevé un peu plus la carte pour l'effet flottant
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1); // Nouvelle ombre au survol, plus subtile
+    // z-index: 2; // Plus nécessaire en grille statique pour éviter des comportements inattendus de stacking avec flex/grid
   }
 }
 
 .recipe-card__image-container {
     width: 100%;
     height: 190px;
-    overflow: hidden;
+    overflow: hidden; // ESSENTIEL pour que l'image enfant respecte les bordures parentes arrondies (au cas où).
+    // Les arrondis sont désormais principalement gérés par .recipe-card
+    border-radius: inherit; /* NOUVEAU : héritera les arrondis du parent (.recipe-card) */
     border-bottom: none;
+    flex-shrink: 0;
 }
 
 .recipe-card__image {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: cover; // S'assure que l'image remplit sans distorsion et est bien rognée si nécessaire.
     object-position: center;
     display: block;
     transition: transform 0.3s ease;
+    border-radius: inherit; /* NOUVEAU : l'image elle-même hérite de ses parents pour un arrondi parfait */
 }
 
 .recipe-card:hover .recipe-card__image {
@@ -416,6 +403,11 @@
 .recipe-card__content {
   padding: var(--spacing-md);
   text-align: left;
+  flex-grow: 1;
+  // Les border-radius ici sont redondants/inappropriés si overflow: hidden; est sur .recipe-card.
+  // Ils ont été supprimés pour éviter tout conflit.
+  // border-bottom-left-radius: var(--border-radius-xl);
+  // border-bottom-right-radius: var(--border-radius-xl);
 }
 
 .recipe-card__title {
@@ -441,82 +433,21 @@
     }
 }
 
-// NOUVEAU CHANGEMENT : Suppression complète des indicateurs et de l'espace qu'ils prenaient.
+/* Suppression complète de tous les styles du carrousel pour éviter tout artefact visuel */
+.carousel-wrapper,
+.carousel-arrow,
+.carousel-arrow--left,
+.carousel-arrow--right,
+.carousel-arrow-icon,
 .carousel-indicators {
-    display: none;
-    height: 0;
-    margin: 0;
-    padding: 0;
-    overflow: hidden; /* S'assure qu'absolument rien n'est affiché ni ne prend de place */
-}
-
-// NOUVEAU CHANGEMENT : Amélioration du positionnement et du style des flèches du carrousel
-.carousel-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: var(--chefkit-background-white);
-    border: none;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
-    z-index: 10;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
-
-    &:hover {
-        background-color: var(--chefkit-primary);
-        .carousel-arrow-icon {
-            color: var(--chefkit-background-white);
-        }
-        box-shadow: 0 8px 25px rgba(var(--chefkit-primary-rgb), 0.25);
-        transform: translateY(-50%) scale(1.05);
-    }
-
-    &--left {
-        left: 0; // NOUVEAU CHANGEMENT : Par défaut à 0, pour qu'il soit sur le bord du wrapper
-    }
-
-    &--right {
-        right: 0; // NOUVEAU CHANGEMENT : Par défaut à 0, pour qu'il soit sur le bord du wrapper
-    }
-
-    @media (min-width: 769px) { /* Pour les tablettes et plus grands, on peut les mettre légèrement à l'extérieur du "conteneur" visuel */
-      &--left {
-          left: calc(-1 * var(--spacing-md)); // Ajuste selon votre design, -20px environ
-      }
-      &--right {
-          right: calc(-1 * var(--spacing-md)); // Ajuste selon votre design, -20px environ
-      }
-    }
-
-    @media (min-width: 1200px) { /* Pour les très grands écrans, on les éloigne encore plus */
-        &--left {
-            left: calc(-1 * var(--spacing-lg)); // Ajuste selon votre design
-        }
-        &--right {
-            right: calc(-1 * var(--spacing-lg)); // Ajuste selon votre design
-        }
-    }
-
-    @media (max-width: 600px) {
-        width: 40px;
-        height: 40px;
-        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-        left: var(--spacing-xs); /* Plus près sur mobile pour qu'il ne disparaisse pas */
-        right: var(--spacing-xs);
-    }
-}
-
-.carousel-arrow-icon {
-    width: 28px;
-    height: 28px;
-    color: var(--chefkit-text-dark);
-    transition: color 0.3s ease;
+    display: none !important; // !important pour s'assurer qu'ils sont bien cachés et ne prennent pas de place
+    width: 0 !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    visibility: hidden !important;
+    pointer-events: none !important; // S'assure qu'ils ne sont pas interactifs
 }
 
 
