@@ -1,43 +1,38 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { RecetteService } from '../services/recette.service';
+import { Router, RouterModule } from '@angular/router';
 import { Recette } from '../models/recette.model';
 
 @Component({
   selector: 'app-homepag',
-  imports: [],
+  imports: [CommonModule, RouterModule],
   templateUrl: './homepag.component.html',
   styleUrl: './homepag.component.scss'
 })
 export class HomepagComponent implements OnInit {
-  recettes: Recette[] = []; // tableau de recettes
+  recettes: Recette[] = [];
+  isLoading = true;
+  errorMsg = '';
 
-  constructor(private router: Router) {}
+  constructor(private recetteService: RecetteService, private router: Router) {}
 
   ngOnInit(): void {
-    // Pour l'instant on met des données statiques
-    this.recettes = [
-      { 
-        id_recette: 1, 
-        titre: 'Avocado Toast', 
-        description: 'Une tartine à l\'avocat simple et délicieuse', 
-        instructions: '1. Faites griller le pain. 2. Écrasez l’avocat...', 
-        temps_preparation_minutes: 5,
-        temps_cuisson_minutes: 5,
-        nombre_personnes: 1
+    this.recetteService.getAllRecettes().subscribe({
+      next: (res) => {
+        this.recettes = res;
+        this.isLoading = false;
       },
-      { 
-        id_recette: 2, 
-        titre: 'Pancakes', 
-        description: 'Des pancakes moelleux pour le petit-déj', 
-        instructions: '1. Mélangez les ingrédients. 2. Faites cuire sur une poêle...', 
-        temps_preparation_minutes: 10,
-        temps_cuisson_minutes: 10,
-        nombre_personnes: 2
+      error: (err) => {
+        console.error('Erreur lors de la récupération des recettes', err);
+        this.errorMsg = 'Erreur lors de la récupération des recettes';
+        this.isLoading = false;
       }
-    ];
+    });
   }
 
   ouvrirRecette(id: number) {
     this.router.navigate(['/recette', id]); // navigation vers la page recette
   }
 }
+

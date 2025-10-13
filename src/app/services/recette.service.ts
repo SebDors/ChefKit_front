@@ -7,9 +7,13 @@ import { Recette } from '../models/recette.model';
   providedIn: 'root'
 })
 export class RecetteService {
-  private apiUrl = 'http://localhost:8080/api/recettes';
+  private apiUrl = 'http://localhost:8080/recettes';
 
   constructor(private http: HttpClient) { }
+
+  getAllRecettes(): Observable<Recette[]> {
+    return this.http.get<Recette[]>(this.apiUrl);
+  }
 
   getRecetteById(id: number): Observable<Recette> {
     return this.http.get<Recette>(`${this.apiUrl}/${id}`);

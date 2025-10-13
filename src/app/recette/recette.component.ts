@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { RecetteService } from '../services/recette.service';
 import { Recette } from '../models/recette.model';
 
 @Component({
   selector: 'app-recette',
-  imports: [],
+  imports: [CommonModule, RouterModule],
   templateUrl: './recette.component.html',
   styleUrl: './recette.component.scss'
 })
@@ -21,8 +22,8 @@ export class RecetteComponent implements OnInit{
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.recetteService.getRecetteById(id).subscribe({
-      next: (data) => {
-        this.recette = data;
+      next: (res) => {
+        this.recette = res;
         this.isLoading = false;
       },
       error: (err) => {
