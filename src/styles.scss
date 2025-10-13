@@ -1,1 +1,211 @@
-/* You can add global styles to this file, and also import other style files */
+@use "sass:color";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+/* ---- COULEURS DE BASE BRUTES SASS POUR LES CALCULS ---- */
+$primary-color-base: #5B6E83; // Gris-Ardoise Chaleureux comme couleur primaire
+$secondary-btn-bg-base: #D9E2EB; // Gris-bleu très clair pour le bouton secondaire
+
+// Couleurs dérivées calculées par Sass
+$primary-color-hover-sass: color.adjust($primary-color-base, $lightness: -7%);
+$secondary-btn-bg-hover-sass: color.adjust($secondary-btn-bg-base, $lightness: -5%);
+$secondary-btn-bg-rgb-for-shadow-sass: color.red($secondary-btn-bg-base), color.green($secondary-btn-bg-base), color.blue($secondary-btn-bg-base);
+
+// Palette de couleurs plus moderne et neutre (hors bleu/vert/terracotta).
+$modern-off-white-base: #F8FBFD; // Nouveau "blanc" (un blanc très léger, tirant vers un gris très très pâle)
+$modern-light-gray-bg-base: #EFF3F7; // Gris clair pour les fonds de section
+$modern-dark-text-base: #2D3A4B; // Gris foncé très élégant pour le texte principal
+$modern-mid-text-base: #7E8DA1; // Gris moyen pour les textes secondaires
+
+// Bordure légère en RGBA pour la flexibilité, basée sur le nouveau "blanc"
+$border-light-rgb-sass: color.red($modern-off-white-base), color.green($modern-off-white-base), color.blue($modern-off-white-base);
+$border-color-subtle-sass: #CFD9E3; // Une couleur de bordure subtile et douce
+
+/* Variables globales CSS (exposées via :root) */
+:root {
+  // Couleurs Primaires / Accent
+  --chefkit-primary: #{$primary-color-base};
+  --chefkit-primary-hover: #{$primary-color-hover-sass};
+  --chefkit-primary-rgb: #{color.red($primary-color-base)}, #{color.green($primary-color-base)}, #{color.blue($primary-color-base)};
+
+  // Couleurs Bouton Secondaire
+  --chefkit-secondary-btn-bg: #{$secondary-btn-bg-base};
+  --chefkit-secondary-btn-text: #{$modern-dark-text-base};
+  --chefkit-secondary-btn-bg-hover: #{$secondary-btn-bg-hover-sass};
+  --chefkit-secondary-btn-focus-shadow-rgb: #{color.red($secondary-btn-bg-base)}, #{color.green($secondary-btn-bg-base)}, #{color.blue($secondary-btn-bg-base)};
+
+  // Nouvelle Palette : Couleurs Générales de Fond et de Texte
+  --chefkit-background-light: #{$modern-light-gray-bg-base}; // Fond de section (couleur générale du site)
+  --chefkit-background-white: #{$modern-off-white-base}; // Couleur dominante des "éléments blancs" (cartes, barre recherche)
+
+  --chefkit-text-dark: #{$modern-dark-text-base}; // Texte principal
+  --chefkit-text-light: #{$modern-mid-text-base}; // Texte secondaire
+  --chefkit-text-muted: #B3B7BD; // Encore plus subtil
+
+  --chefkit-border-light: #{$border-color-subtle-sass}; // Nouvelle bordure plus douce et harmonieuse
+  --chefkit-border-light-rgb: #{color.red($border-color-subtle-sass)}, #{color.green($border-color-subtle-sass)}, #{color.blue($border-color-subtle-sass)}; // Version RGB
+
+  // Couleurs du Footer (adaptées à la nouvelle palette)
+  --chefkit-footer-bg: #2C2F3D; // Reprend le gris foncé du texte principal pour le footer (pour plus de cohérence)
+  --chefkit-footer-text: #F8FBFD; // Utilise le nouveau "blanc" (off-white) pour le texte du footer
+
+  // Typographie - Basée sur 'Inter'
+  --chefkit-font-family-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  --chefkit-font-display: var(--chefkit-font-family-sans);
+
+  --chefkit-font-weight-light: 300;
+  --chefkit-font-weight-regular: 400;
+  --chefkit-font-weight-medium: 500;
+  --chefkit-font-weight-semibold: 600;
+  --chefkit-font-weight-bold: 700;
+  --chefkit-font-weight-heavy: 800; // Poids lourd
+  --chefkit-font-weight-black: 900;
+
+  // Espacements compressés pour un design plus dense mais fluide
+  --spacing-xxs: 4px;
+  --spacing-xs: 8px;
+  --spacing-sm: 12px;
+  --spacing-md: 20px;
+  --spacing-lg: 32px;
+  --spacing-xl: 48px;
+  --spacing-xxl: 80px;
+  --spacing-xxxl: 120px;
+
+  // Rayons des bordures augmentés pour une sensation plus douce et moderne
+  --border-radius-sm: 6px;
+  --border-radius-md: 10px;
+  --border-radius-lg: 16px;
+  --border-radius-xl: 30px;
+  --border-radius-pill: 50px;
+}
+
+/* Réinitialisation CSS minimale */
+html {
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  font-family: var(--chefkit-font-family-sans);
+  color: var(--chefkit-text-dark);
+  background-color: var(--chefkit-background-light); // La couleur générale du site est ce gris-beige clair
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--chefkit-font-display);
+  font-weight: var(--chefkit-font-weight-heavy);
+  color: var(--chefkit-text-dark);
+  margin-top: 0;
+  margin-bottom: var(--spacing-sm);
+  line-height: 1.2;
+}
+
+// Définitions spécifiques de tailles pour les titres pour une hiérarchie claire
+h1 { font-size: 3.8rem; margin-bottom: var(--spacing-md); @media (max-width: 768px) { font-size: 2.8rem; margin-bottom: var(--spacing-sm);} }
+h2 { font-size: 2.9rem; margin-bottom: var(--spacing-lg); @media (max-width: 768px) { font-size: 2.2rem; margin-bottom: var(--spacing-md);} }
+h3 { font-size: 2.3rem; margin-bottom: var(--spacing-md); @media (max-width: 768px) { font-size: 1.8rem; margin-bottom: var(--spacing-sm);} }
+h4 { font-size: 1.8rem; margin-bottom: var(--spacing-sm); @media (max-width: 768px) { font-size: 1.5rem; margin-bottom: var(--spacing-xs);} }
+
+p {
+  margin-top: 0;
+  margin-bottom: var(--spacing-md);
+  font-family: var(--chefkit-font-family-sans);
+  font-weight: var(--chefkit-font-weight-regular);
+  color: var(--chefkit-text-light);
+}
+
+a {
+  text-decoration: none;
+  color: var(--chefkit-primary);
+  transition: color 0.2s ease;
+  &:hover {
+      color: var(--chefkit-primary-hover);
+      text-decoration: underline;
+  }
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  font-family: var(--chefkit-font-family-sans);
+  font-size: inherit;
+  &:focus {
+      outline: 2px solid var(--chefkit-primary);
+      outline-offset: 2px;
+  }
+}
+
+/* Classes utilitaires globales de mise en page */
+.container {
+  max-width: 1120px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--spacing-md);
+  padding-right: var(--spacing-md);
+
+  @media (max-width: 768px) {
+    padding-left: var(--spacing-sm);
+    padding-right: var(--spacing-sm);
+  }
+}
+
+.section-padding {
+  padding-top: var(--spacing-xl);
+  padding-bottom: var(--spacing-xl);
+
+  @media (max-width: 768px) {
+    padding-top: var(--spacing-lg);
+    padding-bottom: var(--spacing-lg);
+  }
+}
+.text-center { text-align: center; }
+
+/* Styles pour les boutons (utilisant les nouvelles variables et spacings) */
+.button {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius-lg); // Nouveaux bords doux
+  font-size: 1rem; // Taille de police standard pour les boutons
+  font-weight: var(--chefkit-font-weight-medium);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+
+  &--primary {
+    background-color: var(--chefkit-primary);
+    color: var(--chefkit-background-white);
+    box-shadow: 0 4px 10px rgba(var(--chefkit-primary-rgb), 0.1);
+
+    &:hover {
+      background-color: var(--chefkit-primary-hover);
+      box-shadow: 0 6px 14px rgba(var(--chefkit-primary-rgb), 0.2);
+      transform: translateY(-2px);
+    }
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(var(--chefkit-primary-rgb), 0.3);
+    }
+  }
+
+  &--secondary {
+    background-color: var(--chefkit-secondary-btn-bg);
+    color: var(--chefkit-secondary-btn-text);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+
+    &:hover {
+      background-color: var(--chefkit-secondary-btn-bg-hover);
+      transform: translateY(-1px);
+    }
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(var(--chefkit-secondary-btn-focus-shadow-rgb), 0.3);
+    }
+  }
+}
