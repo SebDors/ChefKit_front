@@ -1,1 +1,40 @@
-<p>ingredients works!</p>
+<div class="page-container">
+  <div class="category-section fruits">
+    <div class="background"></div>
+    <h2 class="category-title">Fruits</h2>
+    <div class="ingredients-list">
+      <button *ngFor="let fruit of fruits"
+              class="ingredient-button"
+              [class.selected]="isSelected(fruit.nomIngredient)"
+              (click)="toggleIngredient(fruit.nomIngredient)">
+        {{ fruit.nomIngredient }}
+      </button>
+    </div>
+  </div>
+
+  <div class="category-section legumes">
+    <div class="background"></div>
+    <h2 class="category-title">Légumes</h2>
+    <div class="ingredients-list">
+      <button *ngFor="let legume of legumes"
+              class="ingredient-button"
+              [class.selected]="isSelected(legume.nomIngredient)"
+              (click)="toggleIngredient(legume.nomIngredient)">
+        {{ legume.nomIngredient }}
+      </button>
+    </div>
+  </div>
+
+  <div class="category-section autres">
+    <div class="background"></div>
+    <h2 class="category-title">Autres</h2>
+    <div class="ingredients-list">
+      <button *ngFor="let autre of autres"
+              class="ingredient-button"
+              [class.selected]="isSelected(autre.nomIngredient)"
+              (click)="toggleIngredient(autre.nomIngredient)">
+        {{ autre.nomIngredient }}
+      </button>
+    </div>
+  </div>
+</div>
