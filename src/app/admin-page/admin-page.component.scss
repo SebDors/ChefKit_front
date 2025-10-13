@@ -1,0 +1,159 @@
+/* --- HEADER --- */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: var(--chefkit-background-white);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  padding: var(--spacing-md) 0;
+  transition: padding 0.3s ease, font-size 0.3s ease, box-shadow 0.3s ease;
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+.header__logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.header__logo-icon {
+  height: 28px;
+  width: 28px;
+  color: var(--chefkit-primary);
+  margin-right: var(--spacing-xxs);
+  transition: height 0.3s ease, width 0.3s ease;
+}
+
+.header__logo-text {
+  font-size: 1.7rem;
+  font-weight: var(--chefkit-font-weight-bold);
+  color: var(--chefkit-text-dark);
+  font-family: var(--chefkit-font-display);
+  transition: font-size 0.3s ease;
+}
+
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+/* --- General Button Styles (from home-page) --- */
+.button {
+    display: inline-block;
+    font-family: var(--chefkit-font-family-sans);
+    font-size: 0.9rem;
+    font-weight: var(--chefkit-font-weight-semibold);
+    text-align: center;
+    cursor: pointer;
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-xs) var(--spacing-lg);
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: all 0.2s ease-in-out;
+    user-select: none;
+    line-height: 1.5;
+}
+
+.button--primary {
+    background-color: var(--chefkit-primary);
+    color: var(--chefkit-background-white);
+    box-shadow: 0 4px 12px rgba(var(--chefkit-primary-rgb), 0.2);
+
+    &:hover {
+        background-color: var(--chefkit-primary-hover);
+        box-shadow: 0 6px 16px rgba(var(--chefkit-primary-rgb), 0.25);
+        transform: translateY(-2px);
+    }
+}
+
+.button--secondary {
+    background-color: transparent;
+    border-color: var(--chefkit-border-light);
+    color: var(--chefkit-text-dark);
+
+    &:hover {
+        background-color: var(--chefkit-background-light);
+        border-color: var(--chefkit-border-medium);
+        color: var(--chefkit-text-dark);
+    }
+}
+
+.button--danger {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+
+  &:hover {
+    background-color: #c0392b;
+  }
+}
+
+
+/* --- ADMIN PAGE STYLES --- */
+.admin-main {
+  padding: var(--spacing-xl) 0;
+  background-color: #f9fafb; // A light grey background
+  min-height: calc(100vh - 80px); // Adjust based on header height
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.9rem;
+  margin-bottom: var(--spacing-xl);
+  font-family: var(--chefkit-font-display);
+  font-weight: var(--chefkit-font-weight-heavy);
+  color: var(--chefkit-text-dark);
+}
+
+.admin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.admin-card {
+  background-color: var(--chefkit-background-white);
+  border-radius: var(--border-radius-xl);
+  padding: var(--spacing-lg);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.admin-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
+}
+
+.admin-card__title {
+  font-size: 1.5rem;
+  font-weight: var(--chefkit-font-weight-bold);
+  font-family: var(--chefkit-font-display);
+  margin-bottom: var(--spacing-lg);
+  color: var(--chefkit-text-dark);
+}
+
+.admin-card__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.admin-card__actions .button {
+  width: 100%;
+}

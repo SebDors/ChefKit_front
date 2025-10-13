@@ -1,0 +1,46 @@
+<header class="app-header">
+  <div class="container header__inner">
+    <a routerLink="/" class="header__logo-link">
+      <img src="assets/icons/chef-hat.svg" alt="ChefKit Logo" class="header__logo-icon">
+      <span class="header__logo-text">ChefKit Admin</span>
+    </a>
+    <div class="header__actions">
+      <a routerLink="/" class="button button--secondary">Home</a>
+    </div>
+  </div>
+</header>
+
+<main class="admin-main">
+  <div class="container">
+    <h1 class="section-title">Admin Dashboard</h1>
+    <div class="admin-grid">
+      <!-- Recettes -->
+      <div class="admin-card">
+        <h2 class="admin-card__title">Recettes</h2>
+        <div class="admin-card__actions">
+          <button class="button button--primary">Create</button>
+          <button class="button button--secondary">Update</button>
+          <button class="button button--danger">Delete</button>
+        </div>
+      </div>
+      <!-- Users -->
+      <div class="admin-card">
+        <h2 class="admin-card__title">Users</h2>
+        <div class="admin-card__actions">
+          <button class="button button--primary">Create</button>
+          <button class="button button--secondary">Update</button>
+          <button class="button button--danger">Delete</button>
+        </div>
+      </div>
+      <!-- Ingredients -->
+      <div class="admin-card">
+        <h2 class="admin-card__title">Ingrédients</h2>
+        <div class="admin-card__actions">
+          <button class="button button--primary">Create</button>
+          <button class="button button--secondary">Update</button>
+          <button class="button button--danger">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
