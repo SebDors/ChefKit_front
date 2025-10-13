@@ -10,8 +10,21 @@
       <span class="header__logo-text">ChefKit</span>
     </a>
     <div class="header__actions">
-      <a routerLink="/login" class="button button--secondary header__nav-link--alt">Se connecter</a>
-      <a routerLink="/signup" class="button button--primary">S'inscrire</a>
+      <!-- Si l'utilisateur n'est pas connecté -->
+      <ng-container *ngIf="!authService.isLoggedIn()">
+        <a routerLink="/login" class="button button--secondary header__nav-link--alt">Se connecter</a>
+        <a routerLink="/register" class="button button--primary">S'inscrire</a>
+      </ng-container>
+
+      <!-- Si l'utilisateur est connecté -->
+      <ng-container *ngIf="authService.isLoggedIn()">
+        <span class="header__welcome-message">
+          Bonjour, {{ authService.currentUser()?.nomUtilisateur || 'Chef' }} !
+        </span>
+        <button (click)="logout()" class="button button--secondary header__nav-link--alt">
+          Se déconnecter
+        </button>
+      </ng-container>
     </div>
   </div>
 </header>

@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { RecetteService } from '../services/recette.service';
 import { Recette } from '../models/recette.model';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-home-page',
@@ -42,7 +43,11 @@ export class HomePageComponent implements OnInit, OnDestroy {
   // === Souscription backend ===
   private recetteSubscription: any;
 
-  constructor(private recetteService: RecetteService, private router: Router) {}
+  constructor(
+    private recetteService: RecetteService,
+    private router: Router,
+    public authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.updateRecipesPerSlide();
@@ -128,5 +133,10 @@ export class HomePageComponent implements OnInit, OnDestroy {
   // === Gestion des filtres ===
   toggleFilter(filterName: 'vegetarian' | 'vegan' | 'glutenFree'): void {
     this.selectedFilters[filterName] = !this.selectedFilters[filterName];
+  }
+
+  // === Authentification ===
+  logout(): void {
+    this.authService.logout();
   }
 }

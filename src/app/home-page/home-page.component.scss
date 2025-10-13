@@ -82,6 +82,13 @@
     font-weight: var(--chefkit-font-weight-medium);
 }
 
+.header__welcome-message {
+  font-size: 0.95rem;
+  color: var(--chefkit-text-dark);
+  font-weight: var(--chefkit-font-weight-medium);
+  margin-right: var(--spacing-sm);
+}
+
 
 /* --- SECTION HERO --- */
 .hero {
