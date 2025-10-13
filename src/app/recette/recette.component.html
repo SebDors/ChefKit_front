@@ -77,9 +77,9 @@
         <div class="recipe-ingredients">
           <h2 class="section-subtitle">Ingrédients</h2>
           <ul class="ingredients-list">
-            <li *ngFor="let ing of recette.ingredients" class="ingredient-item">
-              <span class="ingredient-name">{{ ing.nom_ingredient }}</span>
-              <span class="ingredient-quantity">{{ ing.quantite }} {{ ing.unite }}</span>
+            <li *ngFor="let ing of ingredients" class="ingredient-item">
+              <span class="ingredient-name">{{ ing.name }}</span>
+              <span class="ingredient-quantity">{{ ing.quantity }} {{ ing.unit }}</span>
             </li>
           </ul>
         </div>

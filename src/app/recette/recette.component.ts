@@ -4,6 +4,7 @@ import { CommonModule, Location } from '@angular/common';
 import { RecetteService } from '../services/recette.service';
 import { Recette } from '../models/recette.model';
 import { AuthService } from '../auth.service';
+import { Ingredient } from '../models/ingredient.model';
 
 @Component({
   selector: 'app-recette',
@@ -18,6 +19,7 @@ export class RecetteComponent implements OnInit {
   isLoading = true;
   isScrolled = false;
   currentYear: number = new Date().getFullYear();
+  ingredients: Ingredient[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -38,7 +40,17 @@ export class RecetteComponent implements OnInit {
   .split(/\s*\d+\.\s*|\.\s*(?=[A-ZÉÀÈÙÛÂÊÎÔUMJ])/) // Divise par "numéro." ou ". " (suivi d'une majuscule)
   .filter(step => step.trim() !== '');
           }
-          this.isLoading = false;
+          this.recetteService.getIngredientsByRecetteId(id).subscribe({
+            next: (ingredientsRes) => {
+              this.ingredients = ingredientsRes;
+              this.isLoading = false;
+            },
+            error: (err) => {
+              console.error('Erreur lors de la récupération des ingrédients:', err);
+              this.isLoading = false;
+              this.router.navigate(['/']);
+            }
+          });
         },
         error: (err) => {
           console.error('Erreur lors de la récupération de la recette:', err);
