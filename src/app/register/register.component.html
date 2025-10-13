@@ -1,51 +1,75 @@
-<div class="register-container">
-  <h2>Inscription</h2>
+<!-- HEADER: Minimaliste, réutilisé depuis la home-page pour la cohérence -->
+<header class="app-header app-header--scrolled">
+  <div class="header__inner container">
+    <a routerLink="/" class="header__logo-link">
+      <svg class="header__logo-icon" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 1.5c-3.03 0-5.5 2.47-5.5 5.5v3h-3a1 1 0 00-1 1v3a1 1 0 001 1h18a1 1 0 001-1v-3a1 1 0 00-1-1h-3v-3c0-3.03-2.47-5.5-5.5-5.5zM12 4.5c1.93 0 3.5 1.57 3.5 3.5v3H8.5v-3c0-1.93 1.57-3.5 3.5-3.5z" />
+      </svg>
+      <span class="header__logo-text">ChefKit</span>
+    </a>
+  </div>
+</header>
 
-  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+<!-- Conteneur principal qui occupe toute la hauteur -->
+<main class="auth-page-container">
+  <div class="auth-card">
+    <a routerLink="/" class="back-button" aria-label="Retour à la page d'accueil">
+      <svg fill="currentColor" viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+    </a>
 
-    <div class="form-group">
-      <label for="nomUtilisateur">Nom d'utilisateur:</label>
-      <input type="text" id="nomUtilisateur" formControlName="nomUtilisateur">
-      <div *ngIf="registerForm.get('nomUtilisateur')?.invalid && (registerForm.get('nomUtilisateur')?.dirty || registerForm.get('nomUtilisateur')?.touched)" class="error-message">
-        <div *ngIf="registerForm.get('nomUtilisateur')?.errors?.['required']">Le nom d'utilisateur est requis.</div>
-        <div *ngIf="registerForm.get('nomUtilisateur')?.errors?.['minlength']">Le nom d'utilisateur doit contenir au moins 3 caractères.</div>
+    <h2 class="auth-card__title">Créer un compte</h2>
+    <p class="auth-card__subtitle">Rejoignez-nous pour découvrir de nouvelles recettes !</p>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="auth-form">
+
+      <div class="form-group">
+        <label for="nomUtilisateur" class="form-label">Nom d'utilisateur</label>
+        <input type="text" id="nomUtilisateur" formControlName="nomUtilisateur" class="form-input" [class.is-invalid]="registerForm.get('nomUtilisateur')?.invalid && registerForm.get('nomUtilisateur')?.touched">
+        <div *ngIf="registerForm.get('nomUtilisateur')?.invalid && (registerForm.get('nomUtilisateur')?.dirty || registerForm.get('nomUtilisateur')?.touched)" class="error-message">
+          <div *ngIf="registerForm.get('nomUtilisateur')?.errors?.['required']">Le nom d'utilisateur est requis.</div>
+          <div *ngIf="registerForm.get('nomUtilisateur')?.errors?.['minlength']">Doit contenir au moins 3 caractères.</div>
+        </div>
       </div>
-    </div>
-    
-    <div class="form-group">
-      <label for="email">Email:</label>
-      <input type="email" id="email" formControlName="email">
-      <div *ngIf="registerForm.get('email')?.invalid && (registerForm.get('email')?.dirty || registerForm.get('email')?.touched)" class="error-message">
-        <div *ngIf="registerForm.get('email')?.errors?.['required']">L'email est requis.</div>
-        <div *ngIf="registerForm.get('email')?.errors?.['email']">Veuillez entrer une adresse email valide.</div>
+      
+      <div class="form-group">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" id="email" formControlName="email" class="form-input" [class.is-invalid]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+        <div *ngIf="registerForm.get('email')?.invalid && (registerForm.get('email')?.dirty || registerForm.get('email')?.touched)" class="error-message">
+          <div *ngIf="registerForm.get('email')?.errors?.['required']">L'email est requis.</div>
+          <div *ngIf="registerForm.get('email')?.errors?.['email']">Veuillez entrer une adresse email valide.</div>
+        </div>
       </div>
-    </div>
 
-    <div class="form-group">
-      <label for="password">Mot de passe:</label>
-      <input type="password" id="password" formControlName="password">
-      <div *ngIf="registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)" class="error-message">
-        <div *ngIf="registerForm.get('password')?.errors?.['required']">Le mot de passe est requis.</div>
-        <div *ngIf="registerForm.get('password')?.errors?.['minlength']">Le mot de passe doit contenir au moins 6 caractères.</div>
+      <div class="form-group">
+        <label for="password" class="form-label">Mot de passe</label>
+        <input type="password" id="password" formControlName="password" class="form-input" [class.is-invalid]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+        <div *ngIf="registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)" class="error-message">
+          <div *ngIf="registerForm.get('password')?.errors?.['required']">Le mot de passe est requis.</div>
+          <div *ngIf="registerForm.get('password')?.errors?.['minlength']">Doit contenir au moins 6 caractères.</div>
+        </div>
       </div>
-    </div>
 
-    <div class="form-group">
-      <label for="confirmPassword">Confirmer le mot de passe:</label>
-      <input type="password" id="confirmPassword" formControlName="confirmPassword">
-      <div *ngIf="registerForm.get('confirmPassword')?.invalid && (registerForm.get('confirmPassword')?.dirty || registerForm.get('confirmPassword')?.touched)" class="error-message">
-        <div *ngIf="registerForm.get('confirmPassword')?.errors?.['required']">La confirmation du mot de passe est requise.</div>
-        <div *ngIf="registerForm.get('confirmPassword')?.errors?.['passwordMismatch']">Les mots de passe ne correspondent pas.</div>
+      <div class="form-group">
+        <label for="confirmPassword" class="form-label">Confirmer le mot de passe</label>
+        <input type="password" id="confirmPassword" formControlName="confirmPassword" class="form-input" [class.is-invalid]="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched">
+        <div *ngIf="registerForm.get('confirmPassword')?.invalid && (registerForm.get('confirmPassword')?.dirty || registerForm.get('confirmPassword')?.touched)" class="error-message">
+          <div *ngIf="registerForm.get('confirmPassword')?.errors?.['required']">La confirmation est requise.</div>
+          <div *ngIf="registerForm.get('confirmPassword')?.errors?.['passwordMismatch']">Les mots de passe ne correspondent pas.</div>
+        </div>
       </div>
-    </div>
 
-    <button type="submit" [disabled]="registerForm.invalid || isLoading()">
-      <span *ngIf="!isLoading()">S'inscrire</span>
-      <span *ngIf="isLoading()">Chargement...</span>
-    </button>
+      <div *ngIf="errorMessage()" class="api-error-message">
+        {{ errorMessage() }}
+      </div>
 
-    <div *ngIf="errorMessage()" class="api-error-message">
-      {{ errorMessage() }}
-    </div>
-  </form>
-</div>
+      <button type="submit" class="button button--primary auth-form__submit-button" [disabled]="registerForm.invalid || isLoading()">
+        <span *ngIf="!isLoading()">S'inscrire</span>
+        <span *ngIf="isLoading()" class="loading-spinner"></span>
+      </button>
+
+      <div class="auth-card__footer">
+        Déjà un compte ? <a routerLink="/login" class="auth-card__link">Se connecter</a>
+      </div>
+    </form>
+  </div>
+</main>

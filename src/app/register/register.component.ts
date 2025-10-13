@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router'; // Import RouterLink
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -9,7 +9,8 @@ import { AuthService } from '../auth.service';
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
+    RouterLink // Add RouterLink here
   ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
