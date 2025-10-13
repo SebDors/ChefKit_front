@@ -3,7 +3,7 @@ import {
   OnInit,
   OnDestroy,
   HostListener,
-  AfterViewInit,
+  AfterViewInit, // Import ajouté pour AfterViewInit
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -110,8 +110,10 @@ export class HomePageComponent implements OnInit, OnDestroy, AfterViewInit {
       this.recipesPerSlide = 1;
     }
     // S'assurer que l'index de la slide actuelle reste valide après un redimensionnement
-    if (this.currentSlideIndex >= this.totalSlides) {
-      this.currentSlideIndex = this.totalSlides > 0 ? this.totalSlides - 1 : 0;
+    if (this.totalSlides > 0 && this.currentSlideIndex >= this.totalSlides) {
+      this.currentSlideIndex = this.totalSlides - 1;
+    } else if (this.totalSlides === 0) {
+      this.currentSlideIndex = 0;
     }
   }
 
@@ -126,14 +128,20 @@ export class HomePageComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   nextSlide(): void {
-    this.currentSlideIndex = (this.currentSlideIndex + 1) % this.totalSlides;
+    if (this.totalSlides > 0) {
+      this.currentSlideIndex = (this.currentSlideIndex + 1) % this.totalSlides;
+    }
   }
 
   prevSlide(): void {
-    this.currentSlideIndex = (this.currentSlideIndex - 1 + this.totalSlides) % this.totalSlides;
+    if (this.totalSlides > 0) {
+      this.currentSlideIndex = (this.currentSlideIndex - 1 + this.totalSlides) % this.totalSlides;
+    }
   }
 
   goToSlide(index: number): void {
-    this.currentSlideIndex = index;
+    if (index >= 0 && index < this.totalSlides) {
+      this.currentSlideIndex = index;
+    }
   }
 }

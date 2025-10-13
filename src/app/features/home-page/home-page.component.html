@@ -55,7 +55,7 @@
         </button>
 
         <div class="carousel-wrapper">
-            <div class="carousel-track" [style.transform]="'translateX(-' + (currentSlideIndex * (100 / recipesPerSlide)) + '%)'">
+            <div class="carousel-track" [style.transform]="'translateX(-' + (currentSlideIndex * 100) + '%)'">
                 <!-- Utilisation de *ngFor pour boucler sur la liste de recettes -->
                 <a *ngFor="let recipe of featuredRecipes"
                    [routerLink]="'/recipes/detail/' + recipe.id"
@@ -79,15 +79,15 @@
         </button>
     </div>
 
-    <!-- Indicateurs de Carrousel (dots) -->
-    <div class="carousel-indicators">
+    <!-- SUPPRIMÉ : Indicateurs de Carrousel (dots) -->
+    <!-- <div class="carousel-indicators">
         <button *ngFor="let i of Array(totalSlides).keys()"
                 class="indicator-dot"
                 [class.active]="i === currentSlideIndex"
                 (click)="goToSlide(i)"
                 [attr.aria-label]="'Aller à la diapositive ' + (i + 1)">
         </button>
-    </div>
+    </div> -->
 </section>
 <!-- FIN CARROUSEL -->
 
