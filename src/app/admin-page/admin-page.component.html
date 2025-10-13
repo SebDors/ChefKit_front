@@ -28,7 +28,10 @@
         <input type="text" placeholder="Nom d'utilisateur" [(ngModel)]="createUserModel.nomUtilisateur">
         <input type="email" placeholder="Email" [(ngModel)]="createUserModel.email">
         <input type="password" placeholder="Mot de passe" [(ngModel)]="createUserModel.motDePasse">
-        <input type="text" placeholder="Rôle" [(ngModel)]="createUserModel.role">
+        <select [(ngModel)]="createUserModel.role">
+          <option value="user">user</option>
+          <option value="admin">admin</option>
+        </select>
         <button (click)="createUser()">Créer</button>
       </div>
       <div class="update">
@@ -37,7 +40,10 @@
         <input type="text" placeholder="Nouveau nom d'utilisateur" [(ngModel)]="updateUserModel.nomUtilisateur">
         <input type="email" placeholder="Nouvel email" [(ngModel)]="updateUserModel.email">
         <input type="password" placeholder="Nouveau mot de passe" [(ngModel)]="updateUserModel.motDePasse">
-        <input type="text" placeholder="Nouveau rôle" [(ngModel)]="updateUserModel.role">
+        <select [(ngModel)]="updateUserModel.role">
+          <option value="user">user</option>
+          <option value="admin">admin</option>
+        </select>
         <button (click)="updateUser()">Modifier</button>
       </div>
       <div class="delete">

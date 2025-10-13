@@ -19,8 +19,8 @@ export class AdminPageComponent implements OnInit{
   ingredientsCount:number = 0;
 
   // Models for the forms
-  createUserModel: Partial<User> = { nomUtilisateur: '', email: '', motDePasse: '', role: '' };
-  updateUserModel: Partial<User> & { usernameToUpdate: string } = { usernameToUpdate: '', nomUtilisateur: '', email: '', motDePasse: '', role: '' };
+  createUserModel: Partial<User> = { nomUtilisateur: '', email: '', motDePasse: '', role: 'user' };
+  updateUserModel: Partial<User> & { usernameToUpdate: string } = { usernameToUpdate: '', nomUtilisateur: '', email: '', motDePasse: '', role: 'user' };
   deleteUserModel = { username: '' };
 
   private adminService: AdminService = inject(AdminService);
@@ -45,7 +45,7 @@ export class AdminPageComponent implements OnInit{
         console.log('User created successfully', response);
         // Optionally, refresh user count or clear the form
         this.adminService.getUserCount().subscribe(count => this.usersCount = count);
-        this.createUserModel = { nomUtilisateur: '', email: '', motDePasse: '', role: '' };
+        this.createUserModel = { nomUtilisateur: '', email: '', motDePasse: '', role: 'user' };
       },
       error => {
         console.error('Error creating user', error);
@@ -55,11 +55,26 @@ export class AdminPageComponent implements OnInit{
 
   updateUser() {
     const { usernameToUpdate, ...updatedData } = this.updateUserModel;
-    this.adminService.updateUser(usernameToUpdate, updatedData as User).subscribe(
+
+    const payload: Partial<User> = {};
+    if (updatedData.nomUtilisateur) {
+      payload.nomUtilisateur = updatedData.nomUtilisateur;
+    }
+    if (updatedData.email) {
+      payload.email = updatedData.email;
+    }
+    if (updatedData.motDePasse) {
+      payload.motDePasse = updatedData.motDePasse;
+    }
+    if (updatedData.role) {
+      payload.role = updatedData.role;
+    }
+
+    this.adminService.updateUser(usernameToUpdate, payload as User).subscribe(
       response => {
         console.log('User updated successfully', response);
         // Optionally, clear the form
-        this.updateUserModel = { usernameToUpdate: '', nomUtilisateur: '', email: '', motDePasse: '', role: '' };
+        this.updateUserModel = { usernameToUpdate: '', nomUtilisateur: '', email: '', motDePasse: '', role: 'user' };
       },
       error => {
         console.error('Error updating user', error);
