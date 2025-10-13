@@ -1,29 +1,119 @@
-<!-- ChefKit_front/src/app/recette/recette.component.html -->
+<!-- HEADER -->
+<header class="app-header" [class.app-header--scrolled]="isScrolled">
+  <div class="header__inner container">
+    <a routerLink="/" class="header__logo-link">
+      <svg class="header__logo-icon" fill="currentColor" viewBox="0 0 24 24">
+        <path
+          d="M12 1.5c-3.03 0-5.5 2.47-5.5 5.5v3h-3a1 1 0 00-1 1v3a1 1 0 001 1h18a1 1 0 001-1v-3a1 1 0 00-1-1h-3v-3c0-3.03-2.47-5.5-5.5-5.5zM12 4.5c1.93 0 3.5 1.57 3.5 3.5v3H8.5v-3c0-1.93 1.57-3.5 3.5-3.5z"
+        />
+      </svg>
+      <span class="header__logo-text">ChefKit</span>
+    </a>
+    <div class="header__actions">
+      <ng-container *ngIf="!authService.isLoggedIn()">
+        <a routerLink="/login" class="button button--secondary header__nav-link--alt">Se connecter</a>
+        <a routerLink="/register" class="button button--primary">S'inscrire</a>
+      </ng-container>
+      <ng-container *ngIf="authService.isLoggedIn()">
+        <span class="header__welcome-message">
+          Bonjour, {{ authService.currentUser()?.nomUtilisateur || 'Chef' }} !
+        </span>
+        <button (click)="logout()" class="button button--secondary header__nav-link--alt">
+          Se déconnecter
+        </button>
+      </ng-container>
+    </div>
+  </div>
+</header>
 
-<div *ngIf="isLoading" class="loading">Chargement...</div>
+<!-- SECTION CONTENU RECETTE -->
+<main class="recipe-page">
+  <div *ngIf="isLoading" class="loading-indicator">
+    <p>Chargement de la recette...</p>
+  </div>
 
-<div *ngIf="!isLoading && recette">
-  <h1>{{ recette.titre }}</h1>
+  <div *ngIf="!isLoading && !recette" class="error-indicator">
+    <p>Oups ! Cette recette est introuvable.</p>
+    <a routerLink="/" class="button button--primary">Retour à l'accueil</a>
+  </div>
 
-  <img *ngIf="recette.pathImage" [src]="recette.pathImage" alt="{{ recette.titre }}" class="recette-image">
-  <!-- CHANGÉ path_image à pathImage -->
-  
-  <p>{{ recette.description }}</p>
+  <ng-container *ngIf="!isLoading && recette">
+    <!-- Section Hero de la recette -->
+    <section class="recipe-hero" [style.background-image]="'url(' + recette.pathImage + ')'">
+      <div class="recipe-hero__overlay"></div>
+      <div class="recipe-hero__content container">
+        <h1 class="recipe-hero__title">{{ recette.titre }}</h1>
+        <p class="recipe-hero__description">{{ recette.description }}</p>
+      </div>
+    </section>
 
-  <ul>
-    <li><strong>Préparation :</strong> {{ recette.tempsPreparationMinutes }} min</li>
-    <li><strong>Cuisson :</strong> {{ recette.tempsCuissonMinutes }} min</li>
-    <li><strong>Pour :</strong> {{ recette.nombrePersonnes }} personne(s)</li>
-  </ul>
-  <!-- CHANGÉ les propriétés temps et personnes -->
+    <!-- Section principale des détails -->
+    <section class="recipe-details section-padding">
+      <div class="container">
+        <div class="recipe-actions">
+          <button (click)="goBack()" class="button button--secondary button--back">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="button__icon">
+              <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+            </svg>
+            Retour
+          </button>
+        </div>
 
-  <h3>Ingrédients :</h3>
-  <ul>
-    <li *ngFor="let ing of recette.ingredients">
-      {{ ing.nom_ingredient }} - {{ ing.quantite }} {{ ing.unite }}
-    </li>
-  </ul>
+        <!-- Informations clés (temps, personnes) -->
+        <div class="recipe-meta">
+          <div class="meta-item">
+            <span class="meta-item__label">Préparation</span>
+            <span class="meta-item__value">{{ recette.tempsPreparationMinutes }} min</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-item__label">Cuisson</span>
+            <span class="meta-item__value">{{ recette.tempsCuissonMinutes }} min</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-item__label">Portions</span>
+            <span class="meta-item__value">{{ recette.nombrePersonnes }} personnes</span>
+          </div>
+        </div>
 
-  <h3>Instructions :</h3>
-  <p class="instructions">{{ recette.instructions }}</p>
-</div>
+        <!-- Contenu principal (Ingrédients et Instructions) -->
+        <div class="recipe-main-content">
+          <div class="recipe-ingredients">
+            <h2 class="section-subtitle">Ingrédients</h2>
+            <ul class="ingredients-list">
+              <li *ngFor="let ing of recette.ingredients" class="ingredient-item">
+                <span class="ingredient-name">{{ ing.nom_ingredient }}</span>
+                <span class="ingredient-quantity">{{ ing.quantite }} {{ ing.unite }}</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="recipe-instructions">
+            <h2 class="section-subtitle">Instructions</h2>
+            <ol class="instructions-list">
+              <li *ngFor="let step of instructionSteps" class="instruction-step">
+                {{ step }}
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+  </ng-container>
+</main>
+
+<!-- FOOTER -->
+<footer class="app-footer">
+  <div class="footer__inner container">
+    <div class="footer__brand">
+      <span class="footer__logo-text">ChefKit</span>
+      <p class="footer__slogan">Simplifiez votre quotidien.</p>
+    </div>
+    <nav class="footer__nav">
+      <a routerLink="/terms" class="footer__nav-link">Conditions d'utilisation</a>
+      <a routerLink="/privacy" class="footer__nav-link">Politique de confidentialité</a>
+    </nav>
+    <div class="footer__copyright">
+      &copy; {{ currentYear }} ChefKit. Tous droits réservés.
+    </div>
+  </div>
+</footer>

@@ -1,89 +1,357 @@
-/* Conteneur principal */
-:host {
-  display: block;
-  max-width: 800px;
-  margin: 20px auto;
-  padding: 20px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #fff8f0;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+/* --- HEADER --- */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: var(--chefkit-background-white);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  padding: var(--spacing-md) 0;
+  transition: padding 0.3s ease, font-size 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Titre de la recette */
-h1 {
-  font-size: 2.2em;
-  color: #333;
-  margin-bottom: 10px;
-  text-align: center;
+.app-header.app-header--scrolled {
+  padding: var(--spacing-sm) 0;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.08);
 }
 
-/* Image principale */
-.recette-img {
-  display: block;
-  max-width: 100%;
-  height: auto;
-  border-radius: 10px;
-  margin: 15px auto;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-}
-
-/* Description */
-p {
-  font-size: 1.1em;
-  color: #555;
-  line-height: 1.6;
-  margin-bottom: 15px;
-}
-
-/* Liste des temps et portions */
-ul {
-  list-style: none;
-  padding: 0;
-  margin-bottom: 20px;
-}
-
-ul li {
-  padding: 5px 0;
-  font-weight: 500;
-  color: #444;
-}
-
-/* Ingrédients */
-h3 {
-  color: #d35400;
-  margin-top: 25px;
-  margin-bottom: 10px;
-}
-
-ul li img.ingredient-img {
-  width: 40px;
-  height: 40px;
-  object-fit: cover;
-  margin-right: 10px;
-  border-radius: 6px;
-  vertical-align: middle;
-}
-
-/* Carte ingrédient */
-ul li {
+.header__inner {
   display: flex;
   align-items: center;
-  margin-bottom: 8px;
+  justify-content: space-between;
 }
 
-/* Instructions */
-h3 + p, p.instructions {
-  margin-top: 10px;
-  line-height: 1.7;
-  font-size: 1.05em;
-  color: #555;
+.header__logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
 }
 
-/* Chargement */
-div[ng-reflect-ng-if="true"] {
+.header__logo-icon {
+  height: 28px;
+  width: 28px;
+  color: var(--chefkit-primary);
+  margin-right: var(--spacing-xxs);
+  transition: height 0.3s ease, width 0.3s ease;
+}
+
+.header__logo-text {
+  font-size: 1.7rem;
+  font-weight: var(--chefkit-font-weight-bold);
+  color: var(--chefkit-text-dark);
+  font-family: var(--chefkit-font-display);
+  transition: font-size 0.3s ease;
+}
+
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.header__welcome-message {
+  font-size: 0.95rem;
+  color: var(--chefkit-text-dark);
+  font-weight: var(--chefkit-font-weight-medium);
+  margin-right: var(--spacing-sm);
+}
+
+/* --- STYLE GÉNÉRAL DE LA PAGE --- */
+.recipe-page {
+  background-color: var(--chefkit-background-light);
+  min-height: 100vh;
+}
+
+.loading-indicator,
+.error-indicator {
   text-align: center;
-  font-size: 1.3em;
-  color: #888;
-  margin-top: 50px;
+  padding: var(--spacing-xxl) var(--spacing-md);
+  font-size: 1.2rem;
+  color: var(--chefkit-text-light);
+}
+
+.error-indicator .button {
+  margin-top: var(--spacing-lg);
+}
+
+/* --- HERO DE LA RECETTE --- */
+.recipe-hero {
+  position: relative;
+  padding: var(--spacing-xl) 0;
+  color: var(--chefkit-background-white);
+  text-align: center;
+  background-size: cover;
+  background-position: center;
+  min-height: 40vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 100%);
+    z-index: 1;
+  }
+
+  &__content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+  }
+
+  &__title {
+    font-family: var(--chefkit-font-display);
+    font-size: 3.5rem;
+    font-weight: var(--chefkit-font-weight-heavy);
+    line-height: 1.1;
+    margin-bottom: var(--spacing-md);
+    color: var(--chefkit-background-white);
+
+    @media (max-width: 768px) {
+      font-size: 2.5rem;
+    }
+  }
+
+  &__description {
+    font-size: 1.2rem;
+    font-weight: var(--chefkit-font-weight-regular);
+    max-width: 650px;
+    margin: 0 auto;
+    opacity: 0.95;
+  }
+}
+
+/* --- DÉTAILS DE LA RECETTE --- */
+.recipe-details {
+  background-color: var(--chefkit-background-white);
+  border-top-left-radius: var(--border-radius-xxl);
+  border-top-right-radius: var(--border-radius-xxl);
+  margin-top: -30px; /* Fait remonter la section sur le hero */
+  position: relative;
+  z-index: 3;
+  padding-top: var(--spacing-xl);
+}
+
+.section-subtitle {
+  font-family: var(--chefkit-font-display);
+  font-size: 2rem;
+  font-weight: var(--chefkit-font-weight-bold);
+  color: var(--chefkit-text-dark);
+  margin-bottom: var(--spacing-lg);
+  text-align: left;
+}
+
+/* --- MÉTA-INFORMATIONS (TEMPS, PORTIONS) --- */
+.recipe-meta {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: var(--chefkit-background-light);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
+  text-align: center;
+  border: 1px solid var(--chefkit-border-light);
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xxs);
+
+  &__label {
+    font-size: 0.9rem;
+    color: var(--chefkit-text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  &__value {
+    font-size: 1.3rem;
+    font-weight: var(--chefkit-font-weight-semibold);
+    color: var(--chefkit-primary);
+  }
+}
+
+/* --- CONTENU PRINCIPAL (INGRÉDIENTS & INSTRUCTIONS) --- */
+.recipe-main-content {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: var(--spacing-xxl);
+
+  @media (max-width: 992px) {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+  }
+}
+
+/* --- LISTE D'INGRÉDIENTS --- */
+.recipe-ingredients {
+  padding-right: var(--spacing-xl);
+  border-right: 1px solid var(--chefkit-border-light);
+
+  @media (max-width: 992px) {
+    padding-right: 0;
+    border-right: none;
+    padding-bottom: var(--spacing-xl);
+    border-bottom: 1px solid var(--chefkit-border-light);
+  }
+}
+
+.ingredients-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ingredient-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: var(--spacing-sm) 0;
+  border-bottom: 1px solid var(--chefkit-border-ultralight);
+  font-size: 1rem;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.ingredient-name {
+  font-weight: var(--chefkit-font-weight-medium);
+  color: var(--chefkit-text-dark);
+}
+
+.ingredient-quantity {
+  font-weight: var(--chefkit-font-weight-regular);
+  color: var(--chefkit-text-light);
+  white-space: nowrap;
+  padding-left: var(--spacing-md);
+}
+
+/* --- INSTRUCTIONS --- */
+.recipe-instructions {
+  padding-left: var(--spacing-xl);
+
+  @media (max-width: 992px) {
+    padding-left: 0;
+  }
+}
+
+.instructions-list {
+  list-style: decimal;
+  list-style-position: inside;
+  padding: 0;
+  margin: 0;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--chefkit-text-medium);
+}
+
+.instruction-step {
+  margin-bottom: var(--spacing-md);
+  padding-left: var(--spacing-sm);
+}
+
+/* --- ACTIONS (BACK BUTTON) --- */
+.recipe-actions {
+  margin-bottom: var(--spacing-lg);
+}
+
+.button--back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xxs);
+  font-weight: var(--chefkit-font-weight-medium);
+}
+
+.button__icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* --- FOOTER --- */
+.app-footer {
+  background-color: var(--chefkit-footer-bg);
+  color: var(--chefkit-footer-text);
+  padding: var(--spacing-lg) var(--spacing-md);
+  font-size: 0.9rem;
+  font-family: var(--chefkit-font-family-sans);
+}
+
+.footer__inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  gap: var(--spacing-lg);
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    text-align: left;
+    gap: var(--spacing-md);
+  }
+}
+
+.footer__brand {
+  margin-bottom: var(--spacing-sm);
+  @media (min-width: 768px) {
+    margin-bottom: 0;
+  }
+}
+
+.footer__logo-text {
+  font-size: 1.5rem;
+  font-weight: var(--chefkit-font-weight-bold);
+  color: var(--chefkit-background-white);
+  font-family: var(--chefkit-font-display);
+}
+
+.footer__slogan {
+  margin-top: var(--spacing-xxs);
+  font-size: 0.75rem;
+  color: var(--chefkit-footer-text);
+  font-family: var(--chefkit-font-family-sans);
+}
+
+.footer__nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  row-gap: var(--spacing-xs);
+  column-gap: var(--spacing-xl);
+
+  @media (min-width: 768px) {
+    justify-content: flex-start;
+    row-gap: 0;
+    column-gap: var(--spacing-xl);
+  }
+}
+
+.footer__nav-link {
+  color: var(--chefkit-footer-text);
+  font-family: var(--chefkit-font-family-sans);
+  font-size: 0.85rem;
+  text-decoration: none;
+  padding: var(--spacing-xxs) 0;
+
+  &:hover {
+    color: var(--chefkit-background-white);
+    text-decoration: underline;
+  }
+}
+
+.footer__copyright {
+  font-size: 0.75rem;
+  color: var(--chefkit-footer-text);
+  margin-top: var(--spacing-sm);
+
+  @media (min-width: 768px) {
+    margin-top: 0;
+  }
 }
