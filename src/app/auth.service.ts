@@ -1,53 +1,74 @@
-import { Injectable,signal } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable, signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Observable, tap, catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
+
+// Interface to define possible shapes of the user data from the API
+interface UserResponse {
+  nomUtilisateur?: string;
+  username?: string;
+  name?: string;
+  role?: string;
+  authorities?: { authority: string }[];
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080/users'; // remplacer par le bon URL de l'API
+  private apiUrl = 'http://localhost:8080/users';
 
   isLoggedIn = signal<boolean>(false);
-  currentUser = signal<any | null>(null);
+  currentUser = signal<{ nomUtilisateur: string, role: string } | null>(null);
 
-  constructor(private http: HttpClient, private router: Router) { 
-    
-  }
+  constructor(private http: HttpClient, private router: Router) {}
+
   register(userData: any): Observable<any> {
     return this.http.post(`${this.apiUrl}`, userData);
-}
+  }
 
-  login(credentials: any): Observable<string> {
-  return this.http.post<string>(`${this.apiUrl}/login`, credentials, {
-    responseType: 'text' as 'json'
-  }).pipe(
-      tap((response: string) => {
-        // En cas de succès, met à jour l'état de connexion
+  login(credentials: any): Observable<UserResponse> {
+    return this.http.post<UserResponse>(`${this.apiUrl}/login`, credentials).pipe(
+      tap((response: UserResponse) => {
         this.isLoggedIn.set(true);
-        // Stocke des infos utilisateur basiques (si l'API renvoie plus, tu peux ajuster)
-        this.currentUser.set({ nomUtilisateur: credentials.nomUtilisateur }); 
-        console.log('Connexion réussie ! Réponse API :', response);
+        
+        let role = 'user';
+
+        if (response.authorities && Array.isArray(response.authorities)) {
+          const isAdmin = response.authorities.some(auth => auth.authority === 'ROLE_ADMIN' || auth.authority === 'admin');
+          if (isAdmin) {
+            role = 'admin';
+          }
+        } 
+        else if (response.role && typeof response.role === 'string') {
+          if (response.role.toLowerCase().includes('admin')) {
+            role = 'admin';
+          }
+        }
+
+        // Create a clean user object, using the username from the login form as requested.
+        const user = {
+            nomUtilisateur: credentials.nomUtilisateur,
+            role: role
+        };
+
+        this.currentUser.set(user);
+        console.log('Login successful! Final user object:', user);
       }),
       catchError(error => {
-        // En cas d'erreur, assure-toi que l'état de connexion est faux
-        this.logout(); // Appelle logout pour nettoyer l'état
-        console.error('Erreur de connexion dans le service :', error);
+        this.logout();
+        console.error('Error during login:', error);
         return throwError(() => error);
       })
     );
   }
 
-  // Méthode de déconnexion
   logout(): void {
-    this.isLoggedIn.set(false); // Met à jour le signal de connexion
-    this.currentUser.set(null); // Efface les informations de l'utilisateur
-    this.router.navigate(['/login']); // Redirige vers la page de connexion
+    this.isLoggedIn.set(false);
+    this.currentUser.set(null);
+    this.router.navigate(['/login']);
   }
 
-  // Pas besoin de getToken() ni checkLoginStatus() si pas de JWT/localStorage
-  
   isAuthenticated(): boolean {
     return this.isLoggedIn();
   }

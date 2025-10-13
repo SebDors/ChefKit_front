@@ -16,10 +16,14 @@
         <a routerLink="/register" class="button button--primary">S'inscrire</a>
       </ng-container>
 
-      <!-- Si l'utilisateur est connecté -->
       <ng-container *ngIf="authService.isLoggedIn()">
         <span class="header__welcome-message">
-          Bonjour, {{ authService.currentUser()?.nomUtilisateur || 'Chef' }} !
+          <ng-container *ngIf="authService.currentUser()?.role === 'admin'; else userWelcome">
+            Bonjour admin {{ authService.currentUser()?.nomUtilisateur }}
+          </ng-container>
+          <ng-template #userWelcome>
+            Bonjour {{ authService.currentUser()?.nomUtilisateur }}
+          </ng-template>
         </span>
         <button (click)="logout()" class="button button--secondary header__nav-link--alt">
           Se déconnecter
