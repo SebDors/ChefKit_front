@@ -44,7 +44,7 @@ export class LoginComponent {
           next: (response) => {
             this.isLoading.set(false);
             console.log('Connexion réussie !', response);
-            this.router.navigate(['/homepag']); // Rediriger
+            this.router.navigate(['/homepage']); // Rediriger
           },
           error: (error) => {
             this.isLoading.set(false);
