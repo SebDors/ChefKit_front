@@ -1,12 +1,8 @@
 <!-- HEADER -->
-<header class="app-header" [class.app-header--scrolled]="isScrolled">
+<header class="app-header app-header--scrolled">
   <div class="header__inner container">
     <a routerLink="/" class="header__logo-link">
-      <svg class="header__logo-icon" fill="currentColor" viewBox="0 0 24 24">
-        <path
-          d="M12 1.5c-3.03 0-5.5 2.47-5.5 5.5v3h-3a1 1 0 00-1 1v3a1 1 0 001 1h18a1 1 0 001-1v-3a1 1 0 00-1-1h-3v-3c0-3.03-2.47-5.5-5.5-5.5zM12 4.5c1.93 0 3.5 1.57 3.5 3.5v3H8.5v-3c0-1.93 1.57-3.5 3.5-3.5z"
-        />
-      </svg>
+      <svg class="header__logo-icon" fill="currentColor" viewBox="0 0 24 24"><path d="M12 1.5c-3.03 0-5.5 2.47-5.5 5.5v3h-3a1 1 0 00-1 1v3a1 1 0 001 1h18a1 1 0 001-1v-3a1 1 0 00-1-1h-3v-3c0-3.03-2.47-5.5-5.5-5.5zM12 4.5c1.93 0 3.5 1.57 3.5 3.5v3H8.5v-3c0-1.93 1.57-3.5 3.5-3.5z" /></svg>
       <span class="header__logo-text">ChefKit</span>
     </a>
     <div class="header__actions">
@@ -16,11 +12,14 @@
       </ng-container>
       <ng-container *ngIf="authService.isLoggedIn()">
         <span class="header__welcome-message">
-          Bonjour, {{ authService.currentUser()?.nomUtilisateur || 'Chef' }} !
+          <ng-container *ngIf="authService.currentUser()?.role === 'admin'; else userWelcome">
+            Bonjour admin {{ authService.currentUser()?.nomUtilisateur }}
+          </ng-container>
+          <ng-template #userWelcome>
+            Bonjour {{ authService.currentUser()?.nomUtilisateur }}
+          </ng-template>
         </span>
-        <button (click)="logout()" class="button button--secondary header__nav-link--alt">
-          Se déconnecter
-        </button>
+        <button (click)="logout()" class="button button--secondary header__nav-link--alt">Se déconnecter</button>
       </ng-container>
     </div>
   </div>
@@ -38,66 +37,64 @@
   </div>
 
   <ng-container *ngIf="!isLoading && recette">
-    <!-- Section Hero de la recette -->
-    <section class="recipe-hero" [style.background-image]="'url(' + recette.pathImage + ')'">
-      <div class="recipe-hero__overlay"></div>
-      <div class="recipe-hero__content container">
-        <h1 class="recipe-hero__title">{{ recette.titre }}</h1>
-        <p class="recipe-hero__description">{{ recette.description }}</p>
-      </div>
-    </section>
-
-    <!-- Section principale des détails -->
-    <section class="recipe-details section-padding">
-      <div class="container">
-        <div class="recipe-actions">
-          <button (click)="goBack()" class="button button--secondary button--back">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="button__icon">
-              <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
-            </svg>
-            Retour
-          </button>
+    <div class="recipe-content-container container">
+      <!-- Colonne de gauche : Image et Méta-infos -->
+      <aside class="recipe-aside">
+        <div class="recipe-image-container">
+          <img [src]="recette.pathImage" [alt]="recette.titre" class="recipe-image">
         </div>
-
-        <!-- Informations clés (temps, personnes) -->
         <div class="recipe-meta">
           <div class="meta-item">
+            <svg class="meta-item__icon" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v5h-2zm0 6h2v2h-2z"/></svg>
             <span class="meta-item__label">Préparation</span>
             <span class="meta-item__value">{{ recette.tempsPreparationMinutes }} min</span>
           </div>
           <div class="meta-item">
+            <svg class="meta-item__icon" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v5h-2zm0 6h2v2h-2z"/></svg>
             <span class="meta-item__label">Cuisson</span>
             <span class="meta-item__value">{{ recette.tempsCuissonMinutes }} min</span>
           </div>
           <div class="meta-item">
+            <svg class="meta-item__icon" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v5h-2zm0 6h2v2h-2z"/></svg>
             <span class="meta-item__label">Portions</span>
             <span class="meta-item__value">{{ recette.nombrePersonnes }} personnes</span>
           </div>
         </div>
+      </aside>
 
-        <!-- Contenu principal (Ingrédients et Instructions) -->
-        <div class="recipe-main-content">
-          <div class="recipe-ingredients">
-            <h2 class="section-subtitle">Ingrédients</h2>
-            <ul class="ingredients-list">
-              <li *ngFor="let ing of recette.ingredients" class="ingredient-item">
-                <span class="ingredient-name">{{ ing.nom_ingredient }}</span>
-                <span class="ingredient-quantity">{{ ing.quantite }} {{ ing.unite }}</span>
-              </li>
-            </ul>
-          </div>
+      <!-- Colonne de droite : Titre, Description, Ingrédients, Instructions -->
+      <div class="recipe-main-content">
+        <button (click)="goBack()" class="button button--secondary button--back">
+          <svg fill="currentColor" viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+          Retour
+        </button>
 
-          <div class="recipe-instructions">
-            <h2 class="section-subtitle">Instructions</h2>
-            <ol class="instructions-list">
-              <li *ngFor="let step of instructionSteps" class="instruction-step">
-                {{ step }}
-              </li>
-            </ol>
-          </div>
+        <div class="recipe-header">
+          <h1 class="recipe-title">{{ recette.titre }}</h1>
+          <p class="recipe-description">{{ recette.description }}</p>
+        </div>
+
+        <div class="recipe-ingredients">
+          <h2 class="section-subtitle">Ingrédients</h2>
+          <ul class="ingredients-list">
+            <li *ngFor="let ing of recette.ingredients" class="ingredient-item">
+              <span class="ingredient-name">{{ ing.nom_ingredient }}</span>
+              <span class="ingredient-quantity">{{ ing.quantite }} {{ ing.unite }}</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="recipe-instructions">
+          <h2 class="section-subtitle">Préparation</h2>
+          <ol class="instructions-list">
+            <li *ngFor="let step of instructionSteps; let i = index" class="instruction-step">
+              <span class="step-number">{{ i + 1 }}</span>
+              <p class="step-text">{{ step }}</p>
+            </li>
+          </ol>
         </div>
       </div>
-    </section>
+    </div>
   </ng-container>
 </main>
 

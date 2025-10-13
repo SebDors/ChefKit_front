@@ -34,7 +34,9 @@ export class RecetteComponent implements OnInit {
         next: (res) => {
           this.recette = res;
           if (this.recette && this.recette.instructions) {
-            this.instructionSteps = this.recette.instructions.split('\n').filter(step => step.trim() !== '');
+            this.instructionSteps = this.recette.instructions
+  .split(/\s*\d+\.\s*|\.\s*(?=[A-ZÉÀÈÙÛÂÊÎÔUMJ])/) // Divise par "numéro." ou ". " (suivi d'une majuscule)
+  .filter(step => step.trim() !== '');
           }
           this.isLoading = false;
         },
