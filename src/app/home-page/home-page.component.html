@@ -78,10 +78,10 @@
   <h2 class="section-title">Nos Dernières Idées Recettes</h2>
 
   <!-- États de chargement -->
-  <div *ngIf="isLoading" class="text-center">Chargement des recettes...</div>
+  <div *ngIf="isLoading && featuredRecipes.length === 0" class="text-center">Chargement des recettes...</div>
   <div *ngIf="errorMsg" class="text-center text-red-500">{{ errorMsg }}</div>
 
-  <div class="carousel-container container" *ngIf="!isLoading && recettes.length > 0">
+  <div class="carousel-container container" *ngIf="!isLoading && featuredRecipes.length > 0">
     <!-- Flèche gauche -->
     <button class="carousel-arrow carousel-arrow--left" (click)="prevSlide()" aria-label="Recette précédente">
       <svg class="carousel-arrow-icon" fill="currentColor" viewBox="0 0 24 24">
@@ -92,7 +92,7 @@
     <div class="carousel-wrapper">
       <div class="carousel-track" [style.transform]="'translateX(-' + (currentSlideIndex * 100) + '%)'">
         <a
-          *ngFor="let recette of recettes"
+          *ngFor="let recette of featuredRecipes"
           (click)="ouvrirRecette(recette.idRecette)"
           class="recipe-card carousel-item"
           [style.flexBasis]="'calc(100% / ' + recipesPerSlide + ')'"
@@ -121,6 +121,38 @@
       </svg>
     </button>
   </div>
+</section>
+<!-- NOUVELLE SECTION : TOUTES LES RECETTES -->
+<section class="all-recipes section-padding">
+    <h2 class="section-title">Toutes Nos Recettes</h2>
+
+    <div *ngIf="isLoading" class="text-center">Chargement de toutes les recettes...</div>
+    <div *ngIf="errorMsg" class="text-center text-red-500">{{ errorMsg }}</div>
+
+    <div class="recipes-grid container" *ngIf="!isLoading && recettes.length > 0">
+        <a
+            *ngFor="let recette of recettes"
+            (click)="ouvrirRecette(recette.idRecette)"
+            class="recipe-card"
+        >
+            <div class="recipe-card__image-container">
+                <img
+                    *ngIf="recette.pathImage"
+                    [src]="recette.pathImage"
+                    [alt]="recette.titre"
+                    class="recipe-card__image"
+                />
+            </div>
+            <div class="recipe-card__content">
+                <h3 class="recipe-card__title">{{ recette.titre }}</h3>
+                <span class="recipe-card__cta">Voir la recette</span>
+            </div>
+        </a>
+    </div>
+
+    <div *ngIf="!isLoading && recettes.length === 0 && !errorMsg" class="text-center">
+        Aucune recette trouvée pour le moment.
+    </div>
 </section>
 
 <!-- FOOTER -->
