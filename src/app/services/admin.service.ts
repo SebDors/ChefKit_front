@@ -1,28 +1,37 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { User } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
-  private apiUrlUsers = 'http://localhost:8080/users';
-  private apiUrlRecettes = 'http://localhost:8080/recettes';
-  private apiUrlIngredients = 'http://localhost:8080/ingredients';
-  constructor(private http: HttpClient) { }
-  
+  private apiUrl = 'http://localhost:8080';
 
-  
-  //Fais un un get de tous les utilisateurs puis retourne juste le nombre d'utilisateurs
+  constructor(private http: HttpClient) { }
+
   getUserCount(): Observable<number> {
-    return this.http.get<number>(this.apiUrlUsers);
+    return this.http.get<number>(`${this.apiUrl}/users/count`);
   }
-  //Fais un un get de toutes les recettes puis retourne juste le nombre de recettes
+
   getRecetteCount(): Observable<number>{
-    return this.http.get<number>(this.apiUrlRecettes);
+    return this.http.get<number>(`${this.apiUrl}/recettes/count`);
   }
-  //Fais un un get de tous les ingrédients puis retourne juste le nombre d'ingrédients
+
   getIngredientCount(): Observable<number>{
-    return this.http.get<number>(this.apiUrlIngredients);
+    return this.http.get<number>(`${this.apiUrl}/ingredients/count`);
+  }
+
+  createUser(user: User): Observable<User> {
+    return this.http.post<User>(`${this.apiUrl}/users`, user);
+  }
+
+  updateUser(username: string, user: User): Observable<User> {
+    return this.http.put<User>(`${this.apiUrl}/users/${username}`, user);
+  }
+
+  deleteUser(username: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/users/${username}`);
   }
 }

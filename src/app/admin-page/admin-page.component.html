@@ -18,3 +18,33 @@
         <p>{{ingredientsCount}}</p>
       </div>
     </div>
+  </div>
+  <div class="Enpoints">
+    <h2>Endpoints Admin</h2>
+    <div class="Utilisateurs">
+      <h3>Utilisateurs</h3>
+      <div class="create">
+        <h4>Créer un utilisateur</h4>
+        <input type="text" placeholder="Nom d'utilisateur" [(ngModel)]="createUserModel.nomUtilisateur">
+        <input type="email" placeholder="Email" [(ngModel)]="createUserModel.email">
+        <input type="password" placeholder="Mot de passe" [(ngModel)]="createUserModel.motDePasse">
+        <input type="text" placeholder="Rôle" [(ngModel)]="createUserModel.role">
+        <button (click)="createUser()">Créer</button>
+      </div>
+      <div class="update">
+        <h4>Modifier un utilisateur</h4>
+        <input type="text" placeholder="Nom d'utilisateur à modifier" [(ngModel)]="updateUserModel.usernameToUpdate">
+        <input type="text" placeholder="Nouveau nom d'utilisateur" [(ngModel)]="updateUserModel.nomUtilisateur">
+        <input type="email" placeholder="Nouvel email" [(ngModel)]="updateUserModel.email">
+        <input type="password" placeholder="Nouveau mot de passe" [(ngModel)]="updateUserModel.motDePasse">
+        <input type="text" placeholder="Nouveau rôle" [(ngModel)]="updateUserModel.role">
+        <button (click)="updateUser()">Modifier</button>
+      </div>
+      <div class="delete">
+        <h4>Supprimer un utilisateur</h4>
+        <input type="text" placeholder="Nom d'utilisateur à supprimer" [(ngModel)]="deleteUserModel.username">
+        <button (click)="deleteUser()">Supprimer</button>
+      </div>
+    </div>
+  </div>
+</main>
