@@ -1,64 +1,109 @@
 // ingredients.component.ts
-import { Component, OnInit, HostListener, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { IngredientsService } from '../services/ingredients.service';
-import { HttpClientModule } from '@angular/common/http';
-import { Ingredient } from '../models/ingredient.model';
-import { Router, RouterModule } from '@angular/router'; // <-- Importation de Router et RouterModule
-import { AuthService } from '../auth.service'; // <-- Importation de AuthService
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { CommonModule } from '@angular/common'; // Important pour ngFor, ngIf
+import { RouterModule, Router } from '@angular/router'; // Important pour routerLink
+import { AuthService } from '../auth.service'; // Assurez-vous du bon chemin
+
+// Interface pour simuler vos objets d'ingrédients
+interface Ingredient {
+  nomIngredient: string;
+  // Vous pouvez ajouter d'autres propriétés comme id, image, etc.
+}
 
 @Component({
   selector: 'app-ingredients',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, RouterModule], // <-- Ajouter RouterModule ici
+  imports: [CommonModule, RouterModule], // Ajoutez RouterModule ici
   templateUrl: './ingredients.component.html',
-  styleUrls: ['./ingredients.component.scss'],
-  providers: [IngredientsService]
+  styleUrls: ['./ingredients.component.scss']
 })
-export class IngredientsComponent implements OnInit {
-  private ingredientsService = inject(IngredientsService);
-  private router = inject(Router); // <-- Injection du Router
-  public authService = inject(AuthService); // <-- Injection de AuthService
+export class IngredientsComponent implements OnInit, OnDestroy {
+  isScrolled = false;
+  selectedIngredients: string[] = []; // Tableau pour stocker les noms des ingrédients sélectionnés
 
-  allIngredients: Ingredient[] = [];
-  fruits: Ingredient[] = [];
-  legumes: Ingredient[] = [];
-  autres: Ingredient[] = [];
-  selectedIngredients = new Set<string>();
+  // Données d'ingrédients fictives pour l'exemple
+  fruits: Ingredient[] = [
+    { nomIngredient: 'Pommes' },
+    { nomIngredient: 'Bananes' },
+    { nomIngredient: 'Fraises' },
+    { nomIngredient: 'Oranges' },
+    { nomIngredient: 'Raisins' },
+    { nomIngredient: 'Mangues' },
+    { nomIngredient: 'Avocats' },
+    { nomIngredient: 'Kiwi' },
+    { nomIngredient: 'Poires' },
+    { nomIngredient: 'Citrons' }
+  ];
 
-  isScrolled = false; // <-- Propriété pour le header collant
+  legumes: Ingredient[] = [
+    { nomIngredient: 'Brocolis' },
+    { nomIngredient: 'Carottes' },
+    { nomIngredient: 'Tomates' },
+    { nomIngredient: 'Concombres' },
+    { nomIngredient: 'Poivrons' },
+    { nomIngredient: 'Oignons' },
+    { nomIngredient: 'Ail' },
+    { nomIngredient: 'Salade' },
+    { nomIngredient: 'Pommes de terre' },
+    { nomIngredient: 'Épinards' }
+  ];
+
+  autres: Ingredient[] = [
+    { nomIngredient: 'Poulet' },
+    { nomIngredient: 'Riz' },
+    { nomIngredient: 'Pâtes' },
+    { nomIngredient: 'Oeufs' },
+    { nomIngredient: 'Fromage' },
+    { nomIngredient: 'Lait' },
+    { nomIngredient: 'Farine' },
+    { nomIngredient: 'Huile d\'olive' },
+    { nomIngredient: 'Thon' },
+    { nomIngredient: 'Bœuf haché' }
+  ];
+
+  constructor(public authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    this.ingredientsService.getIngredients().subscribe(data => {
-      this.allIngredients = data;
-      // Cast to 'any' to access the 'categorie' property which exists in the API data but not in the official model.
-      this.fruits = data.filter((ing: any) => ing.categorie && ing.categorie.toLowerCase() === 'fruit');
-      this.legumes = data.filter((ing: any) => ing.categorie && ing.categorie.toLowerCase() === 'légume');
-      this.autres = data.filter((ing: any) => ing.categorie && ing.categorie.toLowerCase() !== 'fruit' && ing.categorie.toLowerCase() !== 'légume');
-    });
+    // Vous pouvez charger les ingrédients sélectionnés de l'utilisateur ici
+    // Par exemple : this.selectedIngredients = this.ingredientService.getUserIngredients();
   }
 
-  toggleIngredient(ingredientName: string): void {
-    if (this.selectedIngredients.has(ingredientName)) {
-      this.selectedIngredients.delete(ingredientName);
-    } else {
-      this.selectedIngredients.add(ingredientName);
-    }
+  ngOnDestroy(): void {
+    // Nettoyage si nécessaire
   }
 
-  isSelected(ingredientName: string): boolean {
-    return this.selectedIngredients.has(ingredientName);
-  }
-
-  // Fonction pour le header sticky (adaptée de la home-page)
   @HostListener('window:scroll', [])
   onWindowScroll() {
     this.isScrolled = window.pageYOffset > 50;
   }
 
-  // Fonction de déconnexion (adaptée de la home-page)
+  // Méthode pour vérifier si un ingrédient est sélectionné
+  isSelected(ingredientName: string): boolean {
+    return this.selectedIngredients.includes(ingredientName);
+  }
+
+  // Méthode pour basculer la sélection d'un ingrédient
+  toggleIngredient(ingredientName: string): void {
+    if (this.isSelected(ingredientName)) {
+      this.selectedIngredients = this.selectedIngredients.filter(
+        (name) => name !== ingredientName
+      );
+    } else {
+      this.selectedIngredients.push(ingredientName);
+    }
+    console.log('Ingrédients sélectionnés :', this.selectedIngredients);
+  }
+
+  // Méthode appelée lorsque l'utilisateur clique sur "Sauvegarder"
+  saveSelectedIngredients(): void {
+    // Ici, vous enverriez les ingrédients sélectionnés à votre backend ou les stockeriez localement
+    console.log('Ingrédients à sauvegarder :', this.selectedIngredients);
+    alert('Ingrédients sauvegardés : ' + this.selectedIngredients.join(', '));
+    // Redirection possible après la sauvegarde
+    // this.router.navigate(['/mes-recettes-basees-sur-ingredients']);
+  }
+
   logout(): void {
     this.authService.logout();
-    this.router.navigate(['/']); // Rediriger vers l'accueil ou la page de connexion
   }
 }

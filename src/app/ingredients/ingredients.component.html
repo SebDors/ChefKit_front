@@ -3,7 +3,7 @@
 <!-- HEADER -->
 <header class="app-header" [class.app-header--scrolled]="isScrolled">
   <div class="header__inner container">
-    <a routerLink="/" class="header__logo-link">
+    <a routerLink="/" class="header__logo-link"> <!-- Changé "/home" en "/" pour l'accueil standard -->
       <svg class="header__logo-icon" fill="currentColor" viewBox="0 0 24 24">
         <path
           d="M12 1.5c-3.03 0-5.5 2.47-5.5 5.5v3h-3a1 1 0 00-1 1v3a1 1 0 001 1h18a1 1 0 001-1v-3a1 1 0 00-1-1h-3v-3c0-3.03-2.47-5.5-5.5-5.5zM12 4.5c1.93 0 3.5 1.57 3.5 3.5v3H8.5v-3c0-1.93 1.57-3.5 3.5-3.5z"
@@ -12,8 +12,9 @@
       <span class="header__logo-text">ChefKit</span>
     </a>
     <div class="header__actions">
+      <!-- Le bouton "Retour à l'accueil" n'apparaît que si l'utilisateur n'est PAS connecté ici -->
       <ng-container *ngIf="!authService.isLoggedIn()">
-        <a routerLink="/home" class="button button--secondary header__nav-link--alt">Retour à l'accueil</a>
+        <a routerLink="/" class="button button--secondary header__nav-link--alt">Retour à l'accueil</a>
       </ng-container>
 
       <ng-container *ngIf="authService.isLoggedIn()">
@@ -35,11 +36,11 @@
 
 
 <div class="page-container">
-  <!-- NOUVEAU TITRE PRINCIPAL DE LA PAGE -->
+  <!-- TITRE PRINCIPAL DE LA PAGE -->
   <h1 class="main-page-title">Sélectionnez les ingrédients que vous avez !</h1>
 
   <div class="category-section fruits">
-    <div class="background"></div>
+    <div class="background"></div> <!-- Votre div pour l'image de fond -->
     <h2 class="category-title">Fruits</h2>
     <div class="ingredients-list">
       <button *ngFor="let fruit of fruits"
@@ -52,7 +53,7 @@
   </div>
 
   <div class="category-section legumes">
-    <div class="background"></div>
+    <div class="background"></div> <!-- Votre div pour l'image de fond -->
     <h2 class="category-title">Légumes</h2>
     <div class="ingredients-list">
       <button *ngFor="let legume of legumes"
@@ -65,7 +66,7 @@
   </div>
 
   <div class="category-section autres">
-    <div class="background"></div>
+    <div class="background"></div> <!-- Votre div pour l'image de fond -->
     <h2 class="category-title">Autres</h2>
     <div class="ingredients-list">
       <button *ngFor="let autre of autres"
@@ -76,4 +77,9 @@
       </button>
     </div>
   </div>
+
+  <!-- NOUVEAU BOUTON : Sauvegarder les ingrédients -->
+  <button class="button button--primary" style="margin-top: var(--spacing-xl); width: auto;" (click)="saveSelectedIngredients()">
+    Sauvegarder les ingrédients sélectionnés
+  </button>
 </div>

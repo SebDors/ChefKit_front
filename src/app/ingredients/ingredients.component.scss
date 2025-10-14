@@ -110,7 +110,6 @@
 
 .app-header.app-header--scrolled {
   padding: var(--spacing-sm) 0;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
 
   .header__logo-icon {
     height: 22px;
@@ -191,7 +190,7 @@
 body {
   margin: 0;
   font-family: var(--chefkit-font-family-sans);
-  background-image: url('/assets/images/fond_ingrédients.jpg'); /* Votre IMAGE DE FOND GLOBALE */
+  background-image: url('/assets/images/fond_ingredients.jpg'); /* Votre IMAGE DE FOND GLOBALE */
   background-size: cover;
   background-position: center center;
   background-attachment: fixed;
@@ -205,8 +204,8 @@ body {
   align-items: center;
   min-height: 100vh;
   padding: 3rem 1.5rem;
-  /* Ajuster le padding top pour laisser de l'espace pour la navbar et le nouveau titre principal */
-  padding-top: calc(var(--spacing-xxl) + 80px + var(--spacing-xxxl));
+  /* Espacement ajusté pour le titre principal */
+  padding-top: calc(var(--spacing-xxl) + 20px + var(--spacing-lg));
   background-color: transparent;
   gap: 3rem;
   box-sizing: border-box;
@@ -218,22 +217,23 @@ body {
   font-family: var(--chefkit-font-display);
   font-size: 4rem; /* Grande taille pour le titre principal */
   font-weight: var(--chefkit-font-weight-heavy); /* Très gras */
-  text-shadow: 0 5px 15px rgba(0, 0, 0, 0.9); /* Ombre portée très forte */
+  text-shadow: 0 3px 8px rgba(0, 0, 0, 0.6); /* Ombre portée plus douce et moins brillante */
   text-align: center;
-  margin-bottom: var(--spacing-xxl); /* Espace sous le titre principal */
+  /* Marge sous le titre principal réduite */
+  margin-bottom: var(--spacing-sm);
   padding: 0 var(--spacing-md); /* Petits paddings latéraux pour les bords */
 
   @media (max-width: 992px) {
     font-size: 3.5rem;
-    margin-bottom: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
   }
   @media (max-width: 768px) {
     font-size: 3rem;
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
   }
   @media (max-width: 480px) {
     font-size: 2.2rem;
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-xs);
   }
 }
 
@@ -242,10 +242,9 @@ body {
   width: 100%;
   max-width: 960px;
   overflow: hidden;
-  /* CHANGEMENT ICI : Diminuer l'opacité pour que l'image de fond soit plus visible */
-  background-color: rgba(var(--chefkit-background-white-rgb), 0.4); /* De 0.7 à 0.4 */
+  background-color: transparent; /* Toujours transparent, l'image est dans .background */
   border-radius: var(--border-radius-xl);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   padding: 3rem 2.5rem;
   display: flex;
   flex-direction: column;
@@ -253,12 +252,15 @@ body {
   align-items: center;
   text-align: center;
   transition: all 0.4s ease-in-out;
+  color: var(--chefkit-background-white); /* Couleur de texte par défaut claire pour le contenu */
+  z-index: 1; /* Assure que le contenu est au-dessus du background et de l'overlay */
 
   &:hover {
     transform: translateY(-8px) scale(1.005);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
   }
 
+  /* Le div .background à l'intérieur de la section */
   .background {
     position: absolute;
     top: 0;
@@ -267,18 +269,38 @@ body {
     height: 100%;
     background-size: cover;
     background-position: center;
-    /* CHANGEMENTS ICI : Plus lumineux et moins flou */
-    filter: blur(5px) brightness(0.8) saturate(1.2); /* blur(8px) brightness(0.6) -> blur(5px) brightness(0.8) */
-    z-index: -1;
-    transform: scale(1.05);
-    transition: transform 0.4s ease-in-out;
+    filter: brightness(0.7); /* Assombrit légèrement l'image par défaut */
+    z-index: -2; /* Positionne l'image derrière tout le reste */
+    transform: scale(1.02); /* Léger scale initial */
+    transition: transform 0.4s ease-in-out, filter 0.4s ease-in-out;
+    border-radius: inherit; /* Inherit rounded corners from parent */
   }
 
   &:hover .background {
-    transform: scale(1.08);
+    transform: scale(1.05); /* Zoom plus prononcé de l'image au survol */
+    filter: brightness(0.6); /* Rend l'image un peu plus sombre au survol pour plus de contraste */
   }
 
-  /* Images de fond spécifiques pour chaque catégorie */
+
+  /* Overlay pour assurer la lisibilité du texte, superposé à l'image */
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    z-index: -1; /* Au-dessus de l'image (.background) mais sous le contenu */
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)); /* Gradient plus sombre */
+    transition: background 0.4s ease-in-out;
+  }
+
+  &:hover::after {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)); /* Overlay plus prononcé au survol */
+  }
+
+  /* Styles spécifiques par catégorie - les images sont maintenant sur la classe .background */
   &.fruits .background {
     background-image: url('/assets/images/fruits.jpg');
   }
@@ -292,13 +314,14 @@ body {
   }
 
   .category-title {
-    color: #ffffff;
+    color: var(--chefkit-background-white);
     font-family: var(--chefkit-font-display);
     font-size: 3.5rem;
     font-weight: var(--chefkit-font-weight-heavy);
-    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.9); /* Ombre plus forte pour le titre de catégorie aussi */
+    text-shadow: 0 3px 8px rgba(0, 0, 0, 0.8);
     margin-bottom: 2.5rem;
     letter-spacing: 0.1em;
+    z-index: 2; /* S'assure que le titre est bien visible */
   }
 
   .ingredients-list {
@@ -308,53 +331,55 @@ body {
     gap: 15px;
     margin-top: 0;
     max-width: 90%;
+    z-index: 2; /* S'assure que la liste est bien visible */
   }
 
   .ingredient-button {
     padding: 14px 30px;
     font-family: var(--chefkit-font-family-sans);
     font-size: 1.1rem;
-    background-color: rgba(var(--chefkit-background-white-rgb), 0.95);
-    color: var(--chefkit-text-dark);
-    border: 1px solid var(--chefkit-border-light);
+    background-color: rgba(var(--chefkit-background-white-rgb), 0.2);
+    color: var(--chefkit-background-white);
+    border: 1px solid rgba(var(--chefkit-background-white-rgb), 0.5);
     border-radius: var(--border-radius-md);
     cursor: pointer;
     transition: all 0.3s ease-in-out;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     min-width: 120px;
     display: flex;
     align-items: center;
     justify-content: center;
-    outline: none; /* Supprimer l'outline par défaut du navigateur */
+    outline: none;
+    backdrop-filter: blur(2px);
 
     &:hover {
-      background-color: #f7f7f7;
-      border-color: #c0c0c0;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      background-color: rgba(var(--chefkit-background-white-rgb), 0.95);
+      color: var(--chefkit-primary);
+      border-color: var(--chefkit-primary);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
     }
-    // L'ordre des pseudo-classes est important, :active et :focus doivent être après :hover
+    
     &:focus {
-      box-shadow: 0 0 0 3px rgba(var(--chefkit-primary-rgb), 0.4); /* Ajouter un focus ring */
+      box-shadow: 0 0 0 3px rgba(var(--chefkit-primary-rgb), 0.6);
     }
 
     &.selected {
-      background-color: #38a169;
-      color: white;
-      /* CHANGEMENT ICI : Bordure plus visible pour l'état sélectionné */
-      border: 2px solid #27794e; /* Passe à 2px et une couleur sombre */
+      background-color: var(--chefkit-primary);
+      color: var(--chefkit-background-white);
+      border: 2px solid var(--chefkit-primary-hover);
       font-weight: var(--chefkit-font-weight-semibold);
       transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(56, 161, 105, 0.5);
+      box-shadow: 0 8px 20px rgba(56, 161, 105, 0.6);
       position: relative;
-
+      
       &::after {
         content: '✔';
         position: absolute;
         top: 5px;
         right: 5px;
         font-size: 0.9em;
-        color: rgba(255, 255, 255, 0.9); /* Coche plus visible */
+        color: rgba(255, 255, 255, 0.9);
         opacity: 0;
         transform: scale(0.5);
         transition: all 0.2s ease-out;
@@ -372,7 +397,7 @@ body {
 /* Media queries pour la responsivité */
 @media (max-width: 992px) {
   .page-container {
-    padding-top: calc(var(--spacing-xl) + 70px + var(--spacing-xxl)); /* Ajuster le padding */
+    padding-top: calc(var(--spacing-xl) + 20px + var(--spacing-md));
   }
   .category-section {
     padding: 2.5rem 2rem;
@@ -391,17 +416,18 @@ body {
 @media (max-width: 768px) {
   .page-container {
     padding: 2rem 0.8rem;
-    padding-top: calc(var(--spacing-lg) + 60px + var(--spacing-xl)); /* Ajuster le padding */
+    padding-top: calc(var(--spacing-lg) + 15px + var(--spacing-sm));
     gap: 2rem;
   }
   .category-section {
     padding: 2rem 1.5rem;
     border-radius: var(--border-radius-lg);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
   }
   .category-title {
     font-size: 2.5rem;
     margin-bottom: 2rem;
-    text-shadow: 0 3px 10px rgba(0, 0, 0, 0.8);
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
   }
   .ingredients-list {
     gap: 10px;
@@ -417,12 +443,12 @@ body {
 @media (max-width: 480px) {
   .page-container {
     padding: 1.5rem 0.5rem;
-    padding-top: calc(var(--spacing-md) + 50px + var(--spacing-lg)); /* Ajuster le padding */
+    padding-top: calc(var(--spacing-md) + 10px + var(--spacing-xs));
     gap: 1.5rem;
   }
   .category-section {
     padding: 1.8rem 1rem;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
   }
   .category-title {
     font-size: 2rem;

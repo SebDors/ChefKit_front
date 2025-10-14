@@ -17,6 +17,8 @@
       </ng-container>
 
       <ng-container *ngIf="authService.isLoggedIn()">
+        <!-- NOUVEAU BOUTON : Mes ingrédients -->
+        <a routerLink="/ingredients" class="button button--secondary">Mes ingrédients</a> 
         <span class="header__welcome-message">
           <ng-container *ngIf="authService.currentUser()?.role === 'admin'; else userWelcome">
             Bonjour admin {{ authService.currentUser()?.nomUtilisateur }}
