@@ -363,8 +363,17 @@
 
 .carousel-track {
     display: flex;
-    transition: transform 0.5s ease-in-out;
-    gap: var(--spacing-md); 
+    transition: transform 0.5s ease-in-out; 
+}
+
+.carousel-slide {
+  flex: 0 0 100%; /* Chaque slide (groupe de recettes) prend 100% de la largeur du wrapper */
+  display: flex; /* Pour que les recipe-card à l'intérieur s'alignent */
+  justify-content: center; /* Centrer les cartes si l'espace est plus grand */
+  align-items: stretch; /* Les cartes d'une même slide auront la même hauteur */
+  box-sizing: border-box; /* Padding et border inclus dans la largeur */
+  gap: var(--spacing-lg); /* ESPACEMENT ENTRE LES CARTES DE LA MÊME SLIDE */
+  padding: 0 var(--spacing-sm); /* Petit padding intérieur pour éviter que les cartes touchent les bords du wrapper */
 }
 
 .carousel-item {
@@ -391,6 +400,13 @@
     transform: translateY(-8px);
     box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
   }
+}
+
+.carousel-slide .recipe-card {
+    /* Largeur par défaut pour 3 recettes par slide */
+    flex: 0 0 calc(33.333% - (var(--spacing-lg) * 2 / 3)); /* 3 cartes - 2/3 du gap total */
+    max-width: calc(33.333% - (var(--spacing-lg) * 2 / 3));
+    /* Les marges internes sont maintenant gérées par le gap du .carousel-slide */
 }
 
 .recipe-card__image-container {
@@ -480,24 +496,12 @@
 
 .carousel-arrow--left {
     /* Positionne les flèches aux bords du padding du carousel-container */
-    left: 0; 
-    @media (max-width: 1023px) {
-        left: 0;
-    }
-    @media (max-width: 767px) {
-        left: 0;
-    }
+    left: 0;
 }
 
 .carousel-arrow--right {
     /* Positionne les flèches aux bords du padding du carousel-container */
     right: 0;
-    @media (max-width: 1023px) {
-        right: 0;
-    }
-    @media (max-width: 767px) {
-        right: 0;
-    }
 }
 
 
@@ -556,6 +560,27 @@
     box-shadow: 0 18px 55px rgba(0, 0, 0, 0.12); /* Ombre plus forte au survol */
   }
 }
+
+@media (max-width: 1023px) { /* Correspond à recipesPerSlide = 2 */
+  .carousel-slide {
+    gap: var(--spacing-md); /* Ajuster le gap pour 2 cartes */
+  }
+  .carousel-slide .recipe-card {
+    flex: 0 0 calc(50% - (var(--spacing-md) / 2)); /* 2 cartes par slide - 1/2 du gap total */
+    max-width: calc(50% - (var(--spacing-md) / 2));
+  }
+}
+
+@media (max-width: 767px) { /* Correspond à recipesPerSlide = 1 */
+  .carousel-slide {
+    gap: var(--spacing-sm); /* Ajuster le gap pour 1 carte (ou pas de gap significatif) */
+  }
+  .carousel-slide .recipe-card {
+    flex: 0 0 calc(100% - var(--spacing-lg)); /* 1 carte par slide, avec un peu de padding/espace */
+    max-width: calc(100% - var(--spacing-lg));
+  }
+}
+
 
 /* --- FOOTER --- */
 .app-footer {

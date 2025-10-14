@@ -91,26 +91,28 @@
 
     <div class="carousel-wrapper">
       <div class="carousel-track" [style.transform]="'translateX(-' + (currentSlideIndex * 100) + '%)'">
-        <a
-          *ngFor="let recette of featuredRecipes"
-          (click)="ouvrirRecette(recette.idRecette)"
-          class="recipe-card carousel-item"
-          [style.flexBasis]="'calc(100% / ' + recipesPerSlide + ')'"
-          [style.maxWidth]="'calc(100% / ' + recipesPerSlide + ')'"
-        >
-          <div class="recipe-card__image-container">
-            <img
-              *ngIf="recette.pathImage"
-              [src]="recette.pathImage"
-              [alt]="recette.titre"
-              class="recipe-card__image"
-            />
+        <ng-container *ngFor="let i of Array(totalSlides).keys()">
+          <div class="carousel-slide">
+            <a
+              *ngFor="let recette of featuredRecipes.slice(i * recipesPerSlide, (i + 1) * recipesPerSlide)"
+              (click)="ouvrirRecette(recette.idRecette)"
+              class="recipe-card carousel-item"
+            >
+              <div class="recipe-card__image-container">
+                <img
+                  *ngIf="recette.pathImage"
+                  [src]="recette.pathImage"
+                  [alt]="recette.titre"
+                  class="recipe-card__image"
+                />
+              </div>
+              <div class="recipe-card__content">
+                <h3 class="recipe-card__title">{{ recette.titre }}</h3>
+                <span class="recipe-card__cta">Voir la recette</span>
+              </div>
+            </a>
           </div>
-          <div class="recipe-card__content">
-            <h3 class="recipe-card__title">{{ recette.titre }}</h3>
-            <span class="recipe-card__cta">Voir la recette</span>
-          </div>
-        </a>
+        </ng-container>
       </div>
     </div>
 
@@ -122,6 +124,7 @@
     </button>
   </div>
 </section>
+
 <!-- NOUVELLE SECTION : TOUTES LES RECETTES -->
 <section class="all-recipes section-padding">
     <h2 class="section-title">Toutes Nos Recettes</h2>

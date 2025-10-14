@@ -67,7 +67,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
         this.isLoading = false;
 
         // Choix des recettes mises en avant pour le carrousel
-        this.featuredRecipes = data.slice(0, 6); // 6 premières recettes
+        this.featuredRecipes = data.slice(0, 9); // 9 premières recettes
       },
       error: (err) => {
         console.error('Erreur lors de la récupération des recettes :', err);
