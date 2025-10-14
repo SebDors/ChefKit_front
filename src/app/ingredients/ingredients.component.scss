@@ -1,18 +1,263 @@
+/* Définition des variables CSS globales pour ChefKit */
+:root {
+  --chefkit-primary: #38a169; /* Vert "sélectionné" */
+  --chefkit-primary-hover: #27794e; /* Vert plus foncé */
+  --chefkit-background-white: #ffffff;
+  --chefkit-background-light: #f0f2f5; /* Arrière-plan global léger */
+  --chefkit-text-dark: #333333; /* Couleur de texte sombre principale */
+  --chefkit-text-light: #888888; /* Couleur de texte plus claire, ex: pour placeholders */
+  --chefkit-border-light: #e0e0e0; /* Couleur de bordure générale */
+
+  --chefkit-primary-rgb: 56, 161, 105; /* R, G, B de --chefkit-primary */
+  --chefkit-background-white-rgb: 255, 255, 255; /* R, G, B de --chefkit-background-white */
+
+  --spacing-xxs: 4px;
+  --spacing-xs: 8px;
+  --spacing-sm: 12px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-xxl: 48px;
+  --spacing-xxxl: 64px; /* Nouveau spacing pour le titre */
+
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-xl: 16px;
+  --border-radius-pill: 9999px;
+
+  --chefkit-font-weight-light: 300;
+  --chefkit-font-weight-regular: 400;
+  --chefkit-font-weight-medium: 500;
+  --chefkit-font-weight-semibold: 600;
+  --chefkit-font-weight-bold: 700;
+  --chefkit-font-weight-heavy: 800;
+
+  --chefkit-font-display: 'Montserrat', sans-serif;
+  --chefkit-font-family-sans: 'Roboto', sans-serif;
+}
+
+
+/* --- Styles globaux / utilitaires pour le conteneur --- */
+.container {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--spacing-md);
+    padding-right: var(--spacing-md);
+
+    @media (max-width: 768px) {
+        padding-left: var(--spacing-sm);
+        padding-right: var(--spacing-sm);
+    }
+}
+
+.button {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    font-size: 1rem;
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-family: var(--chefkit-font-family-sans);
+    font-weight: var(--chefkit-font-weight-medium);
+    outline: none; /* Supprimer l'outline par défaut du navigateur */
+
+    &--primary {
+        background-color: var(--chefkit-primary);
+        color: var(--chefkit-background-white);
+        box-shadow: 0 4px 10px rgba(var(--chefkit-primary-rgb), 0.2);
+
+        &:hover {
+            background-color: var(--chefkit-primary-hover);
+            box-shadow: 0 6px 15px rgba(var(--chefkit-primary-rgb), 0.3);
+            transform: translateY(-2px);
+        }
+    }
+
+    &--secondary {
+        background-color: transparent;
+        border: 1px solid var(--chefkit-border-light);
+        color: var(--chefkit-text-dark);
+
+        &:hover {
+            background-color: var(--chefkit-background-light);
+            border-color: var(--chefkit-primary);
+            color: var(--chefkit-primary);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+    }
+}
+
+
+/* --- HEADER --- */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: rgba(var(--chefkit-background-white-rgb), 0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  padding: var(--spacing-md) 0;
+  transition: padding 0.3s ease, box-shadow 0.3s ease;
+}
+
+.app-header.app-header--scrolled {
+  padding: var(--spacing-sm) 0;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+
+  .header__logo-icon {
+    height: 22px;
+    width: 22px;
+  }
+
+  .header__logo-text {
+    font-size: 1.5rem;
+  }
+
+  .header__actions .button {
+    font-size: 0.85rem;
+    padding: var(--spacing-xxs) var(--spacing-sm);
+  }
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header__logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.header__logo-icon {
+  height: 28px;
+  width: 28px;
+  color: var(--chefkit-primary);
+  margin-right: var(--spacing-xxs);
+  transition: height 0.3s ease, width 0.3s ease;
+}
+
+.header__logo-text {
+  font-size: 1.7rem;
+  font-weight: var(--chefkit-font-weight-bold);
+  color: var(--chefkit-text-dark);
+  font-family: var(--chefkit-font-display);
+  transition: font-size 0.3s ease;
+}
+
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.header__actions .button--secondary {
+    background-color: transparent;
+    border: 1px solid var(--chefkit-border-light);
+    color: var(--chefkit-text-dark);
+    font-weight: var(--chefkit-font-weight-medium);
+    transition: all 0.2s ease;
+
+    &:hover {
+        background-color: rgba(var(--chefkit-border-light-rgb), 0.2);
+        border-color: var(--chefkit-primary);
+        color: var(--chefkit-primary);
+        text-decoration: none;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+}
+.header__welcome-message {
+  font-size: 0.95rem;
+  color: var(--chefkit-text-dark);
+  font-weight: var(--chefkit-font-weight-medium);
+  margin-right: var(--spacing-sm);
+}
+
+
+/* --- Le reste de vos styles ingredients.component.scss --- */
+
+/* Fond de page global */
+body {
+  margin: 0;
+  font-family: var(--chefkit-font-family-sans);
+  background-image: url('/assets/images/fond_ingrédients.jpg'); /* Votre IMAGE DE FOND GLOBALE */
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-color: var(--chefkit-background-light); /* Couleur de secours */
+}
+
 .page-container {
   display: flex;
   flex-direction: column;
-  height: 100vh; // Use viewport height to fill the screen
+  align-items: center;
+  min-height: 100vh;
+  padding: 3rem 1.5rem;
+  /* Ajuster le padding top pour laisser de l'espace pour la navbar et le nouveau titre principal */
+  padding-top: calc(var(--spacing-xxl) + 80px + var(--spacing-xxxl));
+  background-color: transparent;
+  gap: 3rem;
+  box-sizing: border-box;
+}
+
+/* NOUVEAU STYLE POUR LE TITRE PRINCIPAL DE LA PAGE */
+.main-page-title {
+  color: #ffffff; /* Couleur blanche pour un bon contraste avec le fond global */
+  font-family: var(--chefkit-font-display);
+  font-size: 4rem; /* Grande taille pour le titre principal */
+  font-weight: var(--chefkit-font-weight-heavy); /* Très gras */
+  text-shadow: 0 5px 15px rgba(0, 0, 0, 0.9); /* Ombre portée très forte */
+  text-align: center;
+  margin-bottom: var(--spacing-xxl); /* Espace sous le titre principal */
+  padding: 0 var(--spacing-md); /* Petits paddings latéraux pour les bords */
+
+  @media (max-width: 992px) {
+    font-size: 3.5rem;
+    margin-bottom: var(--spacing-xl);
+  }
+  @media (max-width: 768px) {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-lg);
+  }
+  @media (max-width: 480px) {
+    font-size: 2.2rem;
+    margin-bottom: var(--spacing-md);
+  }
 }
 
 .category-section {
   position: relative;
-  flex: 1;
+  width: 100%;
+  max-width: 960px;
+  overflow: hidden;
+  /* CHANGEMENT ICI : Diminuer l'opacité pour que l'image de fond soit plus visible */
+  background-color: rgba(var(--chefkit-background-white-rgb), 0.4); /* De 0.7 à 0.4 */
+  border-radius: var(--border-radius-xl);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  padding: 3rem 2.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 2rem;
-  overflow: hidden; // to contain the background
+  text-align: center;
+  transition: all 0.4s ease-in-out;
+
+  &:hover {
+    transform: translateY(-8px) scale(1.005);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+  }
 
   .background {
     position: absolute;
@@ -22,11 +267,18 @@
     height: 100%;
     background-size: cover;
     background-position: center;
-    filter: blur(5px);
+    /* CHANGEMENTS ICI : Plus lumineux et moins flou */
+    filter: blur(5px) brightness(0.8) saturate(1.2); /* blur(8px) brightness(0.6) -> blur(5px) brightness(0.8) */
     z-index: -1;
-    transform: scale(1.1); // Prevents blurred edges from showing
+    transform: scale(1.05);
+    transition: transform 0.4s ease-in-out;
   }
 
+  &:hover .background {
+    transform: scale(1.08);
+  }
+
+  /* Images de fond spécifiques pour chaque catégorie */
   &.fruits .background {
     background-image: url('/assets/images/fruits.jpg');
   }
@@ -40,38 +292,149 @@
   }
 
   .category-title {
-    color: white;
-    font-size: 3rem;
-    font-weight: bold;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    color: #ffffff;
+    font-family: var(--chefkit-font-display);
+    font-size: 3.5rem;
+    font-weight: var(--chefkit-font-weight-heavy);
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.9); /* Ombre plus forte pour le titre de catégorie aussi */
+    margin-bottom: 2.5rem;
+    letter-spacing: 0.1em;
   }
 
   .ingredients-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 10px;
-    margin-top: 20px;
-    max-width: 80%;
+    gap: 15px;
+    margin-top: 0;
+    max-width: 90%;
   }
 
   .ingredient-button {
-    padding: 10px 20px;
-    font-size: 1rem;
-    background-color: rgba(255, 255, 255, 0.8);
-    border: none;
-    border-radius: 20px;
+    padding: 14px 30px;
+    font-family: var(--chefkit-font-family-sans);
+    font-size: 1.1rem;
+    background-color: rgba(var(--chefkit-background-white-rgb), 0.95);
+    color: var(--chefkit-text-dark);
+    border: 1px solid var(--chefkit-border-light);
+    border-radius: var(--border-radius-md);
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+    min-width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none; /* Supprimer l'outline par défaut du navigateur */
 
     &:hover {
-      background-color: white;
+      background-color: #f7f7f7;
+      border-color: #c0c0c0;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    }
+    // L'ordre des pseudo-classes est important, :active et :focus doivent être après :hover
+    &:focus {
+      box-shadow: 0 0 0 3px rgba(var(--chefkit-primary-rgb), 0.4); /* Ajouter un focus ring */
     }
 
     &.selected {
-      background-color: #4CAF50; // A nice green
+      background-color: #38a169;
       color: white;
-      border: 2px solid #388E3C;
+      /* CHANGEMENT ICI : Bordure plus visible pour l'état sélectionné */
+      border: 2px solid #27794e; /* Passe à 2px et une couleur sombre */
+      font-weight: var(--chefkit-font-weight-semibold);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(56, 161, 105, 0.5);
+      position: relative;
+
+      &::after {
+        content: '✔';
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        font-size: 0.9em;
+        color: rgba(255, 255, 255, 0.9); /* Coche plus visible */
+        opacity: 0;
+        transform: scale(0.5);
+        transition: all 0.2s ease-out;
+      }
+
+      &.selected::after {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
+  }
+}
+
+
+/* Media queries pour la responsivité */
+@media (max-width: 992px) {
+  .page-container {
+    padding-top: calc(var(--spacing-xl) + 70px + var(--spacing-xxl)); /* Ajuster le padding */
+  }
+  .category-section {
+    padding: 2.5rem 2rem;
+    max-width: 800px;
+  }
+  .category-title {
+    font-size: 3rem;
+  }
+  .ingredient-button {
+    padding: 12px 25px;
+    font-size: 1rem;
+    min-width: 100px;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-container {
+    padding: 2rem 0.8rem;
+    padding-top: calc(var(--spacing-lg) + 60px + var(--spacing-xl)); /* Ajuster le padding */
+    gap: 2rem;
+  }
+  .category-section {
+    padding: 2rem 1.5rem;
+    border-radius: var(--border-radius-lg);
+  }
+  .category-title {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    text-shadow: 0 3px 10px rgba(0, 0, 0, 0.8);
+  }
+  .ingredients-list {
+    gap: 10px;
+    max-width: 95%;
+  }
+  .ingredient-button {
+    padding: 10px 20px;
+    font-size: 0.95rem;
+    min-width: 90px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-container {
+    padding: 1.5rem 0.5rem;
+    padding-top: calc(var(--spacing-md) + 50px + var(--spacing-lg)); /* Ajuster le padding */
+    gap: 1.5rem;
+  }
+  .category-section {
+    padding: 1.8rem 1rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  }
+  .category-title {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.08em;
+  }
+  .ingredients-list {
+    gap: 8px;
+  }
+  .ingredient-button {
+    padding: 9px 18px;
+    font-size: 0.9rem;
+    min-width: unset;
   }
 }
