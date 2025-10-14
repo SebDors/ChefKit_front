@@ -5,6 +5,7 @@ import { AdminService } from '../services/admin.service';
 import { subscribeOn } from 'rxjs';
 import { FormsModule } from '@angular/forms'; // Import FormsModule
 import { User } from '../models/user.model';
+import { Recette } from '../models/recette.model';
 
 @Component({
   selector: 'app-admin-page',
@@ -25,6 +26,13 @@ export class AdminPageComponent implements OnInit{
   updateUserModel: Partial<User> & { usernameToUpdate: string } = { usernameToUpdate: '', nomUtilisateur: '', email: '', motDePasse: '', role: 'user' };
   deleteUserModel = { username: '' };
 
+  //recettes
+  readRecetteModel = { id: 0 };
+  readRecetteResult: Recette | null = null;
+  createRecetteModel: Partial<Recette> = { titre: '', description: '', instructions: '', tempsPreparationMinutes: 0, tempsCuissonMinutes: 0, nombrePersonnes: 0, pathImage: '' };
+  updateRecetteModel: Partial<Recette> & { idToUpdate: number } = { idToUpdate: 0, titre: '', description: '', instructions: '', tempsPreparationMinutes: 0, tempsCuissonMinutes: 0, nombrePersonnes: 0, pathImage: '' };
+  deleteRecetteModel = { id: 0 };
+
   private adminService: AdminService = inject(AdminService);
   
   ngOnInit(): void {
@@ -39,6 +47,19 @@ export class AdminPageComponent implements OnInit{
   this.adminService.getIngredientCount().subscribe(count => {
     this.ingredientsCount = count;
   });
+  }
+
+  getRecette(){
+    this.adminService.getRecetteById(this.readRecetteModel.id).subscribe(
+      recette => {
+        console.log('Recette details:', recette);
+        this.readRecetteResult = recette;
+      },
+      error => {
+        console.error('Error fetching recette details', error);
+        this.readRecetteResult = null;
+      }
+    );
   }
 
   getUser(){
@@ -107,6 +128,46 @@ export class AdminPageComponent implements OnInit{
       },
       error => {
         console.error('Error deleting user', error);
+      }
+    );
+  }
+
+  //recettes
+  createRecette() {
+    this.adminService.createRecette(this.createRecetteModel as Recette).subscribe(
+      response => {
+        console.log('Recette created successfully', response);
+        this.adminService.getRecetteCount().subscribe(count => this.recettesCount = count);
+        this.createRecetteModel = { titre: '', description: '', instructions: '', tempsPreparationMinutes: 0, tempsCuissonMinutes: 0, nombrePersonnes: 0, pathImage: '' };
+      },
+      error => {
+        console.error('Error creating recette', error);
+      }
+    );
+  }
+
+  updateRecette() {
+    const { idToUpdate, ...updatedData } = this.updateRecetteModel;
+    this.adminService.updateRecette(idToUpdate, updatedData as Recette).subscribe(
+      response => {
+        console.log('Recette updated successfully', response);
+        this.updateRecetteModel = { idToUpdate: 0, titre: '', description: '', instructions: '', tempsPreparationMinutes: 0, tempsCuissonMinutes: 0, nombrePersonnes: 0, pathImage: '' };
+      },
+      error => {
+        console.error('Error updating recette', error);
+      }
+    );
+  }
+
+  deleteRecette() {
+    this.adminService.deleteRecette(this.deleteRecetteModel.id).subscribe(
+      response => {
+        console.log('Recette deleted successfully', response);
+        this.adminService.getRecetteCount().subscribe(count => this.recettesCount = count);
+        this.deleteRecetteModel = { id: 0 };
+      },
+      error => {
+        console.error('Error deleting recette', error);
       }
     );
   }
