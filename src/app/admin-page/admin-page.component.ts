@@ -19,6 +19,8 @@ export class AdminPageComponent implements OnInit{
   ingredientsCount:number = 0;
 
   // Models for the forms
+  readUserModel = { username: '' };
+  readUserResult: User | null = null;
   createUserModel: Partial<User> = { nomUtilisateur: '', email: '', motDePasse: '', role: 'user' };
   updateUserModel: Partial<User> & { usernameToUpdate: string } = { usernameToUpdate: '', nomUtilisateur: '', email: '', motDePasse: '', role: 'user' };
   deleteUserModel = { username: '' };
@@ -37,6 +39,19 @@ export class AdminPageComponent implements OnInit{
   this.adminService.getIngredientCount().subscribe(count => {
     this.ingredientsCount = count;
   });
+  }
+
+  getUser(){
+    this.adminService.getUser(this.readUserModel.username).subscribe(
+      user => {
+        console.log('User details:', user);
+        this.readUserResult = user;
+      },
+      error => {
+        console.error('Error fetching user details', error);
+        this.readUserResult = null;
+      }
+    );
   }
 
   createUser() {
@@ -73,7 +88,7 @@ export class AdminPageComponent implements OnInit{
     this.adminService.updateUser(usernameToUpdate, payload as User).subscribe(
       response => {
         console.log('User updated successfully', response);
-        // Optionally, clear the form
+        
         this.updateUserModel = { usernameToUpdate: '', nomUtilisateur: '', email: '', motDePasse: '', role: 'user' };
       },
       error => {

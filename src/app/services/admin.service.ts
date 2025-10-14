@@ -23,10 +23,12 @@ export class AdminService {
     return this.http.get<number>(`${this.apiUrl}/ingredients/count`);
   }
 
+  getUser(username: string): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/users/username/${username}`);
+  }
   createUser(user: User): Observable<User> {
     return this.http.post<User>(`${this.apiUrl}/users`, user);
   }
-
   updateUser(username: string, user: User): Observable<User> {
     return this.http.post<User>(`${this.apiUrl}/users/update/${username}`, user);
   }

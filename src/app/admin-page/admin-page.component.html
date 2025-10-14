@@ -23,33 +23,46 @@
     <h2>Endpoints Admin</h2>
     <div class="Utilisateurs">
       <h3>Utilisateurs</h3>
-      <div class="create">
-        <h4>Créer un utilisateur</h4>
-        <input type="text" placeholder="Nom d'utilisateur" [(ngModel)]="createUserModel.nomUtilisateur">
-        <input type="email" placeholder="Email" [(ngModel)]="createUserModel.email">
-        <input type="password" placeholder="Mot de passe" [(ngModel)]="createUserModel.motDePasse">
-        <select [(ngModel)]="createUserModel.role">
-          <option value="user">user</option>
-          <option value="admin">admin</option>
-        </select>
-        <button (click)="createUser()">Créer</button>
-      </div>
-      <div class="update">
-        <h4>Modifier un utilisateur</h4>
-        <input type="text" placeholder="Nom d'utilisateur à modifier" [(ngModel)]="updateUserModel.usernameToUpdate">
-        <input type="text" placeholder="Nouveau nom d'utilisateur" [(ngModel)]="updateUserModel.nomUtilisateur">
-        <input type="email" placeholder="Nouvel email" [(ngModel)]="updateUserModel.email">
-        <input type="password" placeholder="Nouveau mot de passe" [(ngModel)]="updateUserModel.motDePasse">
-        <select [(ngModel)]="updateUserModel.role">
-          <option value="user">user</option>
-          <option value="admin">admin</option>
-        </select>
-        <button (click)="updateUser()">Modifier</button>
-      </div>
-      <div class="delete">
-        <h4>Supprimer un utilisateur</h4>
-        <input type="text" placeholder="Nom d'utilisateur à supprimer" [(ngModel)]="deleteUserModel.username">
-        <button (click)="deleteUser()">Supprimer</button>
+      <div class="read">
+        <h4>Voir un utilisateur</h4>
+        <input type="text" placeholder="Nom d'utilisateur" [(ngModel)]="readUserModel.username">
+        <button (click)="getUser()">Voir</button>
+        <div *ngIf="readUserResult">
+          <p><strong>ID:</strong> {{ readUserResult.idUtilisateur}}</p>
+          <p><strong>Nom d'utilisateur:</strong> {{ readUserResult.nomUtilisateur }}</p>
+          <p><strong>Email:</strong> {{ readUserResult.email }}</p>
+          <p><strong>Mot de passe:</strong> {{ readUserResult.motDePasse }}</p>
+          <p><strong>Rôle:</strong> {{ readUserResult.role }}</p>
+          <p><strong>Date de création:</strong> {{ readUserResult.dateCreation | date:'dd/MM/yyyy hh:mm' }}</p>
+        </div>
+        <div class="create">
+          <h4>Créer un utilisateur</h4>
+          <input type="text" placeholder="Nom d'utilisateur" [(ngModel)]="createUserModel.nomUtilisateur">
+          <input type="email" placeholder="Email" [(ngModel)]="createUserModel.email">
+          <input type="password" placeholder="Mot de passe" [(ngModel)]="createUserModel.motDePasse">
+          <select [(ngModel)]="createUserModel.role">
+            <option value="user">user</option>
+            <option value="admin">admin</option>
+          </select>
+          <button (click)="createUser()">Créer</button>
+        </div>
+        <div class="update">
+          <h4>Modifier un utilisateur</h4>
+          <input type="text" placeholder="Nom d'utilisateur à modifier" [(ngModel)]="updateUserModel.usernameToUpdate">
+          <input type="text" placeholder="Nouveau nom d'utilisateur" [(ngModel)]="updateUserModel.nomUtilisateur">
+          <input type="email" placeholder="Nouvel email" [(ngModel)]="updateUserModel.email">
+          <input type="password" placeholder="Nouveau mot de passe" [(ngModel)]="updateUserModel.motDePasse">
+          <select [(ngModel)]="updateUserModel.role">
+            <option value="user">user</option>
+            <option value="admin">admin</option>
+          </select>
+          <button (click)="updateUser()">Modifier</button>
+        </div>
+        <div class="delete">
+          <h4>Supprimer un utilisateur</h4>
+          <input type="text" placeholder="Nom d'utilisateur à supprimer" [(ngModel)]="deleteUserModel.username">
+          <button (click)="deleteUser()">Supprimer</button>
+        </div>
       </div>
     </div>
   </div>

@@ -4,4 +4,5 @@ export interface User {
    email: string;
    motDePasse: string;
    role: string; 
+   dateCreation: Date;
 }
