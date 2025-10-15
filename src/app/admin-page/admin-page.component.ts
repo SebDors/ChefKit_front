@@ -1,9 +1,9 @@
-import { Component, inject, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core'; // Removed 'inject' as it wasn't used
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AdminService } from '../services/admin.service';
-import { subscribeOn } from 'rxjs';
-import { FormsModule } from '@angular/forms'; // Import FormsModule
+// import { subscribeOn } from 'rxjs'; // 'subscribeOn' was imported but not used directly, can be removed if not needed elsewhere
+import { FormsModule } from '@angular/forms';
 import { User } from '../models/user.model';
 import { Recette } from '../models/recette.model';
 import { IngredientDetail } from '../models/ingredient-detail.model';
@@ -11,13 +11,16 @@ import { IngredientDetail } from '../models/ingredient-detail.model';
 @Component({
   selector: 'app-admin-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink], // Add FormsModule
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './admin-page.component.html',
   styleUrl: './admin-page.component.scss'
 })
 export class AdminPageComponent implements OnInit{
   isScrolled = false;
   currentYear = new Date().getFullYear();
+
+  // Nouvelle propriété pour gérer l'onglet actif
+  activeSection: 'users' | 'recettes' | 'ingredients' = 'users'; // Par défaut, afficher les utilisateurs
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
@@ -51,19 +54,23 @@ export class AdminPageComponent implements OnInit{
 
 
   constructor(private adminService: AdminService) { }
-  
-  ngOnInit(): void {
 
-  //appeler les services pour récupérer les données
-  this.adminService.getUserCount().subscribe(count => {
-    this.usersCount = count;
-  });
-  this.adminService.getRecetteCount().subscribe(count => {
-    this.recettesCount = count;
-  });
-  this.adminService.getIngredientCount().subscribe(count => {
-    this.ingredientsCount = count;
-  });
+  ngOnInit(): void {
+    //appeler les services pour récupérer les données
+    this.adminService.getUserCount().subscribe(count => {
+      this.usersCount = count;
+    });
+    this.adminService.getRecetteCount().subscribe(count => {
+      this.recettesCount = count;
+    });
+    this.adminService.getIngredientCount().subscribe(count => {
+      this.ingredientsCount = count;
+    });
+  }
+
+  // Nouvelle méthode pour changer l'onglet actif
+  setActiveSection(section: 'users' | 'recettes' | 'ingredients'): void {
+    this.activeSection = section;
   }
 
   getRecette(){
@@ -139,7 +146,7 @@ export class AdminPageComponent implements OnInit{
     this.adminService.updateUser(usernameToUpdate, payload as User).subscribe(
       response => {
         console.log('User updated successfully', response);
-        
+
         this.updateUserModel = { usernameToUpdate: '', nomUtilisateur: '', email: '', motDePasse: '', role: 'user' };
       },
       error => {
@@ -243,6 +250,3 @@ export class AdminPageComponent implements OnInit{
   }
 
 }
-
-
-  
