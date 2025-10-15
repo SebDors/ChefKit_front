@@ -19,7 +19,7 @@
       </div>
     </div>
   </div>
-  <div class="Enpoints">
+  <div class="Enpoints"> <!-- Ceci est le div "Enpoints" -->
     <h2>Endpoints Admin</h2>
     <div class="Utilisateurs">
       <h3>Utilisateurs</h3>
@@ -69,7 +69,7 @@
       <h3>Recettes</h3>
       <div class="read">
         <h4>Voir une recette</h4>
-        <input type="number" placeholder="ID de la recette" [(ngModel)]="readRecetteModel.id">
+        <input type="text" placeholder="Titre de la recette" [(ngModel)]="readRecetteModel.titre">
         <button (click)="getRecette()">Voir</button>
         <div *ngIf="readRecetteResult">
           <p><strong>ID:</strong> {{ readRecetteResult.idRecette }}</p>
@@ -95,7 +95,7 @@
       </div>
       <div class="update">
         <h4>Modifier une recette</h4>
-        <input type="number" placeholder="ID de la recette à modifier" [(ngModel)]="updateRecetteModel.idToUpdate">
+        <input type="text" placeholder="Titre de la recette à modifier" [(ngModel)]="updateRecetteModel.titreToUpdate">
         <input type="text" placeholder="Nouveau titre" [(ngModel)]="updateRecetteModel.titre">
         <input type="text" placeholder="Nouvelle description" [(ngModel)]="updateRecetteModel.description">
         <input type="text" placeholder="Nouvelles instructions" [(ngModel)]="updateRecetteModel.instructions">
@@ -107,9 +107,42 @@
       </div>
       <div class="delete">
         <h4>Supprimer une recette</h4>
-        <input type="number" placeholder="ID de la recette à supprimer" [(ngModel)]="deleteRecetteModel.id">
+        <input type="text" placeholder="Titre de la recette à supprimer" [(ngModel)]="deleteRecetteModel.titreToDelete"> <!-- CHANGÉ ICI -->
         <button (click)="deleteRecette()">Supprimer</button>
       </div>
     </div>
-  </div>
+
+    <!-- NOUVELLE SECTION POUR LES INGREDIENTS -->
+    <div class="Ingredients">
+      <h3>Ingrédients</h3>
+      <div class="read">
+        <h4>Voir un ingrédient</h4>
+        <input type="number" placeholder="ID de l'ingrédient" [(ngModel)]="readIngredientModel.id">
+        <button (click)="getIngredient()">Voir</button>
+        <div *ngIf="readIngredientResult">
+          <p><strong>ID:</strong> {{ readIngredientResult.idIngredient }}</p>
+          <p><strong>Nom:</strong> {{ readIngredientResult.nomIngredient }}</p>
+          <p><strong>Catégorie:</strong> {{ readIngredientResult.categorie }}</p>
+        </div>
+      </div>
+      <div class="create">
+        <h4>Créer un ingrédient</h4>
+        <input type="text" placeholder="Nom de l'ingrédient" [(ngModel)]="createIngredientModel.nomIngredient">
+        <input type="text" placeholder="Catégorie" [(ngModel)]="createIngredientModel.categorie">
+        <button (click)="createIngredient()">Créer</button>
+      </div>
+      <div class="update">
+        <h4>Modifier un ingrédient</h4>
+        <input type="number" placeholder="ID de l'ingrédient à modifier" [(ngModel)]="updateIngredientModel.idToUpdate">
+        <input type="text" placeholder="Nouveau nom de l'ingrédient" [(ngModel)]="updateIngredientModel.nomIngredient">
+        <input type="text" placeholder="Nouvelle catégorie" [(ngModel)]="updateIngredientModel.categorie">
+        <button (click)="updateIngredient()">Modifier</button>
+      </div>
+      <div class="delete">
+        <h4>Supprimer un ingrédient</h4>
+        <input type="number" placeholder="ID de l'ingrédient à supprimer" [(ngModel)]="deleteIngredientModel.id">
+        <button (click)="deleteIngredient()">Supprimer</button>
+      </div>
+    </div>
+  </div> <!-- CE DIV DOIT FERMER LE div class="Enpoints" -->
 </main>
