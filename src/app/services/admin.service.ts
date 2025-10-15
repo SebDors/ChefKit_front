@@ -54,4 +54,16 @@ export class AdminService {
   deleteRecette(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/recettes/${id}`);
   }
+
+  getRecetteByTitle(title: string): Observable<Recette> {
+    return this.http.get<Recette>(`${this.apiUrl}/recettes/titre/${title}`);
+  }
+
+  updateRecetteByTitle(title: string, recette: Recette): Observable<Recette> {
+    return this.http.post<Recette>(`${this.apiUrl}/recettes/titre/${title}`, recette);
+  }
+
+  deleteRecetteByTitle(title: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/recettes/titre/${title}`);
+  }
 }

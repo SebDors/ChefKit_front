@@ -27,11 +27,11 @@ export class AdminPageComponent implements OnInit{
   deleteUserModel = { username: '' };
 
   //recettes
-  readRecetteModel = { id: 0 };
+  readRecetteModel = { title: '' };
   readRecetteResult: Recette | null = null;
   createRecetteModel: Partial<Recette> = { titre: '', description: '', instructions: '', tempsPreparationMinutes: 0, tempsCuissonMinutes: 0, nombrePersonnes: 0, pathImage: '' };
-  updateRecetteModel: Partial<Recette> & { idToUpdate: number } = { idToUpdate: 0, titre: '', description: '', instructions: '', tempsPreparationMinutes: 0, tempsCuissonMinutes: 0, nombrePersonnes: 0, pathImage: '' };
-  deleteRecetteModel = { id: 0 };
+  updateRecetteModel: Partial<Recette> & { titleToUpdate: string } = { titleToUpdate: '', titre: '', description: '', instructions: '', tempsPreparationMinutes: 0, tempsCuissonMinutes: 0, nombrePersonnes: 0, pathImage: '' };
+  deleteRecetteModel = { title: '' };
 
   private adminService: AdminService = inject(AdminService);
   
@@ -50,7 +50,7 @@ export class AdminPageComponent implements OnInit{
   }
 
   getRecette(){
-    this.adminService.getRecetteById(this.readRecetteModel.id).subscribe(
+    this.adminService.getRecetteByTitle(this.readRecetteModel.title).subscribe(
       recette => {
         console.log('Recette details:', recette);
         this.readRecetteResult = recette;
@@ -147,11 +147,11 @@ export class AdminPageComponent implements OnInit{
   }
 
   updateRecette() {
-    const { idToUpdate, ...updatedData } = this.updateRecetteModel;
-    this.adminService.updateRecette(idToUpdate, updatedData as Recette).subscribe(
+    const { titleToUpdate, ...updatedData } = this.updateRecetteModel;
+    this.adminService.updateRecetteByTitle(titleToUpdate, updatedData as Recette).subscribe(
       response => {
         console.log('Recette updated successfully', response);
-        this.updateRecetteModel = { idToUpdate: 0, titre: '', description: '', instructions: '', tempsPreparationMinutes: 0, tempsCuissonMinutes: 0, nombrePersonnes: 0, pathImage: '' };
+        this.updateRecetteModel = { titleToUpdate: '', titre: '', description: '', instructions: '', tempsPreparationMinutes: 0, tempsCuissonMinutes: 0, nombrePersonnes: 0, pathImage: '' };
       },
       error => {
         console.error('Error updating recette', error);
@@ -160,11 +160,11 @@ export class AdminPageComponent implements OnInit{
   }
 
   deleteRecette() {
-    this.adminService.deleteRecette(this.deleteRecetteModel.id).subscribe(
+    this.adminService.deleteRecetteByTitle(this.deleteRecetteModel.title).subscribe(
       response => {
         console.log('Recette deleted successfully', response);
         this.adminService.getRecetteCount().subscribe(count => this.recettesCount = count);
-        this.deleteRecetteModel = { id: 0 };
+        this.deleteRecetteModel = { title: '' };
       },
       error => {
         console.error('Error deleting recette', error);
