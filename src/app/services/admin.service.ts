@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../models/user.model';
 import { Recette } from '../models/recette.model';
+import { Ingredient_unique } from '../models/ingredient_unique.model';
 
 @Injectable({
   providedIn: 'root'
@@ -65,5 +66,22 @@ export class AdminService {
 
   deleteRecetteByTitle(title: string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/recettes/titre/${title}`);
+  }
+
+  //ingredients
+  getIngredientByName(name: string): Observable<Ingredient_unique> {
+    return this.http.get<Ingredient_unique>(`${this.apiUrl}/ingredients/nom/${name}`);
+  }
+
+  createIngredient(ingredient: Ingredient_unique): Observable<Ingredient_unique> {
+    return this.http.post<Ingredient_unique>(`${this.apiUrl}/ingredients`, ingredient);
+  }
+
+  updateIngredientByName(name: string, ingredient: Ingredient_unique): Observable<Ingredient_unique> {
+    return this.http.post<Ingredient_unique>(`${this.apiUrl}/ingredients/update/${name}`, ingredient);
+  }
+
+  deleteIngredientByName(name: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/ingredients/delete/${name}`);
   }
 }

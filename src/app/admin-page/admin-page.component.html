@@ -114,5 +114,38 @@
         <button (click)="deleteRecette()">Supprimer</button>
       </div>
     </div>
+    <div class="Ingredients">
+      <h3>Ingrédients</h3>
+      <div class="read">
+        <h4>Voir un ingrédient</h4>
+        <input type="text" placeholder="Nom de l'ingrédient" [(ngModel)]="readIngredientModel.nom_ingredient">
+        <button (click)="getIngredient()">Voir</button>
+        <div *ngIf="readIngredientResult">
+          <p><strong>ID:</strong> {{ readIngredientResult.idIngredient }}</p>
+          <p><strong>Nom:</strong> {{ readIngredientResult.nomIngredient }}</p>
+          <p><strong>Catégorie:</strong> {{ readIngredientResult.categorie }}</p>
+        </div>
+      </div>
+      <div class="create">
+        <h4>Créer un ingrédient</h4>
+        <input type="text" placeholder="Nom" [(ngModel)]="createIngredientModel.nomIngredient">
+        <input type="text" placeholder="Catégorie" [(ngModel)]="createIngredientModel.categorie">
+        <button (click)="createIngredient()">Créer</button>
+      </div>
+      <div class="update">
+        <h4>Modifier un ingrédient</h4>
+        <input type="text" placeholder="Nom de l'ingrédient à modifier"
+          [(ngModel)]="updateIngredientModel.nom_ingredientToUpdate">
+        <input type="text" placeholder="Nouveau nom" [(ngModel)]="updateIngredientModel.nomIngredient">
+        <input type="text" placeholder="Nouvelle catégorie" [(ngModel)]="updateIngredientModel.categorie">
+        <button (click)="updateIngredient()">Modifier</button>
+      </div>
+      <div class="delete">
+        <h4>Supprimer un ingrédient</h4>
+        <input type="text" placeholder="Nom de l'ingrédient à supprimer"
+          [(ngModel)]="deleteIngredientModel.nom_ingredient">
+        <button (click)="deleteIngredient()">Supprimer</button>
+      </div>
+    </div>
   </div>
 </main>
