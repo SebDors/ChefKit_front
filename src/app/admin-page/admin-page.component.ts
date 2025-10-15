@@ -54,6 +54,15 @@ export class AdminPageComponent implements OnInit{
       recette => {
         console.log('Recette details:', recette);
         this.readRecetteResult = recette;
+        this.updateRecetteModel = {
+          titleToUpdate: recette.titre,
+          description: recette.description,
+          instructions: recette.instructions,
+          tempsPreparationMinutes: recette.tempsPreparationMinutes,
+          tempsCuissonMinutes: recette.tempsCuissonMinutes,
+          nombrePersonnes: recette.nombrePersonnes,
+          pathImage: recette.pathImage
+        };
       },
       error => {
         console.error('Error fetching recette details', error);
@@ -67,6 +76,13 @@ export class AdminPageComponent implements OnInit{
       user => {
         console.log('User details:', user);
         this.readUserResult = user;
+        this.updateUserModel = {
+          usernameToUpdate: user.nomUtilisateur,
+          nomUtilisateur: user.nomUtilisateur,
+          email: user.email,
+          motDePasse: user.motDePasse,
+          role: user.role
+        };
       },
       error => {
         console.error('Error fetching user details', error);
