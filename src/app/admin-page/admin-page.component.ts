@@ -1,6 +1,6 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, inject, OnInit, HostListener } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { AdminService } from '../services/admin.service';
 import { subscribeOn } from 'rxjs';
 import { FormsModule } from '@angular/forms'; // Import FormsModule
@@ -11,11 +11,19 @@ import { IngredientDetail } from '../models/ingredient-detail.model';
 @Component({
   selector: 'app-admin-page',
   standalone: true,
-  imports: [CommonModule, FormsModule], // Add FormsModule
+  imports: [CommonModule, FormsModule, RouterLink], // Add FormsModule
   templateUrl: './admin-page.component.html',
   styleUrl: './admin-page.component.scss'
 })
 export class AdminPageComponent implements OnInit{
+  isScrolled = false;
+  currentYear = new Date().getFullYear();
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    this.isScrolled = window.scrollY > 10;
+  }
+
   usersCount:number = 0;
   recettesCount:number = 0;
   ingredientsCount:number = 0;

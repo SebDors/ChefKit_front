@@ -1,3 +1,9 @@
+/* --- GLOBAL ADMIN STYLES --- */
+:host {
+  display: block;
+  background-color: #f9fafb; // Light grey background for the whole page
+}
+
 /* --- HEADER --- */
 .app-header {
   position: sticky;
@@ -7,6 +13,25 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   padding: var(--spacing-md) 0;
   transition: padding 0.3s ease, font-size 0.3s ease, box-shadow 0.3s ease;
+}
+
+.app-header.app-header--scrolled {
+  padding: var(--spacing-sm) 0;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.08);
+
+  .header__logo-icon {
+    height: 22px;
+    width: 22px;
+  }
+
+  .header__logo-text {
+    font-size: 1.5rem;
+  }
+
+  .header__actions .button {
+    font-size: 0.85rem;
+    padding: var(--spacing-xxs) var(--spacing-sm);
+  }
 }
 
 .header__inner {
@@ -46,69 +71,16 @@
   gap: var(--spacing-sm);
 }
 
-/* --- General Button Styles (from home-page) --- */
-.button {
-    display: inline-block;
-    font-family: var(--chefkit-font-family-sans);
-    font-size: 0.9rem;
-    font-weight: var(--chefkit-font-weight-semibold);
-    text-align: center;
-    cursor: pointer;
-    border-radius: var(--border-radius-md);
-    padding: var(--spacing-xs) var(--spacing-lg);
-    text-decoration: none;
-    border: 1px solid transparent;
-    transition: all 0.2s ease-in-out;
-    user-select: none;
-    line-height: 1.5;
-}
-
-.button--primary {
-    background-color: var(--chefkit-primary);
-    color: var(--chefkit-background-white);
-    box-shadow: 0 4px 12px rgba(var(--chefkit-primary-rgb), 0.2);
-
-    &:hover {
-        background-color: var(--chefkit-primary-hover);
-        box-shadow: 0 6px 16px rgba(var(--chefkit-primary-rgb), 0.25);
-        transform: translateY(-2px);
-    }
-}
-
-.button--secondary {
-    background-color: transparent;
-    border-color: var(--chefkit-border-light);
-    color: var(--chefkit-text-dark);
-
-    &:hover {
-        background-color: var(--chefkit-background-light);
-        border-color: var(--chefkit-border-medium);
-        color: var(--chefkit-text-dark);
-    }
-}
-
-.button--danger {
-  background-color: #e74c3c;
-  color: white;
-  border: none;
-
-  &:hover {
-    background-color: #c0392b;
-  }
-}
-
-
-/* --- ADMIN PAGE STYLES --- */
+/* --- MAIN CONTENT --- */
 .admin-main {
   padding: var(--spacing-xl) 0;
-  background-color: #f9fafb; // A light grey background
-  min-height: calc(100vh - 80px); // Adjust based on header height
+  min-height: calc(100vh - 180px); // Adjust based on header/footer height
 }
 
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 var(--spacing-md);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
 }
 
 .section-title {
@@ -120,9 +92,40 @@
   color: var(--chefkit-text-dark);
 }
 
+/* --- STATS --- */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
+}
+
+.stat-card {
+  background-color: var(--chefkit-background-white);
+  border-radius: var(--border-radius-xl);
+  padding: var(--spacing-lg);
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+}
+
+.stat-card__title {
+  font-size: 1.2rem;
+  font-weight: var(--chefkit-font-weight-semibold);
+  color: var(--chefkit-text-medium);
+  margin-bottom: var(--spacing-sm);
+}
+
+.stat-card__number {
+  font-size: 3rem;
+  font-weight: var(--chefkit-font-weight-heavy);
+  color: var(--chefkit-primary);
+  font-family: var(--chefkit-font-display);
+}
+
+/* --- ADMIN CARDS --- */
 .admin-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: var(--spacing-lg);
 }
 
@@ -130,30 +133,192 @@
   background-color: var(--chefkit-background-white);
   border-radius: var(--border-radius-xl);
   padding: var(--spacing-lg);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-  text-align: center;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
 
-.admin-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
+  }
 }
 
 .admin-card__title {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   font-weight: var(--chefkit-font-weight-bold);
   font-family: var(--chefkit-font-display);
   margin-bottom: var(--spacing-lg);
   color: var(--chefkit-text-dark);
+  text-align: center;
+  border-bottom: 1px solid var(--chefkit-border-light);
+  padding-bottom: var(--spacing-md);
 }
 
 .admin-card__actions {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-sm);
+  gap: var(--spacing-md);
+
+  h4 {
+    font-size: 1.1rem;
+    font-weight: var(--chefkit-font-weight-semibold);
+    margin-top: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+    color: var(--chefkit-text-dark);
+  }
 }
 
-.admin-card__actions .button {
+/* --- FORM ELEMENTS --- */
+.form-input {
   width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: 0.95rem;
+  border-radius: var(--border-radius-md);
+  border: 1px solid var(--chefkit-border-medium);
+  background-color: var(--chefkit-background-light);
+  transition: all 0.2s ease-in-out;
+  color: var(--chefkit-text-dark);
+
+  &:focus {
+    outline: none;
+    border-color: var(--chefkit-primary);
+    box-shadow: 0 0 0 3px rgba(var(--chefkit-primary-rgb), 0.4);
+    background-color: var(--chefkit-background-white);
+  }
+}
+
+/* --- BUTTONS (from home-page) --- */
+.button {
+  display: inline-block;
+  font-family: var(--chefkit-font-family-sans);
+  font-size: 0.9rem;
+  font-weight: var(--chefkit-font-weight-semibold);
+  text-align: center;
+  cursor: pointer;
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-xs) var(--spacing-lg);
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: all 0.2s ease-in-out;
+  user-select: none;
+  line-height: 1.5;
+  width: 100%; // Make buttons full-width inside cards
+}
+
+.button--primary {
+  background-color: var(--chefkit-primary);
+  color: var(--chefkit-background-white);
+  box-shadow: 0 4px 12px rgba(var(--chefkit-primary-rgb), 0.2);
+
+  &:hover {
+    background-color: var(--chefkit-primary-hover);
+    box-shadow: 0 6px 16px rgba(var(--chefkit-primary-rgb), 0.25);
+    transform: translateY(-2px);
+  }
+}
+
+.button--secondary {
+  background-color: transparent;
+  border-color: var(--chefkit-border-light);
+  color: var(--chefkit-text-dark);
+
+  &:hover {
+    background-color: var(--chefkit-background-light);
+    border-color: var(--chefkit-border-medium);
+    color: var(--chefkit-text-dark);
+  }
+}
+
+.button--danger {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+
+  &:hover {
+    background-color: #c0392b;
+    transform: translateY(-2px);
+  }
+}
+
+/* --- RESULT BOX --- */
+.result-box {
+  background-color: var(--chefkit-background-light);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-md);
+  margin-top: var(--spacing-sm);
+  border: 1px solid var(--chefkit-border-light);
+  font-size: 0.9rem;
+
+  p {
+    margin: 0 0 var(--spacing-xxs) 0;
+  }
+}
+
+/* --- FOOTER --- */
+.app-footer {
+  background-color: var(--chefkit-footer-bg);
+  color: var(--chefkit-footer-text);
+  padding: var(--spacing-lg) var(--spacing-md);
+  font-size: 0.9rem;
+  font-family: var(--chefkit-font-family-sans);
+}
+
+.footer__inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  gap: var(--spacing-lg);
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    text-align: left;
+    gap: var(--spacing-md);
+  }
+}
+
+.footer__brand {
+  margin-bottom: var(--spacing-sm);
+  @media (min-width: 768px) {
+    margin-bottom: 0;
+  }
+}
+
+.footer__logo-text {
+  font-size: 1.5rem;
+  font-weight: var(--chefkit-font-weight-bold);
+  color: var(--chefkit-background-white);
+  font-family: var(--chefkit-font-display);
+}
+
+.footer__slogan {
+  margin-top: var(--spacing-xxs);
+  font-size: 0.75rem;
+  color: var(--chefkit-footer-text);
+  font-family: var(--chefkit-font-family-sans);
+}
+
+.footer__nav {
+  display: flex;
+  gap: var(--spacing-xl);
+}
+
+.footer__nav-link {
+  color: var(--chefkit-footer-text);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--chefkit-background-white);
+    text-decoration: underline;
+  }
+}
+
+.footer__copyright {
+  font-size: 0.75rem;
+  color: var(--chefkit-footer-text);
+  margin-top: var(--spacing-sm);
+
+  @media (min-width: 768px) {
+    margin-top: 0;
+  }
 }
