@@ -124,6 +124,10 @@
               <p><strong>ID:</strong> {{ readRecetteResult.idRecette }}</p>
               <p><strong>Titre:</strong> {{ readRecetteResult.titre }}</p>
               <p><strong>Description:</strong> {{ readRecetteResult.description }}</p>
+              <p><strong>Instructions:</strong> {{ readRecetteResult.instructions }}</p>
+              <p><strong>Temps de préparation:</strong> {{ readRecetteResult.tempsPreparationMinutes }} minutes</p>
+              <p><strong>Temps de cuisson:</strong> {{ readRecetteResult.tempsCuissonMinutes }} minutes</p>
+              <p><strong>Nombre de personnes:</strong> {{ readRecetteResult.nombrePersonnes }}</p>
             </div>
 
             <h4>Créer une recette</h4>
@@ -139,6 +143,12 @@
             <h4>Modifier une recette</h4>
             <input type="text" placeholder="Titre à modifier" [(ngModel)]="updateRecetteModel.titreToUpdate" class="form-input">
             <input type="text" placeholder="Nouveau titre" [(ngModel)]="updateRecetteModel.titre" class="form-input">
+            <input type="text" placeholder="Nouvelle description" [(ngModel)]="updateRecetteModel.description" class="form-input">
+            <input type="text" placeholder="Nouvelles instructions" [(ngModel)]="updateRecetteModel.instructions" class="form-input">
+            <input type="number" placeholder="Nouveau temps de préparation" [(ngModel)]="updateRecetteModel.tempsPreparationMinutes" class="form-input">
+            <input type="number" placeholder="Nouveau temps de cuisson" [(ngModel)]="updateRecetteModel.tempsCuissonMinutes" class="form-input">
+            <input type="number" placeholder="Nouveau nombre de personnes" [(ngModel)]="updateRecetteModel.nombrePersonnes" class="form-input">
+            <input type="text" placeholder="Nouveau chemin de l'image" [(ngModel)]="updateRecetteModel.pathImage" class="form-input">
             <button (click)="updateRecette()" class="button button--primary">Modifier</button>
 
             <h4>Supprimer une recette</h4>
