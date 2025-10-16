@@ -18,13 +18,9 @@
 
 <!-- MAIN CONTENT -->
 <main class="admin-main">
-  <!-- NOUVELLE SECTION POUR LA BANNIÈRE AVEC IMAGE DE FOND -->
   <section class="admin-hero">
-    <!-- C'EST ICI LA MODIFICATION : AJOUT DE admin-hero__content -->
-    <div class="admin-hero__content container"> 
+    <div class="admin-hero__content container">
       <h1 class="section-title admin-hero__title">Tableau de Bord Administrateur</h1>
-
-      <!-- STATS -->
       <div class="stats-grid">
         <div class="stat-card">
           <h3 class="stat-card__title">Utilisateurs</h3>
@@ -41,10 +37,8 @@
       </div>
     </div>
   </section>
-  <!-- FIN DE LA NOUVELLE SECTION BANNIÈRE -->
 
   <div class="container">
-    <!-- NOUVELLE STRUCTURE POUR LES SECTIONS CRUD (inchangée) -->
     <div class="admin-dashboard-layout">
       <!-- Navigation latérale -->
       <nav class="admin-sidebar">
@@ -76,50 +70,70 @@
         <!-- USERS -->
         <div class="admin-card" *ngIf="activeSection === 'users'">
           <h2 class="admin-card__title">Gérer les Utilisateurs</h2>
-          <div class="admin-card__actions">
+          
+          <!-- Section "Voir un utilisateur" - EN HAUT -->
+          <div class="admin-view-section">
             <h4>Voir un utilisateur</h4>
-            <input type="text" placeholder="Nom d'utilisateur" [(ngModel)]="readUserModel.username" class="form-input">
-            <button (click)="getUser()" class="button button--secondary">Voir</button>
+            <div class="form-row">
+              <input type="text" placeholder="Nom d'utilisateur" [(ngModel)]="readUserModel.username" class="form-input">
+              <button (click)="getUser()" class="button button--secondary">Voir</button>
+            </div>
             <div *ngIf="readUserResult" class="result-box">
               <p><strong>ID:</strong> {{ readUserResult.idUtilisateur}}</p>
               <p><strong>Nom:</strong> {{ readUserResult.nomUtilisateur }}</p>
               <p><strong>Email:</strong> {{ readUserResult.email }}</p>
               <p><strong>Rôle:</strong> {{ readUserResult.role }}</p>
             </div>
+          </div>
 
-            <h4>Créer un utilisateur</h4>
-            <input type="text" placeholder="Nom d'utilisateur" [(ngModel)]="createUserModel.nomUtilisateur" class="form-input">
-            <input type="email" placeholder="Email" [(ngModel)]="createUserModel.email" class="form-input">
-            <input type="password" placeholder="Mot de passe" [(ngModel)]="createUserModel.motDePasse" class="form-input">
-            <select [(ngModel)]="createUserModel.role" class="form-input">
-              <option value="user">user</option>
-              <option value="admin">admin</option>
-            </select>
-            <button (click)="createUser()" class="button button--primary">Créer</button>
+          <!-- Grille des autres opérations - EN DESSOUS -->
+          <div class="admin-forms-grid">
+            <!-- Formulaire Créer un utilisateur -->
+            <div class="form-section">
+              <h4>Créer un utilisateur</h4>
+              <input type="text" placeholder="Nom d'utilisateur" [(ngModel)]="createUserModel.nomUtilisateur" class="form-input">
+              <input type="email" placeholder="Email" [(ngModel)]="createUserModel.email" class="form-input">
+              <input type="password" placeholder="Mot de passe" [(ngModel)]="createUserModel.motDePasse" class="form-input">
+              <select [(ngModel)]="createUserModel.role" class="form-input">
+                <option value="user">user</option>
+                <option value="admin">admin</option>
+              </select>
+              <button (click)="createUser()" class="button button--primary">Créer</button>
+            </div>
 
-            <h4>Modifier un utilisateur</h4>
-            <input type="text" placeholder="Nom d'utilisateur à modifier" [(ngModel)]="updateUserModel.usernameToUpdate" class="form-input">
-            <input type="text" placeholder="Nouveau nom" [(ngModel)]="updateUserModel.nomUtilisateur" class="form-input">
-            <input type="email" placeholder="Nouvel email" [(ngModel)]="updateUserModel.email" class="form-input">
-            <select [(ngModel)]="updateUserModel.role" class="form-input">
-              <option value="user">user</option>
-              <option value="admin">admin</option>
-            </select>
-            <button (click)="updateUser()" class="button button--primary">Modifier</button>
+            <!-- Formulaire Modifier un utilisateur -->
+            <div class="form-section">
+              <h4>Modifier un utilisateur</h4>
+              <input type="text" placeholder="Nom d'utilisateur à modifier" [(ngModel)]="updateUserModel.usernameToUpdate" class="form-input">
+              <input type="text" placeholder="Nouveau nom" [(ngModel)]="updateUserModel.nomUtilisateur" class="form-input">
+              <input type="email" placeholder="Nouvel email" [(ngModel)]="updateUserModel.email" class="form-input">
+              <select [(ngModel)]="updateUserModel.role" class="form-input">
+                <option value="user">user</option>
+                <option value="admin">admin</option>
+              </select>
+              <button (click)="updateUser()" class="button button--primary">Modifier</button>
+            </div>
 
-            <h4>Supprimer un utilisateur</h4>
-            <input type="text" placeholder="Nom d'utilisateur à supprimer" [(ngModel)]="deleteUserModel.username" class="form-input">
-            <button (click)="deleteUser()" class="button button--danger">Supprimer</button>
+            <!-- Formulaire Supprimer un utilisateur -->
+            <div class="form-section">
+              <h4>Supprimer un utilisateur</h4>
+              <input type="text" placeholder="Nom d'utilisateur à supprimer" [(ngModel)]="deleteUserModel.username" class="form-input">
+              <button (click)="deleteUser()" class="button button--danger">Supprimer</button>
+            </div>
           </div>
         </div>
 
         <!-- RECETTES -->
         <div class="admin-card" *ngIf="activeSection === 'recettes'">
           <h2 class="admin-card__title">Gérer les Recettes</h2>
-          <div class="admin-card__actions">
+          
+          <!-- Section "Voir une recette" - EN HAUT -->
+          <div class="admin-view-section">
             <h4>Voir une recette</h4>
-            <input type="text" placeholder="Titre de la recette" [(ngModel)]="readRecetteModel.titre" class="form-input">
-            <button (click)="getRecette()" class="button button--secondary">Voir</button>
+            <div class="form-row">
+              <input type="text" placeholder="Titre de la recette" [(ngModel)]="readRecetteModel.titre" class="form-input">
+              <button (click)="getRecette()" class="button button--secondary">Voir</button>
+            </div>
             <div *ngIf="readRecetteResult" class="result-box">
               <p><strong>ID:</strong> {{ readRecetteResult.idRecette }}</p>
               <p><strong>Titre:</strong> {{ readRecetteResult.titre }}</p>
@@ -129,61 +143,89 @@
               <p><strong>Temps de cuisson:</strong> {{ readRecetteResult.tempsCuissonMinutes }} minutes</p>
               <p><strong>Nombre de personnes:</strong> {{ readRecetteResult.nombrePersonnes }}</p>
             </div>
+          </div>
 
-            <h4>Créer une recette</h4>
-            <input type="text" placeholder="Titre" [(ngModel)]="createRecetteModel.titre" class="form-input">
-            <input type="text" placeholder="Description" [(ngModel)]="createRecetteModel.description" class="form-input">
-            <input type="text" placeholder="Instructions" [(ngModel)]="createRecetteModel.instructions" class="form-input">
-            <input type="number" placeholder="Temps de préparation" [(ngModel)]="createRecetteModel.tempsPreparationMinutes" class="form-input">
-            <input type="number" placeholder="Temps de cuisson" [(ngModel)]="createRecetteModel.tempsCuissonMinutes" class="form-input">
-            <input type="number" placeholder="Nombre de personnes" [(ngModel)]="createRecetteModel.nombrePersonnes" class="form-input">
-            <input type="text" placeholder="Chemin de l'image" [(ngModel)]="createRecetteModel.pathImage" class="form-input">
-            <button (click)="createRecette()" class="button button--primary">Créer</button>
+          <!-- Grille des autres opérations - EN DESSOUS -->
+          <div class="admin-forms-grid">
+            <!-- Formulaire Créer une recette -->
+            <div class="form-section">
+              <h4>Créer une recette</h4>
+              <input type="text" placeholder="Titre" [(ngModel)]="createRecetteModel.titre" class="form-input">
+              <input type="text" placeholder="Description" [(ngModel)]="createRecetteModel.description" class="form-input">
+              <input type="text" placeholder="Instructions" [(ngModel)]="createRecetteModel.instructions" class="form-input">
+              <input type="number" placeholder="Temps de préparation" [(ngModel)]="createRecetteModel.tempsPreparationMinutes" class="form-input">
+              <input type="number" placeholder="Temps de cuisson" [(ngModel)]="createRecetteModel.tempsCuissonMinutes" class="form-input">
+              <input type="number" placeholder="Nombre de personnes" [(ngModel)]="createRecetteModel.nombrePersonnes" class="form-input">
+              <input type="text" placeholder="Chemin de l'image" [(ngModel)]="createRecetteModel.pathImage" class="form-input">
+              <button (click)="createRecette()" class="button button--primary">Créer</button>
+            </div>
 
-            <h4>Modifier une recette</h4>
-            <input type="text" placeholder="Titre à modifier" [(ngModel)]="updateRecetteModel.titreToUpdate" class="form-input">
-            <input type="text" placeholder="Nouveau titre" [(ngModel)]="updateRecetteModel.titre" class="form-input">
-            <input type="text" placeholder="Nouvelle description" [(ngModel)]="updateRecetteModel.description" class="form-input">
-            <input type="text" placeholder="Nouvelles instructions" [(ngModel)]="updateRecetteModel.instructions" class="form-input">
-            <input type="number" placeholder="Nouveau temps de préparation" [(ngModel)]="updateRecetteModel.tempsPreparationMinutes" class="form-input">
-            <input type="number" placeholder="Nouveau temps de cuisson" [(ngModel)]="updateRecetteModel.tempsCuissonMinutes" class="form-input">
-            <input type="number" placeholder="Nouveau nombre de personnes" [(ngModel)]="updateRecetteModel.nombrePersonnes" class="form-input">
-            <input type="text" placeholder="Nouveau chemin de l'image" [(ngModel)]="updateRecetteModel.pathImage" class="form-input">
-            <button (click)="updateRecette()" class="button button--primary">Modifier</button>
+            <!-- Formulaire Modifier une recette -->
+            <div class="form-section">
+              <h4>Modifier une recette</h4>
+              <input type="text" placeholder="Titre à modifier" [(ngModel)]="updateRecetteModel.titreToUpdate" class="form-input">
+              <input type="text" placeholder="Nouveau titre" [(ngModel)]="updateRecetteModel.titre" class="form-input">
+              <input type="text" placeholder="Nouvelle description" [(ngModel)]="updateRecetteModel.description" class="form-input">
+              <input type="text" placeholder="Nouvelles instructions" [(ngModel)]="updateRecetteModel.instructions" class="form-input">
+              <input type="number" placeholder="Nouveau temps de préparation" [(ngModel)]="updateRecetteModel.tempsPreparationMinutes" class="form-input">
+              <input type="number" placeholder="Nouveau temps de cuisson" [(ngModel)]="updateRecetteModel.tempsCuissonMinutes" class="form-input">
+              <input type="number" placeholder="Nouveau nombre de personnes" [(ngModel)]="updateRecetteModel.nombrePersonnes" class="form-input">
+              <input type="text" placeholder="Nouveau chemin de l'image" [(ngModel)]="updateRecetteModel.pathImage" class="form-input">
+              <button (click)="updateRecette()" class="button button--primary">Modifier</button>
+            </div>
 
-            <h4>Supprimer une recette</h4>
-            <input type="text" placeholder="Titre à supprimer" [(ngModel)]="deleteRecetteModel.titreToDelete" class="form-input">
-            <button (click)="deleteRecette()" class="button button--danger">Supprimer</button>
+            <!-- Formulaire Supprimer une recette -->
+            <div class="form-section">
+              <h4>Supprimer une recette</h4>
+              <input type="text" placeholder="Titre à supprimer" [(ngModel)]="deleteRecetteModel.titreToDelete" class="form-input">
+              <button (click)="deleteRecette()" class="button button--danger">Supprimer</button>
+            </div>
           </div>
         </div>
 
         <!-- INGRÉDIENTS -->
         <div class="admin-card" *ngIf="activeSection === 'ingredients'">
           <h2 class="admin-card__title">Gérer les Ingrédients</h2>
-          <div class="admin-card__actions">
+          
+          <!-- Section "Voir un ingrédient" - EN HAUT -->
+          <div class="admin-view-section">
             <h4>Voir un ingrédient</h4>
-            <input type="number" placeholder="ID de l'ingrédient" [(ngModel)]="readIngredientModel.id" class="form-input">
-            <button (click)="getIngredient()" class="button button--secondary">Voir</button>
+            <div class="form-row">
+              <input type="number" placeholder="ID de l'ingrédient" [(ngModel)]="readIngredientModel.id" class="form-input">
+              <button (click)="getIngredient()" class="button button--secondary">Voir</button>
+            </div>
             <div *ngIf="readIngredientResult" class="result-box">
               <p><strong>ID:</strong> {{ readIngredientResult.idIngredient }}</p>
               <p><strong>Nom:</strong> {{ readIngredientResult.nomIngredient }}</p>
               <p><strong>Catégorie:</strong> {{ readIngredientResult.categorie }}</p>
             </div>
+          </div>
 
-            <h4>Créer un ingrédient</h4>
-            <input type="text" placeholder="Nom de l'ingrédient" [(ngModel)]="createIngredientModel.nomIngredient" class="form-input">
-            <input type="text" placeholder="Catégorie" [(ngModel)]="createIngredientModel.categorie" class="form-input">
-            <button (click)="createIngredient()" class="button button--primary">Créer</button>
+          <!-- Grille des autres opérations - EN DESSOUS -->
+          <div class="admin-forms-grid">
+            <!-- Formulaire Créer un ingrédient -->
+            <div class="form-section">
+              <h4>Créer un ingrédient</h4>
+              <input type="text" placeholder="Nom de l'ingrédient" [(ngModel)]="createIngredientModel.nomIngredient" class="form-input">
+              <input type="text" placeholder="Catégorie" [(ngModel)]="createIngredientModel.categorie" class="form-input">
+              <button (click)="createIngredient()" class="button button--primary">Créer</button>
+            </div>
 
-            <h4>Modifier un ingrédient</h4>
-            <input type="number" placeholder="ID à modifier" [(ngModel)]="updateIngredientModel.idToUpdate" class="form-input">
-            <input type="text" placeholder="Nouveau nom" [(ngModel)]="updateIngredientModel.nomIngredient" class="form-input">
-            <input type="text" placeholder="Nouvelle catégorie" [(ngModel)]="updateIngredientModel.categorie" class="form-input">
-            <button (click)="updateIngredient()" class="button button--primary">Modifier</button>
+            <!-- Formulaire Modifier un ingrédient -->
+            <div class="form-section">
+              <h4>Modifier un ingrédient</h4>
+              <input type="number" placeholder="ID à modifier" [(ngModel)]="updateIngredientModel.idToUpdate" class="form-input">
+              <input type="text" placeholder="Nouveau nom" [(ngModel)]="updateIngredientModel.nomIngredient" class="form-input">
+              <input type="text" placeholder="Nouvelle catégorie" [(ngModel)]="updateIngredientModel.categorie" class="form-input">
+              <button (click)="updateIngredient()" class="button button--primary">Modifier</button>
+            </div>
 
-            <h4>Supprimer un ingrédient</h4>
-            <input type="number" placeholder="ID à supprimer" [(ngModel)]="deleteIngredientModel.id" class="form-input">
-            <button (click)="deleteIngredient()" class="button button--danger">Supprimer</button>
+            <!-- Formulaire Supprimer un ingrédient -->
+            <div class="form-section">
+              <h4>Supprimer un ingrédient</h4>
+              <input type="number" placeholder="ID à supprimer" [(ngModel)]="deleteIngredientModel.id" class="form-input">
+              <button (click)="deleteIngredient()" class="button button--danger">Supprimer</button>
+            </div>
           </div>
         </div>
       </div>
