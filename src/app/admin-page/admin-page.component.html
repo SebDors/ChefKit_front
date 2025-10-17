@@ -77,6 +77,9 @@
               <p><strong>Mot de passe:</strong> {{ readUserResult.motDePasse }}</p>
               <p><strong>Rôle:</strong> {{ readUserResult.role }}</p>
             </div>
+            <div *ngIf="userError" class="error-message">
+              {{ userError }}
+            </div>
           </div>
 
           <!-- Grille des autres opérations - EN DESSOUS -->
@@ -144,6 +147,9 @@
               <p><strong>Temps de cuisson:</strong> {{ readRecetteResult.tempsCuissonMinutes }} minutes</p>
               <p><strong>Nombre de personnes:</strong> {{ readRecetteResult.nombrePersonnes }}</p>
               <img src="{{ readRecetteResult.pathImage }}" alt="Image de la recette" class="recipe-image">
+            </div>
+            <div *ngIf="recetteError" class="error-message">
+              {{ recetteError }}
             </div>
           </div>
 
@@ -215,6 +221,9 @@
               <p><strong>ID:</strong> {{ readIngredientResult.idIngredient }}</p>
               <p><strong>Nom:</strong> {{ readIngredientResult.nomIngredient }}</p>
               <p><strong>Catégorie:</strong> {{ readIngredientResult.categorie }}</p>
+            </div>
+            <div *ngIf="ingredientError" class="error-message">
+              {{ ingredientError }}
             </div>
           </div>
 

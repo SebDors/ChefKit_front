@@ -33,6 +33,7 @@ export class AdminPageComponent implements OnInit{
   // Models for the forms
   readUserModel = { username: '' };
   readUserResult: User | null = null;
+  userError: string = '';
   createUserModel: Partial<User> = { nomUtilisateur: '', email: '', motDePasse: '', role: 'user' };
   updateUserModel: Partial<User> & { usernameToUpdate: string } = { usernameToUpdate: '', nomUtilisateur: '', email: '', motDePasse: '', role: 'user' };
   deleteUserModel = { username: '' };
@@ -40,6 +41,7 @@ export class AdminPageComponent implements OnInit{
   //recettes
   readRecetteModel = { titre: '' };
   readRecetteResult: Recette | null = null;
+  recetteError: string = '';
   createRecetteModel: Partial<Recette> = { titre: '', description: '', instructions: '', tempsPreparationMinutes: 0, tempsCuissonMinutes: 0, nombrePersonnes: 0, pathImage: '' };
   updateRecetteModel: Partial<Recette> & { titleToUpdate: string } = { titleToUpdate: '', titre: '', description: '', instructions: '', tempsPreparationMinutes: 0, tempsCuissonMinutes: 0, nombrePersonnes: 0, pathImage: '' };
   deleteRecetteModel = { title: '' };
@@ -47,6 +49,7 @@ export class AdminPageComponent implements OnInit{
   // Ingredients
   readIngredientModel = { nom_ingredient: '' };
   readIngredientResult: IngredientDetail | null = null;
+  ingredientError: string = '';
   createIngredientModel: Partial<IngredientDetail> = { nomIngredient: '', categorie: '' };
   updateIngredientModel: Partial<IngredientDetail> & { nom_ingredientToUpdate: string } = { nom_ingredientToUpdate: '', nomIngredient: '', categorie: '' };
   deleteIngredientModel = { nom_ingredient: '' };
@@ -75,6 +78,7 @@ export class AdminPageComponent implements OnInit{
       user => {
         console.log('User details:', user);
         this.readUserResult = user;
+        this.userError = '';
         this.updateUserModel = {
           usernameToUpdate: user.nomUtilisateur,
           ...user
@@ -83,6 +87,7 @@ export class AdminPageComponent implements OnInit{
       error => {
         console.error('Error fetching user details', error);
         this.readUserResult = null;
+        this.userError = error.error.message;
       }
     );
   }
@@ -134,6 +139,7 @@ export class AdminPageComponent implements OnInit{
       recette => {
         console.log('Recette details:', recette);
         this.readRecetteResult = recette;
+        this.recetteError = '';
         this.updateRecetteModel = {
           titleToUpdate: recette.titre,
           ...recette
@@ -142,6 +148,7 @@ export class AdminPageComponent implements OnInit{
       error => {
         console.error('Error fetching recette details', error);
         this.readRecetteResult = null;
+        this.recetteError = error.error.message;
       }
     );
   }
@@ -191,6 +198,7 @@ export class AdminPageComponent implements OnInit{
       ingredient => {
         console.log('Ingredient details:', ingredient);
         this.readIngredientResult = ingredient;
+        this.ingredientError = '';
         this.updateIngredientModel = {
           nom_ingredientToUpdate: ingredient.nomIngredient,
           ...ingredient
@@ -199,6 +207,7 @@ export class AdminPageComponent implements OnInit{
       error => {
         console.error('Error fetching ingredient details', error);
         this.readIngredientResult = null;
+        this.ingredientError = error.error.message;
       }
     );
   }
