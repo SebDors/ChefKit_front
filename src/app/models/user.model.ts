@@ -3,6 +3,5 @@ export interface User {
    nomUtilisateur: string;
    email: string;
    motDePasse: string;
-   role: string; 
-   dateCreation: Date;
+   role: string;
 }

@@ -1,23 +1,34 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, HostListener, inject } from '@angular/core'; // Removed 'inject' as it wasn't used
 import { RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { AdminService } from '../services/admin.service';
 import { FormsModule } from '@angular/forms';
 import { User } from '../models/user.model';
 import { Recette } from '../models/recette.model';
-import { Ingredient_unique } from '../models/ingredient_unique.model';
+import { IngredientDetail } from '../models/ingredient-detail.model';
 
 @Component({
   selector: 'app-admin-page',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './admin-page.component.html',
   styleUrls: ['./admin-page.component.scss']
 })
-export class AdminPageComponent implements OnInit {
-  usersCount: number = 0;
-  recettesCount: number = 0;
-  ingredientsCount: number = 0;
+export class AdminPageComponent implements OnInit{
+  isScrolled = false;
+  currentYear = new Date().getFullYear();
+
+  // Nouvelle propriété pour gérer l'onglet actif
+  activeSection: 'users' | 'recettes' | 'ingredients' = 'users'; // Par défaut, afficher les utilisateurs
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    this.isScrolled = window.scrollY > 10;
+  }
+
+  usersCount:number = 0;
+  recettesCount:number = 0;
+  ingredientsCount:number = 0;
 
   // Models for the forms
   readUserModel = { username: '' };
@@ -26,8 +37,8 @@ export class AdminPageComponent implements OnInit {
   updateUserModel: Partial<User> & { usernameToUpdate: string } = { usernameToUpdate: '', nomUtilisateur: '', email: '', motDePasse: '', role: 'user' };
   deleteUserModel = { username: '' };
 
-  // Recettes
-  readRecetteModel = { title: '' };
+  //recettes
+  readRecetteModel = { titre: '' };
   readRecetteResult: Recette | null = null;
   createRecetteModel: Partial<Recette> = { titre: '', description: '', instructions: '', tempsPreparationMinutes: 0, tempsCuissonMinutes: 0, nombrePersonnes: 0, pathImage: '' };
   updateRecetteModel: Partial<Recette> & { titleToUpdate: string } = { titleToUpdate: '', titre: '', description: '', instructions: '', tempsPreparationMinutes: 0, tempsCuissonMinutes: 0, nombrePersonnes: 0, pathImage: '' };
@@ -35,9 +46,9 @@ export class AdminPageComponent implements OnInit {
 
   // Ingredients
   readIngredientModel = { nom_ingredient: '' };
-  readIngredientResult: Ingredient_unique | null = null;
-  createIngredientModel: Partial<Ingredient_unique> = { nomIngredient: '', categorie: '' };
-  updateIngredientModel: Partial<Ingredient_unique> & { nom_ingredientToUpdate: string } = { nom_ingredientToUpdate: '', nomIngredient: '', categorie: '' };
+  readIngredientResult: IngredientDetail | null = null;
+  createIngredientModel: Partial<IngredientDetail> = { nomIngredient: '', categorie: '' };
+  updateIngredientModel: Partial<IngredientDetail> & { nom_ingredientToUpdate: string } = { nom_ingredientToUpdate: '', nomIngredient: '', categorie: '' };
   deleteIngredientModel = { nom_ingredient: '' };
 
   private adminService: AdminService = inject(AdminService);
@@ -54,12 +65,20 @@ export class AdminPageComponent implements OnInit {
     });
   }
 
-  // User methods
-  getUser() {
+  // Nouvelle méthode pour changer l'onglet actif
+  setActiveSection(section: 'users' | 'recettes' | 'ingredients'): void {
+    this.activeSection = section;
+  }
+
+  getUser(){
     this.adminService.getUser(this.readUserModel.username).subscribe(
       user => {
         console.log('User details:', user);
         this.readUserResult = user;
+        this.updateUserModel = {
+          usernameToUpdate: user.nomUtilisateur,
+          ...user
+        };
       },
       error => {
         console.error('Error fetching user details', error);
@@ -67,6 +86,7 @@ export class AdminPageComponent implements OnInit {
       }
     );
   }
+
 
   createUser() {
     this.adminService.createUser(this.createUserModel as User).subscribe(
@@ -86,6 +106,7 @@ export class AdminPageComponent implements OnInit {
     this.adminService.updateUser(usernameToUpdate, updatedData as User).subscribe(
       response => {
         console.log('User updated successfully', response);
+
         this.updateUserModel = { usernameToUpdate: '', nomUtilisateur: '', email: '', motDePasse: '', role: 'user' };
       },
       error => {
@@ -108,8 +129,8 @@ export class AdminPageComponent implements OnInit {
   }
 
   // Recette methods
-  getRecette() {
-    this.adminService.getRecetteByTitle(this.readRecetteModel.title).subscribe(
+  getRecette(){
+    this.adminService.getRecette(this.readRecetteModel.titre).subscribe(
       recette => {
         console.log('Recette details:', recette);
         this.readRecetteResult = recette;
@@ -140,7 +161,7 @@ export class AdminPageComponent implements OnInit {
 
   updateRecette() {
     const { titleToUpdate, ...updatedData } = this.updateRecetteModel;
-    this.adminService.updateRecetteByTitle(titleToUpdate, updatedData as Recette).subscribe(
+    this.adminService.updateRecette(titleToUpdate, updatedData as Recette).subscribe(
       response => {
         console.log('Recette updated successfully', response);
         this.updateRecetteModel = { titleToUpdate: '', titre: '', description: '', instructions: '', tempsPreparationMinutes: 0, tempsCuissonMinutes: 0, nombrePersonnes: 0, pathImage: '' };
@@ -152,7 +173,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   deleteRecette() {
-    this.adminService.deleteRecetteByTitle(this.deleteRecetteModel.title).subscribe(
+    this.adminService.deleteRecette(this.deleteRecetteModel.title).subscribe(
       response => {
         console.log('Recette deleted successfully', response);
         this.adminService.getRecetteCount().subscribe(count => this.recettesCount = count);
@@ -183,7 +204,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   createIngredient() {
-    this.adminService.createIngredient(this.createIngredientModel as Ingredient_unique).subscribe(
+    this.adminService.createIngredient(this.createIngredientModel as IngredientDetail).subscribe(
       response => {
         console.log('Ingredient created successfully', response);
         this.adminService.getIngredientCount().subscribe(count => this.ingredientsCount = count);
@@ -197,7 +218,7 @@ export class AdminPageComponent implements OnInit {
 
   updateIngredient() {
     const { nom_ingredientToUpdate, ...updatedData } = this.updateIngredientModel;
-    this.adminService.updateIngredientByName(nom_ingredientToUpdate, updatedData as Ingredient_unique).subscribe(
+    this.adminService.updateIngredientByName(nom_ingredientToUpdate, updatedData as IngredientDetail).subscribe(
       response => {
         console.log('Ingredient updated successfully', response);
         this.updateIngredientModel = { nom_ingredientToUpdate: '', nomIngredient: '', categorie: '' };

@@ -1,4 +1,9 @@
-/* --- HEADER --- */
+:host {
+  display: block;
+  background-color: #f9fafb; // Light grey background for the whole page
+}
+
+/* --- HEADER (inchangé) --- */
 .app-header {
   position: sticky;
   top: 0;
@@ -7,6 +12,25 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   padding: var(--spacing-md) 0;
   transition: padding 0.3s ease, font-size 0.3s ease, box-shadow 0.3s ease;
+
+  &.app-header--scrolled {
+    padding: var(--spacing-sm) 0;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.08);
+
+    .header__logo-icon {
+      height: 22px;
+      width: 22px;
+    }
+
+    .header__logo-text {
+      font-size: 1.5rem;
+    }
+
+    .header__actions .button {
+      font-size: 0.85rem;
+      padding: var(--spacing-xxs) var(--spacing-sm);
+    }
+  }
 }
 
 .header__inner {
@@ -46,45 +70,349 @@
   gap: var(--spacing-sm);
 }
 
-/* --- General Button Styles (from home-page) --- */
-.button {
-    display: inline-block;
-    font-family: var(--chefkit-font-family-sans);
-    font-size: 0.9rem;
-    font-weight: var(--chefkit-font-weight-semibold);
-    text-align: center;
-    cursor: pointer;
+/* --- MAIN CONTENT --- */
+.admin-main {
+  padding: 0 0 var(--spacing-xl) 0;
+  min-height: calc(100vh - 180px);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+/* --- ADMIN HERO SECTION (NEW) --- */
+.admin-hero {
+  position: relative;
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: var(--chefkit-background-white);
+  background-image: url('/assets/images/admin-back.jpg'); /* Utilise ton image */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: var(--spacing-xxl) var(--spacing-md);
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 1;
+  }
+
+  .admin-hero__content {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    width: 100%;
+  }
+
+  .admin-hero__title {
+    font-size: 3.5rem;
+    font-weight: var(--chefkit-font-weight-heavy);
+    margin-bottom: var(--spacing-lg);
+    font-family: var(--chefkit-font-display);
+    line-height: 1.1;
+    color: var(--chefkit-background-white);
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+
+    @media (min-width: 768px) {
+      font-size: 5.2rem;
+    }
+  }
+}
+
+.stats-grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-xl);
+}
+
+.stat-card {
+  background-color: rgba(30, 30, 30, 0.50);
+  backdrop-filter: blur(20px) saturate(2);
+  -webkit-backdrop-filter: blur(20px) saturate(2);
+  border-radius: var(--border-radius-xl);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  padding: var(--spacing-lg);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 150px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  }
+}
+
+.stat-card__title {
+  font-size: 1.3rem;
+  font-weight: var(--chefkit-font-weight-semibold);
+  color: #FFFFFF;
+  margin-bottom: var(--spacing-xs);
+}
+
+.stat-card__number {
+  font-size: 3rem;
+  font-weight: var(--chefkit-font-weight-heavy);
+  color: #FFFFFF;
+  font-family: var(--chefkit-font-display);
+  margin: 0;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* --- ADMIN DASHBOARD LAYOUT (inchangé) --- */
+.admin-dashboard-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-lg);
+  padding-bottom: var(--spacing-xl);
+
+  @media (min-width: 768px) {
+    grid-template-columns: 250px 1fr;
+  }
+}
+
+.admin-sidebar {
+  background-color: var(--chefkit-background-white);
+  border-radius: var(--border-radius-xl);
+  padding: var(--spacing-md);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+
+  @media (max-width: 767px) {
+    flex-direction: row;
+    overflow-x: auto;
+    padding: var(--spacing-sm);
     border-radius: var(--border-radius-md);
-    padding: var(--spacing-xs) var(--spacing-lg);
-    text-decoration: none;
-    border: 1px solid transparent;
-    transition: all 0.2s ease-in-out;
-    user-select: none;
-    line-height: 1.5;
+    margin-bottom: var(--spacing-lg);
+  }
+}
+
+.admin-sidebar__item {
+  display: block;
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: transparent;
+  border: none;
+  border-radius: var(--border-radius-md);
+  text-align: left;
+  font-size: 1rem;
+  font-weight: var(--chefkit-font-weight-medium);
+  color: var(--chefkit-text-dark);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background-color: var(--chefkit-background-light);
+    color: var(--chefkit-primary);
+  }
+
+  &--active {
+    background-color: var(--chefkit-primary);
+    color: var(--chefkit-background-white);
+    font-weight: var(--chefkit-font-weight-semibold);
+    box-shadow: 0 2px 8px rgba(var(--chefkit-primary-rgb), 0.2);
+
+    &:hover {
+      background-color: var(--chefkit-primary-hover);
+      color: var(--chefkit-background-white);
+    }
+  }
+
+  @media (max-width: 767px) {
+    flex-shrink: 0;
+    width: auto;
+    white-space: nowrap;
+    text-align: center;
+  }
+}
+
+.admin-content {
+  // Styles pour le conteneur du contenu des onglets
+}
+
+/* --- ADMIN CARDS (MODIFIÉ) --- */
+.admin-card {
+  background-color: var(--chefkit-background-white);
+  border-radius: var(--border-radius-xl);
+  padding: var(--spacing-lg);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+  // Ajout du `display: flex` et `flex-direction: column`
+  // pour gérer l'espacement entre la section "Voir" et la grille des autres formulaires.
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg); // Espacement entre la section "Voir" et la grille
+
+  &:hover {
+    transform: none;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+  }
+}
+
+.admin-card__title {
+  font-size: 1.8rem;
+  font-weight: var(--chefkit-font-weight-bold);
+  font-family: var(--chefkit-font-display);
+  margin-bottom: var(--spacing-md); // Réduit un peu le margin pour être cohérent avec le gap
+  color: var(--chefkit-text-dark);
+  text-align: center;
+  border-bottom: 1px solid var(--chefkit-border-light);
+  padding-bottom: var(--spacing-md);
+}
+
+// NOUVELLE SECTION POUR "VOIR"
+.admin-view-section {
+  background-color: var(--chefkit-background-light); // Une couleur de fond légèrement différente pour la distinguer
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-md);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03); // Ombre légère
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm); // Espacement interne
+
+  h4 {
+    font-size: 1.1rem;
+    font-weight: var(--chefkit-font-weight-semibold);
+    margin-top: 0;
+    margin-bottom: var(--spacing-xs);
+    color: var(--chefkit-text-dark);
+    text-align: left;
+  }
+}
+
+// Ligne pour l'input et le bouton "Voir" côte à côte
+.form-row {
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+
+  .form-input {
+    flex-grow: 1; // L'input prend le maximum d'espace disponible
+  }
+  .button--secondary {
+    flex-shrink: 0; // Le bouton ne rétrécit pas
+    width: auto;
+  }
+}
+
+
+// GRILLE DES AUTRES FORMULAIRES (Créer, Modifier, Supprimer)
+.admin-forms-grid {
+  display: grid;
+  grid-template-columns: 1fr; // Par défaut une colonne sur mobile
+  gap: var(--spacing-lg); // Espacement entre les formulaires
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr); // Deux colonnes sur tablette et desktop
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr); // Trois colonnes sur les grands écrans
+  }
+}
+
+.form-section {
+  background-color: var(--chefkit-background-white);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-md);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+
+  h4 {
+    font-size: 1.1rem;
+    font-weight: var(--chefkit-font-weight-semibold);
+    margin-top: 0;
+    margin-bottom: var(--spacing-xs);
+    color: var(--chefkit-text-dark);
+    text-align: left;
+  }
+
+  .button {
+    width: 100%; // Les boutons dans cette grille reprennent 100% de la largeur de leur section
+    margin-top: var(--spacing-xs); // Petit espacement au-dessus des boutons
+  }
+}
+
+/* --- FORM ELEMENTS (inchangé) --- */
+.form-input {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: 0.95rem;
+  border-radius: var(--border-radius-md);
+  border: 1px solid var(--chefkit-border-medium);
+  background-color: var(--chefkit-background-light);
+  transition: all 0.2s ease-in-out;
+  color: var(--chefkit-text-dark);
+  box-sizing: border-box;
+
+  &:focus {
+    outline: none;
+    border-color: var(--chefkit-primary);
+    box-shadow: 0 0 0 3px rgba(var(--chefkit-primary-rgb), 0.4);
+    background-color: var(--chefkit-background-white);
+  }
+}
+
+/* --- BUTTONS (MODIFIÉ) --- */
+.button {
+  display: inline-block;
+  font-family: var(--chefkit-font-family-sans);
+  font-size: 0.9rem;
+  font-weight: var(--chefkit-font-weight-semibold);
+  text-align: center;
+  cursor: pointer;
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-xs) var(--spacing-lg);
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: all 0.2s ease-in-out;
+  user-select: none;
+  line-height: 1.5;
+  // La largeur est gérée par les conteneurs parents (.form-row ou .form-section)
+  // pour plus de flexibilité. La valeur par défaut 'width: 100%' n'est plus nécessaire ici.
 }
 
 .button--primary {
-    background-color: var(--chefkit-primary);
-    color: var(--chefkit-background-white);
-    box-shadow: 0 4px 12px rgba(var(--chefkit-primary-rgb), 0.2);
+  background-color: var(--chefkit-primary);
+  color: var(--chefkit-background-white);
+  box-shadow: 0 4px 12px rgba(var(--chefkit-primary-rgb), 0.2);
 
-    &:hover {
-        background-color: var(--chefkit-primary-hover);
-        box-shadow: 0 6px 16px rgba(var(--chefkit-primary-rgb), 0.25);
-        transform: translateY(-2px);
-    }
+  &:hover {
+    background-color: var(--chefkit-primary-hover);
+    box-shadow: 0 6px 16px rgba(var(--chefkit-primary-rgb), 0.25);
+    transform: translateY(-2px);
+  }
 }
 
 .button--secondary {
-    background-color: transparent;
-    border-color: var(--chefkit-border-light);
-    color: var(--chefkit-text-dark);
+  background-color: transparent;
+  border-color: var(--chefkit-border-light);
+  color: var(--chefkit-text-dark);
 
-    &:hover {
-        background-color: var(--chefkit-background-light);
-        border-color: var(--chefkit-border-medium);
-        color: var(--chefkit-text-dark);
-    }
+  &:hover {
+    background-color: var(--chefkit-background-light);
+    border-color: var(--chefkit-border-medium);
+    color: var(--chefkit-text-dark);
+  }
 }
 
 .button--danger {
@@ -94,66 +422,93 @@
 
   &:hover {
     background-color: #c0392b;
+    transform: translateY(-2px);
   }
 }
 
+/* --- RESULT BOX (inchangé) --- */
+.result-box {
+  background-color: var(--chefkit-background-light);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-md);
+  margin-top: var(--spacing-sm);
+  border: 1px solid var(--chefkit-border-light);
+  font-size: 0.9rem;
+  box-sizing: border-box;
+  word-wrap: break-word;
 
-/* --- ADMIN PAGE STYLES --- */
-.admin-main {
-  padding: var(--spacing-xl) 0;
-  background-color: #f9fafb; // A light grey background
-  min-height: calc(100vh - 80px); // Adjust based on header height
+  p {
+    margin: 0 0 var(--spacing-xxs) 0;
+  }
 }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 var(--spacing-md);
+/* --- FOOTER (inchangé) --- */
+.app-footer {
+  background-color: var(--chefkit-footer-bg);
+  color: var(--chefkit-footer-text);
+  padding: var(--spacing-lg) var(--spacing-md);
+  font-size: 0.9rem;
+  font-family: var(--chefkit-font-family-sans);
 }
 
-.section-title {
-  text-align: center;
-  font-size: 2.9rem;
-  margin-bottom: var(--spacing-xl);
-  font-family: var(--chefkit-font-display);
-  font-weight: var(--chefkit-font-weight-heavy);
-  color: var(--chefkit-text-dark);
-}
-
-.admin-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: var(--spacing-lg);
-}
-
-.admin-card {
-  background-color: var(--chefkit-background-white);
-  border-radius: var(--border-radius-xl);
-  padding: var(--spacing-lg);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-  text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.admin-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
-}
-
-.admin-card__title {
-  font-size: 1.5rem;
-  font-weight: var(--chefkit-font-weight-bold);
-  font-family: var(--chefkit-font-display);
-  margin-bottom: var(--spacing-lg);
-  color: var(--chefkit-text-dark);
-}
-
-.admin-card__actions {
+.footer__inner {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-sm);
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  gap: var(--spacing-lg);
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    text-align: left;
+    gap: var(--spacing-md);
+  }
 }
 
-.admin-card__actions .button {
-  width: 100%;
+.footer__brand {
+  margin-bottom: var(--spacing-sm);
+
+  @media (min-width: 768px) {
+    margin-bottom: 0;
+  }
+}
+
+.footer__logo-text {
+  font-size: 1.5rem;
+  font-weight: var(--chefkit-font-weight-bold);
+  color: var(--chefkit-background-white);
+  font-family: var(--chefkit-font-display);
+}
+
+.footer__slogan {
+  margin-top: var(--spacing-xxs);
+  font-size: 0.75rem;
+  color: var(--chefkit-footer-text);
+  font-family: var(--chefkit-font-family-sans);
+}
+
+.footer__nav {
+  display: flex;
+  gap: var(--spacing-xl);
+}
+
+.footer__nav-link {
+  color: var(--chefkit-footer-text);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--chefkit-background-white);
+    text-decoration: underline;
+  }
+}
+
+.footer__copyright {
+  font-size: 0.75rem;
+  color: var(--chefkit-footer-text);
+  margin-top: var(--spacing-sm);
+
+  @media (min-width: 768px) {
+    margin-top: 0;
+  }
 }

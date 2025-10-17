@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../models/user.model';
 import { Recette } from '../models/recette.model';
-import { Ingredient_unique } from '../models/ingredient_unique.model';
+import { IngredientDetail } from '../models/ingredient-detail.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,7 @@ export class AdminService {
 
   constructor(private http: HttpClient) { }
 
+  //getCount
   getUserCount(): Observable<number> {
     return this.http.get<number>(`${this.apiUrl}/users/count`);
   }
@@ -25,6 +26,7 @@ export class AdminService {
     return this.http.get<number>(`${this.apiUrl}/ingredients/count`);
   }
 
+  //user
   getUser(username: string): Observable<User> {
     return this.http.get<User>(`${this.apiUrl}/users/username/${username}`);
   }
@@ -40,8 +42,8 @@ export class AdminService {
   }
 
   //recettes
-  getRecetteById(id: number): Observable<Recette> {
-    return this.http.get<Recette>(`${this.apiUrl}/recettes/${id}`);
+  getRecette(titre: string): Observable<Recette> {
+    return this.http.get<Recette>(`${this.apiUrl}/recettes/titre/${titre}`);
   }
   getAllRecettes(): Observable<Recette[]> {
     return this.http.get<Recette[]>(`${this.apiUrl}/recettes`);
@@ -49,36 +51,24 @@ export class AdminService {
   createRecette(recette: Recette): Observable<Recette> {
     return this.http.post<Recette>(`${this.apiUrl}/recettes`, recette);
   }
-  updateRecette(id: number, recette: Recette): Observable<Recette> {
-    return this.http.post<Recette>(`${this.apiUrl}/recettes/${id}`, recette);
+  updateRecette(titre: string, recette: Recette): Observable<Recette> {
+    return this.http.post<Recette>(`${this.apiUrl}/recettes/titre/${titre}`, recette);
   }
-  deleteRecette(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/recettes/${id}`);
-  }
-
-  getRecetteByTitle(title: string): Observable<Recette> {
-    return this.http.get<Recette>(`${this.apiUrl}/recettes/titre/${title}`);
-  }
-
-  updateRecetteByTitle(title: string, recette: Recette): Observable<Recette> {
-    return this.http.post<Recette>(`${this.apiUrl}/recettes/titre/${title}`, recette);
-  }
-
-  deleteRecetteByTitle(title: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/recettes/titre/${title}`);
+  deleteRecette(titre: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/recettes/titre/${titre}`);
   }
 
   //ingredients
-  getIngredientByName(name: string): Observable<Ingredient_unique> {
-    return this.http.get<Ingredient_unique>(`${this.apiUrl}/ingredients/nom/${name}`);
+  getIngredientByName(name: string): Observable<IngredientDetail> {
+    return this.http.get<IngredientDetail>(`${this.apiUrl}/ingredients/nom/${name}`);
   }
 
-  createIngredient(ingredient: Ingredient_unique): Observable<Ingredient_unique> {
-    return this.http.post<Ingredient_unique>(`${this.apiUrl}/ingredients`, ingredient);
+  createIngredient(ingredient: IngredientDetail): Observable<IngredientDetail> {
+    return this.http.post<IngredientDetail>(`${this.apiUrl}/ingredients`, ingredient);
   }
 
-  updateIngredientByName(name: string, ingredient: Ingredient_unique): Observable<Ingredient_unique> {
-    return this.http.post<Ingredient_unique>(`${this.apiUrl}/ingredients/update/${name}`, ingredient);
+  updateIngredientByName(name: string, ingredient: IngredientDetail): Observable<IngredientDetail> {
+    return this.http.post<IngredientDetail>(`${this.apiUrl}/ingredients/update/${name}`, ingredient);
   }
 
   deleteIngredientByName(name: string): Observable<any> {
