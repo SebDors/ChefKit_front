@@ -79,11 +79,29 @@ export class IngredientsComponent implements OnInit, OnDestroy {
 
   // Méthode appelée lorsque l'utilisateur clique sur "Sauvegarder"
   saveSelectedIngredients(): void {
-    // Ici, vous enverriez les ingrédients sélectionnés à votre backend ou les stockeriez localement
-    console.log('Ingrédients à sauvegarder :', this.selectedIngredients);
-    alert('Ingrédients sauvegardés : ' + this.selectedIngredients.join(', '));
-    // Redirection possible après la sauvegarde
-    // this.router.navigate(['/mes-recettes-basees-sur-ingredients']);
+    const currentUser = this.authService.currentUser();
+    if (!currentUser) {
+      alert("Vous devez être connecté pour sauvegarder votre frigo.");
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    // 1. Créer une liste complète de tous les ingrédients avec leurs IDs
+    const allIngredients = [...this.fruits, ...this.legumes, ...this.autres];
+
+    // 2. Mapper les noms des ingrédients sélectionnés à leurs IDs
+    const selectedIds = this.selectedIngredients.map(name => {
+      const ingredient = allIngredients.find(ing => ing.nomIngredient === name);
+      return ingredient ? ingredient.idIngredient : null;
+    }).filter(id => id !== null) as number[]; // Filtrer les nuls et typer en number[]
+
+    console.log('IDs à sauvegarder :', selectedIds);
+
+    // 3. Appeler le service pour sauvegarder les IDs dans le frigo de l'utilisateur
+    this.ingredientsService.saveFridgeIngredients(currentUser.nomUtilisateur, selectedIds).subscribe({
+      next: () => alert('Votre frigo a été mis à jour avec succès !'),
+      error: (err) => alert('Une erreur est survenue lors de la sauvegarde : ' + err.message)
+    });
   }
 
   logout(): void {
