@@ -9,9 +9,13 @@
       <span class="header__logo-text">ChefKit</span>
     </a>
     <div class="header__actions">
-      <a routerLink="/" class="button button--secondary">Accueil</a>
-      <a routerLink="/login" class="button button--secondary header__nav-link--alt">Se connecter</a>
-      <a routerLink="/signup" class="button button--primary">S'inscrire</a>
+      <ng-container *ngIf="authService.isLoggedIn()">
+        <a routerLink="/ingredient" class="button button--secondary">Mes ingrédients</a>
+        <a routerLink="/" class="button button--primary">Retour</a>
+        <button (click)="logout()" class="button button--primary header__nav-link--alt">
+          Se déconnecter
+        </button>
+      </ng-container>
     </div>
   </div>
 </header>

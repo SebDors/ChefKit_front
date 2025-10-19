@@ -1,11 +1,12 @@
 import { Component, OnInit, HostListener, inject } from '@angular/core'; // Removed 'inject' as it wasn't used
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AdminService } from '../services/admin.service';
 import { FormsModule } from '@angular/forms';
 import { User } from '../models/user.model';
 import { Recette } from '../models/recette.model';
 import { IngredientDetail } from '../models/ingredient-detail.model';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-admin-page',
@@ -15,6 +16,8 @@ import { IngredientDetail } from '../models/ingredient-detail.model';
   styleUrls: ['./admin-page.component.scss']
 })
 export class AdminPageComponent implements OnInit{
+  constructor(public authService: AuthService, private router: Router) {}
+  
   isScrolled = false;
   currentYear = new Date().getFullYear();
 
@@ -249,5 +252,9 @@ export class AdminPageComponent implements OnInit{
         console.error('Error deleting ingredient', error);
       }
     );
+  }
+
+  logout(): void {
+    this.authService.logout();
   }
 }
