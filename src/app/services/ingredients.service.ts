@@ -19,7 +19,7 @@ export class IngredientsService {
     return this.http.get<IngredientDetail[]>(`${this.apiUrl}/users/${username}/fridge`);
   }
 
-  saveFridgeIngredients(userId: number, ingredientIds: number[]): Observable<any> {
-    return this.http.put(`${this.apiUrl}/users/${userId}/fridge`, ingredientIds);
+  saveFridgeIngredients(username: string, ingredientIds: number[]): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/users/${username}/fridge`, ingredientIds);
   }
 }
