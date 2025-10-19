@@ -18,13 +18,14 @@
       <ng-container *ngIf="authService.isLoggedIn()">
         <span class="header__welcome-message">
           <ng-container *ngIf="authService.currentUser()?.role === 'admin'; else userWelcome">
+            <a routerLink="/admin" class="button button--secondary">Admin</a>
             Bonjour admin {{ authService.currentUser()?.nomUtilisateur }}
           </ng-container>
           <ng-template #userWelcome>
             Bonjour {{ authService.currentUser()?.nomUtilisateur }}
           </ng-template>
         </span>
-        <button (click)="logout()" class="button button--secondary header__nav-link--alt">
+        <button (click)="logout()" class="button button--primary header__nav-link--alt">
           Se déconnecter
         </button>
       </ng-container>
