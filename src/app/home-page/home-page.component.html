@@ -116,6 +116,35 @@
   </div>
 </section>
 
+<!-- NOUVELLE SECTION : RECETTES SUGGÉRÉES -->
+<section *ngIf="authService.isLoggedIn()" class="associated-recipes section-padding bg-light">
+  <h2 class="section-title">Recettes suggérées pour vous</h2>
+
+  <!-- Cas 1: Chargement en cours -->
+  <div *ngIf="isLoadingAssociated" class="text-center">Chargement des suggestions...</div>
+
+  <!-- Cas 2: Chargement terminé -->
+  <ng-container *ngIf="!isLoadingAssociated">
+    <!-- Sous-cas A: Des recettes ont été trouvées -->
+    <div class="recipes-grid container" *ngIf="associatedRecipes.length > 0">
+      <a *ngFor="let recette of associatedRecipes" (click)="ouvrirRecette(recette.idRecette)" class="recipe-card">
+        <div class="recipe-card__image-container">
+          <img *ngIf="recette.pathImage" [src]="recette.pathImage" [alt]="recette.titre" class="recipe-card__image" />
+        </div>
+        <div class="recipe-card__content">
+          <h3 class="recipe-card__title">{{ recette.titre }}</h3>
+          <span class="recipe-card__cta">Voir la recette</span>
+        </div>
+      </a>
+    </div>
+    <!-- Sous-cas B: Aucune recette n'a été trouvée -->
+    <div *ngIf="associatedRecipes.length === 0" class="container text-center">
+      <p>Aucune recette ne correspond aux ingrédients de votre frigo. <a routerLink="/ingredient">Ajoutez-en d'autres !</a></p>
+    </div>
+  </ng-container>
+</section>
+
+
 <!-- NOUVELLE SECTION : TOUTES LES RECETTES -->
 <section class="all-recipes section-padding">
   <h2 class="section-title">Toutes Nos Recettes</h2>

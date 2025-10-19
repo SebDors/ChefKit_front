@@ -9,6 +9,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { RecetteService } from '../services/recette.service';
 import { Recette } from '../models/recette.model';
 import { AuthService } from '../auth.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-home-page',
@@ -20,8 +21,10 @@ import { AuthService } from '../auth.service';
 export class HomePageComponent implements OnInit, OnDestroy {
   // === Données dynamiques ===
   recettes: Recette[] = [];
+  associatedRecipes: Recette[] = []; // Pour les recettes suggérées
   featuredRecipes: Recette[] = []; // pour le carrousel
   isLoading = true;
+  isLoadingAssociated = false;
   errorMsg = '';
 
   // === Données pour la mise en page ===
@@ -43,15 +46,21 @@ export class HomePageComponent implements OnInit, OnDestroy {
   // === Souscription backend ===
   private recetteSubscription: any;
 
+
   constructor(
     private recetteService: RecetteService,
     private router: Router,
-    public authService: AuthService
+    public authService: AuthService,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
     this.updateRecipesPerSlide();
-    this.getAllRecettes();
+    this.getAllRecettes(); // On charge toujours toutes les recettes
+    const currentUser = this.authService.currentUser();
+    if (currentUser) {
+      this.getAssociatedRecipes(currentUser.nomUtilisateur); // On charge les recettes suggérées en plus
+    }
   }
 
   ngOnDestroy(): void {
@@ -59,6 +68,19 @@ export class HomePageComponent implements OnInit, OnDestroy {
   }
 
   // === Récupération des recettes depuis le backend ===
+  getAssociatedRecipes(username: string): void {
+    this.isLoadingAssociated = true;
+    this.userService.getRecipesByFridge(username).subscribe({
+      next: (data: Recette[]) => {
+        this.associatedRecipes = data || []; // On assigne toujours le résultat, même s'il est vide.
+        this.isLoadingAssociated = false;
+      },
+      error: (err) => {
+        console.error('Erreur lors de la récupération des recettes suggérées :', err);
+        this.isLoadingAssociated = false;
+      }
+    });
+  }
   getAllRecettes(): void {
     this.isLoading = true;
     this.recetteSubscription = this.recetteService.getAllRecettes().subscribe({
