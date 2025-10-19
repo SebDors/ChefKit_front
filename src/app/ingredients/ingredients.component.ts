@@ -3,12 +3,8 @@ import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Important pour ngFor, ngIf
 import { RouterModule, Router } from '@angular/router'; // Important pour routerLink
 import { AuthService } from '../auth.service'; // Assurez-vous du bon chemin
-
-// Interface pour simuler vos objets d'ingrédients
-interface Ingredient {
-  nomIngredient: string;
-  // Vous pouvez ajouter d'autres propriétés comme id, image, etc.
-}
+import { IngredientsService } from '../services/ingredients.service';
+import { IngredientDetail } from '../models/ingredient-detail.model';
 
 @Component({
   selector: 'app-ingredients',
@@ -21,55 +17,31 @@ export class IngredientsComponent implements OnInit, OnDestroy {
   isScrolled = false;
   selectedIngredients: string[] = []; // Tableau pour stocker les noms des ingrédients sélectionnés
 
-  // Données d'ingrédients fictives pour l'exemple
-  fruits: Ingredient[] = [
-    { nomIngredient: 'Pommes' },
-    { nomIngredient: 'Bananes' },
-    { nomIngredient: 'Fraises' },
-    { nomIngredient: 'Oranges' },
-    { nomIngredient: 'Raisins' },
-    { nomIngredient: 'Mangues' },
-    { nomIngredient: 'Avocats' },
-    { nomIngredient: 'Kiwi' },
-    { nomIngredient: 'Poires' },
-    { nomIngredient: 'Citrons' }
-  ];
+  // Données d'ingrédients
+  fruits: IngredientDetail[] = [];
+  legumes: IngredientDetail[] = [];
+  autres: IngredientDetail[] = [];
 
-  legumes: Ingredient[] = [
-    { nomIngredient: 'Brocolis' },
-    { nomIngredient: 'Carottes' },
-    { nomIngredient: 'Tomates' },
-    { nomIngredient: 'Concombres' },
-    { nomIngredient: 'Poivrons' },
-    { nomIngredient: 'Oignons' },
-    { nomIngredient: 'Ail' },
-    { nomIngredient: 'Salade' },
-    { nomIngredient: 'Pommes de terre' },
-    { nomIngredient: 'Épinards' }
-  ];
-
-  autres: Ingredient[] = [
-    { nomIngredient: 'Poulet' },
-    { nomIngredient: 'Riz' },
-    { nomIngredient: 'Pâtes' },
-    { nomIngredient: 'Oeufs' },
-    { nomIngredient: 'Fromage' },
-    { nomIngredient: 'Lait' },
-    { nomIngredient: 'Farine' },
-    { nomIngredient: 'Huile d\'olive' },
-    { nomIngredient: 'Thon' },
-    { nomIngredient: 'Bœuf haché' }
-  ];
-
-  constructor(public authService: AuthService, private router: Router) {}
+  constructor(
+    public authService: AuthService,
+    private router: Router,
+    private ingredientsService: IngredientsService
+  ) {}
 
   ngOnInit(): void {
-    // Vous pouvez charger les ingrédients sélectionnés de l'utilisateur ici
-    // Par exemple : this.selectedIngredients = this.ingredientService.getUserIngredients();
+    this.loadIngredients();
   }
 
   ngOnDestroy(): void {
     // Nettoyage si nécessaire
+  }
+
+  loadIngredients(): void {
+    this.ingredientsService.getIngredients().subscribe(ingredients => {
+      this.fruits = ingredients.filter(ingredient => ingredient.categorie === 'fruit');
+      this.legumes = ingredients.filter(ingredient => ingredient.categorie === 'légume');
+      this.autres = ingredients.filter(ingredient => ingredient.categorie === 'autre');
+    });
   }
 
   @HostListener('window:scroll', [])
