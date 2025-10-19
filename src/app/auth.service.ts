@@ -74,7 +74,7 @@ export class AuthService {
     this.isLoggedIn.set(false);
     this.currentUser.set(null);
     sessionStorage.removeItem('currentUser');
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
   }
 
   isAuthenticated(): boolean {
