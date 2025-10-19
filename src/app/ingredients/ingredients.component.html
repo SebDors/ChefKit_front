@@ -18,6 +18,7 @@
       </ng-container>
 
       <ng-container *ngIf="authService.isLoggedIn()">
+        <a routerLink="/" class="button button--secondary">Retour</a>
         <span class="header__welcome-message">
           <ng-container *ngIf="authService.currentUser()?.role === 'admin'; else userWelcome">
             Bonjour admin {{ authService.currentUser()?.nomUtilisateur }}
