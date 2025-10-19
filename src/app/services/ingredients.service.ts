@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Ingredient } from '../models/ingredient.model';
+import { IngredientDetail } from '../models/ingredient-detail.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ export class IngredientsService {
 
   constructor(private http: HttpClient) { }
 
-  getIngredients(): Observable<Ingredient[]> {
-    return this.http.get<Ingredient[]>(this.apiUrl);
+  getIngredients(): Observable<IngredientDetail[]> {
+    return this.http.get<IngredientDetail[]>(this.apiUrl);
   }
 }
