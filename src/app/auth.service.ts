@@ -21,7 +21,13 @@ export class AuthService {
   isLoggedIn = signal<boolean>(false);
   currentUser = signal<{ nomUtilisateur: string, role: string } | null>(null);
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) {
+    const storedUser = sessionStorage.getItem('currentUser');
+    if (storedUser) {
+      this.currentUser.set(JSON.parse(storedUser));
+      this.isLoggedIn.set(true);
+    }
+  }
 
   register(userData: any): Observable<any> {
     return this.http.post(`${this.apiUrl}`, userData);
@@ -53,6 +59,7 @@ export class AuthService {
         };
 
         this.currentUser.set(user);
+        sessionStorage.setItem('currentUser', JSON.stringify(user));
         console.log('Login successful! Final user object:', user);
       }),
       catchError(error => {
@@ -66,7 +73,8 @@ export class AuthService {
   logout(): void {
     this.isLoggedIn.set(false);
     this.currentUser.set(null);
-    this.router.navigate(['/login']);
+    sessionStorage.removeItem('currentUser');
+    this.router.navigate(['/']);
   }
 
   isAuthenticated(): boolean {
