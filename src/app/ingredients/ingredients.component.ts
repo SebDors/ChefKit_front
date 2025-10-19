@@ -29,7 +29,18 @@ export class IngredientsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.loadIngredients();
+    const currentUser = this.authService.currentUser();
+    if (currentUser) {
+      // Charger les ingrédients du frigo de l'utilisateur
+      this.ingredientsService.getFridgeIngredients(currentUser.nomUtilisateur).subscribe(fridgeIngredients => {
+        this.selectedIngredients = fridgeIngredients.map(ingredient => ingredient.nomIngredient);
+        // Une fois les ingrédients du frigo chargés, charger tous les ingrédients
+        this.loadIngredients();
+      });
+    } else {
+      // Si aucun utilisateur n'est connecté ou n'a pas d'ID, charger simplement tous les ingrédients
+      this.loadIngredients();
+    }
   }
 
   ngOnDestroy(): void {
@@ -40,7 +51,7 @@ export class IngredientsComponent implements OnInit, OnDestroy {
     this.ingredientsService.getIngredients().subscribe(ingredients => {
       this.fruits = ingredients.filter(ingredient => ingredient.categorie === 'fruit');
       this.legumes = ingredients.filter(ingredient => ingredient.categorie === 'légume');
-      this.autres = ingredients.filter(ingredient => ingredient.categorie === 'autre');
+      this.autres = ingredients.filter(ingredient => ingredient.categorie === 'Autre');
     });
   }
 

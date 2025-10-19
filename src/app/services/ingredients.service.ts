@@ -7,11 +7,19 @@ import { IngredientDetail } from '../models/ingredient-detail.model';
   providedIn: 'root'
 })
 export class IngredientsService {
-  private apiUrl = 'http://localhost:8080/ingredients';
+  private apiUrl = 'http://localhost:8080';
 
   constructor(private http: HttpClient) { }
 
   getIngredients(): Observable<IngredientDetail[]> {
-    return this.http.get<IngredientDetail[]>(this.apiUrl);
+    return this.http.get<IngredientDetail[]>(`${this.apiUrl}/ingredients`);
+  }
+
+  getFridgeIngredients(username: string): Observable<IngredientDetail[]> {
+    return this.http.get<IngredientDetail[]>(`${this.apiUrl}/users/${username}/fridge`);
+  }
+
+  saveFridgeIngredients(userId: number, ingredientIds: number[]): Observable<any> {
+    return this.http.put(`${this.apiUrl}/users/${userId}/fridge`, ingredientIds);
   }
 }
