@@ -1,59 +1,66 @@
-# Chefkit
+# Chefkit - Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.17.
+Ce projet représente l'interface utilisateur (frontend) de l'application Chefkit, une plateforme dédiée aux recettes de cuisine. Il a été développé avec [Angular CLI](https://www.google.com/url?sa=E&q=https%3A%2F%2Fgithub.com%2Fangular%2Fangular-cli) version 19.2.17.
 
-## Development server
+## Vue d'ensemble de l'application
 
-To start a local development server, run:
+Chefkit est une application de recettes de cuisine qui permet aux utilisateurs de découvrir, rechercher, consulter et gérer des recettes. Le frontend se connecte à une API RESTful (le backend) pour récupérer et afficher les informations.
 
-```bash
-ng serve
+## Démarrage rapide
+
+Suivez ces étapes pour lancer l'application frontend sur votre machine locale.
+
+### Prérequis
+
+Assurez-vous d'avoir [Node.js](https://www.google.com/url?sa=E&q=https%3A%2F%2Fnodejs.org%2Fen%2Fdownload%2F) et [npm](https://www.google.com/url?sa=E&q=https%3A%2F%2Fwww.npmjs.com%2Fget-npm) installés sur votre système.
+
+### Lancement du serveur de développement
+
+Pour démarrer le serveur de développement local, vous avez deux options :
+
+* **Utiliser npm start (recommandé) :**
+
+  codeBash
+
+  ```
+  npm start
+  ```
+
+  Cette commande est configurée pour lancer l'application en mode développement.
+* **Utiliser ng serve :**
+
+  codeBash
+
+  ```
+  ng serve
+  ```
+
+Une fois le serveur démarré, ouvrez votre navigateur et accédez à **http://localhost:4200/**. L'application se rechargera automatiquement chaque fois que vous modifiez l'un des fichiers source.
+
+## Fonctionnalités principales
+
+* **Recherche de recettes :** Trouvez facilement des recettes grâce à une barre de recherche intuitive.
+* **Affichage détaillé des recettes :** Consultez les ingrédients, les étapes de préparation, les temps de cuisson, etc.
+* **Gestion des ingrédients personnels :** L'utilisateur peut sauvegarder les ingrédients qu'il a chez lui dans une liste dédiée.
+* **Suggestions de recettes personnalisées :** Basé sur les ingrédients sauvegardés par l'utilisateur, l'application suggère des recettes qu'il peut réaliser avec ce qu'il a déjà en stock.
+
+## Compilation
+
+Pour compiler le projet pour le déploiement (par exemple, pour une production) :
+
+codeBash
+
 ```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Ceci compilera votre application et stockera les artefacts de construction dans le répertoire dist/. Par défaut, la compilation de production optimise votre application pour la performance et la vitesse.
 
-## Running unit tests
+## Ressources supplémentaires
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+Pour plus d'informations sur l'utilisation d'Angular CLI et le développement Angular, vous pouvez consulter :
 
-```bash
-ng test
-```
+* [Angular CLI Overview and Command Reference](https://www.google.com/url?sa=E&q=https%3A%2F%2Fangular.dev%2Ftools%2Fcli)
+* [Documentation officielle d&#39;Angular](https://www.google.com/url?sa=E&q=https%3A%2F%2Fangular.dev%2F)
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+---
