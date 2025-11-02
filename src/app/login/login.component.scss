@@ -59,12 +59,13 @@
 }
 
 /* Styles du formulaire */
-.auth-form {
-  text-align: left;
-}
+
 
 .form-group {
   margin-bottom: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .form-label {
