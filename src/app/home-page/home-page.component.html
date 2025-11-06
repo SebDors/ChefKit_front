@@ -16,11 +16,12 @@
       </ng-container>
 
       <ng-container *ngIf="authService.isLoggedIn()">
-        <!-- NOUVEAU BOUTON : Mes ingrédients -->
-        <a routerLink="/ingredient" class="button button--secondary">Mes ingrédients</a> 
+        <a routerLink="/ingredient" class="button button--secondary">Mes ingrédients</a>
+        <a *ngIf="authService.currentUser()?.role === 'admin'" routerLink="/admin"
+          class="button button--secondary">Admin</a>
+
         <span class="header__welcome-message">
           <ng-container *ngIf="authService.currentUser()?.role === 'admin'; else userWelcome">
-            <a routerLink="/admin" class="button button--secondary">Admin</a>
             Bonjour admin {{ authService.currentUser()?.nomUtilisateur }}
           </ng-container>
           <ng-template #userWelcome>
@@ -139,7 +140,8 @@
     </div>
     <!-- Sous-cas B: Aucune recette n'a été trouvée -->
     <div *ngIf="associatedRecipes.length === 0" class="container text-center">
-      <p>Aucune recette ne correspond aux ingrédients de votre frigo. <a routerLink="/ingredient">Ajoutez-en d'autres !</a></p>
+      <p>Aucune recette ne correspond aux ingrédients de votre frigo. <a routerLink="/ingredient">Ajoutez-en d'autres
+          !</a></p>
     </div>
   </ng-container>
 </section>
