@@ -223,3 +223,31 @@
   align-items: center;
   gap: var(--spacing-xs);
 }
+
+.subsection-title {
+  font-size: 1.2rem;
+  font-weight: var(--chefkit-font-weight-semibold);
+  color: var(--chefkit-text-dark);
+  margin-top: var(--spacing-lg);
+  margin-bottom: var(--spacing-sm);
+}
+
+.ingredient-item--empty {
+  font-style: italic;
+  color: var(--chefkit-text-light);
+  padding: var(--spacing-sm);
+  background-color: var(--chefkit-background-light);
+  border: 1px solid var(--chefkit-border-light);
+  border-radius: var(--border-radius-md);
+}
+
+.ingredients-list--owned .ingredient-item {
+  border-left: 4px solid #28a745;
+  background-color: #f0fff4;
+}
+
+.ingredients-list--missing .ingredient-item {
+  border-left: 4px solid #dc3545;
+  background-color: #fff5f5;
+}
+

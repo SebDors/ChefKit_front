@@ -76,12 +76,37 @@
 
         <div class="recipe-ingredients">
           <h2 class="section-subtitle">Ingrédients</h2>
-          <ul class="ingredients-list">
-            <li *ngFor="let ing of ingredients" class="ingredient-item">
-              <span class="ingredient-name">{{ ing.name }}</span>
-              <span class="ingredient-quantity">{{ ing.quantity }} {{ ing.unit }}</span>
-            </li>
-          </ul>
+          
+          <!-- If user is logged in, show owned/missing lists -->
+          <ng-container *ngIf="isUserLoggedIn">
+            <h3 class="subsection-title">Ce que vous avez :</h3>
+            <ul class="ingredients-list ingredients-list--owned">
+              <li *ngFor="let ing of ownedIngredients" class="ingredient-item">
+                <span class="ingredient-name">{{ ing.name }}</span>
+                <span class="ingredient-quantity">{{ ing.quantity }} {{ ing.unit }}</span>
+              </li>
+              <li *ngIf="ownedIngredients.length === 0" class="ingredient-item--empty">Vous n'avez aucun de ces ingrédients.</li>
+            </ul>
+
+            <h3 class="subsection-title">Ce qu'il vous manque :</h3>
+            <ul class="ingredients-list ingredients-list--missing">
+              <li *ngFor="let ing of missingIngredients" class="ingredient-item">
+                <span class="ingredient-name">{{ ing.name }}</span>
+                <span class="ingredient-quantity">{{ ing.quantity }} {{ ing.unit }}</span>
+              </li>
+              <li *ngIf="missingIngredients.length === 0" class="ingredient-item--empty">Vous avez tous les ingrédients !</li>
+            </ul>
+          </ng-container>
+
+          <!-- If user is not logged in, show the original full list -->
+          <ng-container *ngIf="!isUserLoggedIn">
+            <ul class="ingredients-list">
+              <li *ngFor="let ing of ingredients" class="ingredient-item">
+                <span class="ingredient-name">{{ ing.name }}</span>
+                <span class="ingredient-quantity">{{ ing.quantity }} {{ ing.unit }}</span>
+              </li>
+            </ul>
+          </ng-container>
         </div>
 
         <div class="recipe-instructions">
