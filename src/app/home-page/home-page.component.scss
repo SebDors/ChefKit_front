@@ -30,6 +30,34 @@
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.08);
 }
 
+.button {
+  box-sizing: border-box;
+  display: inline-block;
+  font-family: var(--chefkit-font-family-sans);
+  font-size: 1rem;
+  font-weight: var(--chefkit-font-weight-medium);
+  text-align: center;
+  cursor: pointer;
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: all 0.2s ease-in-out;
+  user-select: none;
+  line-height: 1.5;
+}
+
+.button.deconnect {
+  background-color: #464B4F;
+  border-color: #464B4F;
+
+  &:hover {
+    background-color: #2d3134;
+    border-color: #2d3134;
+    transform: translateY(-2px);
+  }
+}
+
 .header__inner {
   display: flex;
   align-items: center;

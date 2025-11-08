@@ -12,7 +12,7 @@
       <ng-container *ngIf="authService.isLoggedIn()">
         <a routerLink="/ingredient" class="button button--secondary">Mes ingrédients</a>
         <a routerLink="/" class="button button--primary">Retour</a>
-        <button (click)="logout()" class="button button--primary header__nav-link--alt">
+        <button (click)="logout()" class="button button--primary header__nav-link--alt deconnect">
           Se déconnecter
         </button>
       </ng-container>

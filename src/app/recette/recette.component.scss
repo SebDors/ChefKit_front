@@ -1,5 +1,5 @@
-/* --- IMPORTS ET STYLES DE BASE --- */
-@import '../home-page/home-page.component.scss'; // Pour le header et le footer
+@import '../home-page/home-page.component.scss';
+@import '../../styles.scss';
 
 :host {
   display: block;

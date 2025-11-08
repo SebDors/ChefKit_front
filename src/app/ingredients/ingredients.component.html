@@ -19,7 +19,7 @@
         <a *ngIf="authService.currentUser()?.role === 'admin'" routerLink="/admin"
           class="button button--secondary">Admin</a>
         <a routerLink="/" class="button button--primary">Retour</a>
-        <button (click)="logout()" class="button button--primary header__nav-link--alt">
+        <button (click)="logout()" class="button button--primary header__nav-link--alt deconnect">
           Se déconnecter
         </button>
       </ng-container>

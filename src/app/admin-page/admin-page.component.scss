@@ -3,6 +3,17 @@
   background-color: #f9fafb; // Light grey background for the whole page
 }
 
+.button.deconnect {
+  background-color: #464B4F;
+  border-color: #464B4F;
+
+  &:hover {
+    background-color: #2d3134;
+    border-color: #2d3134;
+    transform: translateY(-2px);
+  }
+}
+
 /* --- HEADER (inchangé) --- */
 .app-header {
   position: sticky;
@@ -34,6 +45,7 @@
     }
   }
 }
+
 
 .header__inner {
   display: flex;
@@ -376,6 +388,7 @@
 
 /* --- BUTTONS (MODIFIÉ) --- */
 .button {
+  box-sizing: border-box;
   display: inline-block;
   font-family: var(--chefkit-font-family-sans);
   font-size: 1rem;
