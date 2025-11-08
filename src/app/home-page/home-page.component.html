@@ -50,23 +50,18 @@
     <div class="hero__integrated-search-container">
       <div class="hero__search-main-row">
         <input type="text" placeholder="Ajouter des ingrédients (ex: poulet, riz, brocoli)" class="hero__search-input"
-          aria-label="Recherche de recettes par ingrédients" />
-        <button class="button button--primary hero__search-button">
+          aria-label="Recherche de recettes par ingrédients" [(ngModel)]="searchInput" (keyup.enter)="addSearchTag()" />
+        <button class="button button--primary hero__search-button" (click)="addSearchTag()">
           Rechercher <span class="visually-hidden">une recette</span>
         </button>
       </div>
 
-      <div class="hero__filter-options">
-        <span class="hero__filter-label visually-hidden">Filtres rapides :</span>
-        <button class="filter-chip" [class.active]="selectedFilters.vegetarian" (click)="toggleFilter('vegetarian')">
-          Végétarien
-        </button>
-        <button class="filter-chip" [class.active]="selectedFilters.vegan" (click)="toggleFilter('vegan')">
-          Vegan
-        </button>
-        <button class="filter-chip" [class.active]="selectedFilters.glutenFree" (click)="toggleFilter('glutenFree')">
-          Sans Gluten
-        </button>
+      <div class="hero__tag-container" *ngIf="searchTags.length > 0">
+        <span class="hero__tag-label visually-hidden">Ingrédients :</span>
+        <span *ngFor="let tag of searchTags" class="tag-chip" (click)="removeSearchTag(tag)" role="button" attr.aria-label="Supprimer l'ingrédient {{ tag }}" title="Cliquer pour supprimer">
+          {{ tag }}
+          <span class="tag-chip__remove-icon" aria-hidden="true">&times;</span>
+        </span>
       </div>
     </div>
   </div>
@@ -170,6 +165,11 @@
     Aucune recette trouvée pour le moment.
   </div>
 </section>
+
+<!-- TOASTER NOTIFICATION -->
+<div *ngIf="showNotification" class="toaster-notification">
+  {{ notificationMessage }}
+</div>
 
 <!-- FOOTER -->
 <footer class="app-footer">

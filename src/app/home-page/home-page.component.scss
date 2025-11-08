@@ -284,14 +284,12 @@
   }
 }
 
-.hero__filter-options {
+.hero__tag-container {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
     gap: var(--spacing-xs);
-    padding-top: var(--spacing-sm);
-    margin-top: var(--spacing-sm);
 
     @media (max-width: 767px) {
       padding-top: var(--spacing-xs);
@@ -299,7 +297,9 @@
     }
 }
 
-.filter-chip {
+.tag-chip {
+    display: inline-flex;
+    align-items: center;
     padding: var(--spacing-xxs) var(--spacing-sm);
     border-radius: var(--border-radius-pill);
     border: 1px solid var(--chefkit-border-light);
@@ -308,7 +308,7 @@
     font-size: 0.875rem;
     font-family: var(--chefkit-font-family-sans);
     font-weight: var(--chefkit-font-weight-medium);
-    transition: all 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    transition: all 0.2s ease;
     cursor: pointer;
 
     &:hover {
@@ -316,15 +316,21 @@
         color: var(--chefkit-primary);
         background-color: var(--chefkit-background-white);
         box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-        transform: translateY(-2px);
     }
+}
 
-    &.active {
-        background-color: var(--chefkit-primary);
-        color: var(--chefkit-background-white);
-        border-color: var(--chefkit-primary);
-        box-shadow: 0 3px 12px rgba(var(--chefkit-primary-rgb), 0.3);
-        transform: none;
+.tag-chip__remove-icon {
+    color: var(--chefkit-text-dark);
+    margin-left: var(--spacing-xs);
+    font-size: 1.2em;
+    line-height: 1;
+    padding: 0;
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+
+    .tag-chip:hover & {
+        opacity: 1;
+        color: var(--chefkit-primary);
     }
 }
 
@@ -691,7 +697,86 @@
   color: var(--chefkit-footer-text);
   margin-top: var(--spacing-sm);
 
-  @media (min-width: 768px) {
-    margin-top: 0;
+    @media (min-width: 768px) {
+
+      margin-top: 0;
+
+    }
+
   }
-}
+
+  
+
+  /* --- TOASTER NOTIFICATION --- */
+
+  .toaster-notification {
+
+    position: fixed;
+
+    bottom: 20px;
+
+      right: 20px;
+
+      background-color: #c0392b;
+
+      color: white;
+
+      padding: 16px 24px;
+
+    border-radius: var(--border-radius-md);
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+    z-index: 2000;
+
+    font-family: var(--chefkit-font-family-sans);
+
+    font-size: 0.95rem;
+
+    font-weight: var(--chefkit-font-weight-medium);
+
+    animation: slide-in 0.3s ease-out, fade-out 0.3s ease-in 4.7s forwards;
+
+  }
+
+  
+
+  @keyframes slide-in {
+
+    from {
+
+      transform: translateX(100%);
+
+      opacity: 0;
+
+    }
+
+    to {
+
+      transform: translateX(0);
+
+      opacity: 1;
+
+    }
+
+  }
+
+  
+
+  @keyframes fade-out {
+
+    from {
+
+      opacity: 1;
+
+    }
+
+    to {
+
+      opacity: 0;
+
+    }
+
+  }
+
+  

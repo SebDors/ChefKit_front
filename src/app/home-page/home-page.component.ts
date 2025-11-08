@@ -5,6 +5,7 @@ import {
   HostListener
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { RecetteService } from '../services/recette.service';
 import { Recette } from '../models/recette.model';
@@ -14,7 +15,7 @@ import { UserService } from '../services/user.service';
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss'] // correction : styleUrls au pluriel
 })
@@ -31,17 +32,18 @@ export class HomePageComponent implements OnInit, OnDestroy {
   currentYear: number = new Date().getFullYear();
   isScrolled = false;
 
+  // === Search ===
+  public searchInput: string = '';
+  public searchTags: string[] = [];
+
+  // === Notification ===
+  public showNotification = false;
+  public notificationMessage = '';
+
   // === Carrousel ===
   currentSlideIndex = 0;
   recipesPerSlide = 3;
   public Array = Array;
-
-  // === Filtres ===
-  selectedFilters = {
-    vegetarian: false,
-    vegan: false,
-    glutenFree: false
-  };
 
   // === Souscription backend ===
   private recetteSubscription: any;
@@ -152,9 +154,35 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.isScrolled = window.pageYOffset > 50;
   }
 
-  // === Gestion des filtres ===
-  toggleFilter(filterName: 'vegetarian' | 'vegan' | 'glutenFree'): void {
-    this.selectedFilters[filterName] = !this.selectedFilters[filterName];
+  // === Gestion de la recherche ===
+  addSearchTag(): void {
+    const tags = this.searchInput.split(',').map(tag => tag.trim()).filter(tag => tag);
+    let tagAdded = false;
+    if (tags.length > 0) {
+      tags.forEach(tag => {
+        if (tag && !this.searchTags.includes(tag)) {
+          this.searchTags.push(tag);
+          tagAdded = true;
+        }
+      });
+    }
+    this.searchInput = '';
+
+    if (tagAdded) {
+      this.showToast("Nous n'avons pas réussi à implémenter la recherche de recette par ingrédient");
+    }
+  }
+
+  removeSearchTag(tagToRemove: string): void {
+    this.searchTags = this.searchTags.filter(tag => tag !== tagToRemove);
+  }
+
+  showToast(message: string): void {
+    this.notificationMessage = message;
+    this.showNotification = true;
+    setTimeout(() => {
+      this.showNotification = false;
+    }, 5000); // Hide after 5 seconds
   }
 
   // === Authentification ===
