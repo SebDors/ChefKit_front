@@ -18,6 +18,8 @@ import { AuthService } from '../auth.service';
 export class RegisterComponent {
   isLoading = signal(false);
   errorMessage = signal('');
+  passwordVisible = signal(false);
+  confirmPasswordVisible = signal(false);
 
   registerForm = new FormGroup({
     nomUtilisateur: new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -45,6 +47,14 @@ export class RegisterComponent {
     const password = this.registerForm.get('password')?.value;
     const confirmPassword = control.value;
     return password === confirmPassword ? null : { 'passwordMismatch': true };
+  }
+
+  togglePasswordVisibility() {
+    this.passwordVisible.set(!this.passwordVisible());
+  }
+
+  toggleConfirmPasswordVisibility() {
+    this.confirmPasswordVisible.set(!this.confirmPasswordVisible());
   }
 
   onSubmit() {

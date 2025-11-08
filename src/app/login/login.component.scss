@@ -6,7 +6,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: calc(100vh - 70px); // Hauteur totale moins la hauteur du header
+  min-height: calc(100vh - 70px);
   padding: var(--spacing-lg) var(--spacing-md);
   background-image: url('/assets/images/hero-background.jpg');
   background-size: cover;
@@ -74,6 +74,7 @@
   font-weight: var(--chefkit-font-weight-medium);
   color: var(--chefkit-text-dark);
   margin-bottom: var(--spacing-xs);
+  align-self: flex-start;
 }
 
 .form-input {
@@ -86,6 +87,9 @@
   transition: all 0.2s ease-in-out;
   color: var(--chefkit-text-dark);
   font-family: var(--chefkit-font-family-sans);
+  box-sizing: border-box;
+  height: 48px;
+  line-height: 1.5;
 
   &::placeholder {
     color: var(--chefkit-text-muted);
@@ -109,6 +113,7 @@
   color: #d32f2f;
   padding-top: var(--spacing-xxs);
   font-weight: var(--chefkit-font-weight-medium);
+  align-self: flex-start;
 }
 
 .api-error-message {
@@ -123,6 +128,47 @@
   font-weight: var(--chefkit-font-weight-medium);
 }
 
+/* masquer le mot de passe */
+.password-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+
+  .form-input {
+    flex-grow: 1;
+    padding-right: 45px;
+  }
+
+  .toggle-password-btn {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--chefkit-text-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    z-index: 3;
+
+
+    svg {
+      width: 22px;
+      height: 22px;
+      display: block;
+    }
+
+    &:hover {
+      color: var(--chefkit-text-dark);
+      transform: translateY(-50%) scale(1.1);
+    }
+  }
+}
+
 /* Bouton de soumission */
 .auth-form__submit-button {
   width: 100%;
@@ -132,7 +178,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 50px; // Hauteur fixe pour éviter le décalage lors du chargement
+  min-height: 50px;
 }
 
 /* Footer de la carte (lien vers l'inscription) */

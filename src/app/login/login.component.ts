@@ -14,6 +14,7 @@ import { AuthService } from '../auth.service';
 export class LoginComponent {
   isLoading = signal(false);
   errorMessage = signal('');
+  passwordVisible = signal(false);
 
   loginForm = new FormGroup({
     // CHANGEMENT ICI : Utilise nomUtilisateur au lieu de email
@@ -25,6 +26,10 @@ export class LoginComponent {
     private authService: AuthService,
     private router: Router
   ) { }
+
+  togglePasswordVisibility() {
+    this.passwordVisible.set(!this.passwordVisible());
+  }
 
   onSubmit() {
     this.isLoading.set(true);
