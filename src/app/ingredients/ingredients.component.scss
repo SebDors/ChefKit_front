@@ -207,7 +207,7 @@ body {
   /* Espacement ajusté pour le titre principal */
   padding-top: calc(var(--spacing-xxl) + 20px + var(--spacing-lg));
   background-color: transparent;
-  gap: 3rem;
+  gap: 1.5rem; // Adjusted gap for accordion
   box-sizing: border-box;
 }
 
@@ -237,161 +237,139 @@ body {
   }
 }
 
-.category-section {
-  position: relative;
+.accordion-container {
   width: 100%;
   max-width: 960px;
-  overflow: hidden;
-  background-color: transparent; /* Toujours transparent, l'image est dans .background */
-  border-radius: var(--border-radius-xl);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  padding: 3rem 2.5rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  transition: all 0.4s ease-in-out;
-  color: var(--chefkit-background-white); /* Couleur de texte par défaut claire pour le contenu */
-  z-index: 1; /* Assure que le contenu est au-dessus du background et de l'overlay */
+  gap: 1.5rem;
+}
 
-  &:hover {
-    transform: translateY(-8px) scale(1.005);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-  }
+.accordion-item {
+  border-radius: var(--border-radius-xl);
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  background-color: #fff;
 
-  /* Le div .background à l'intérieur de la section */
-  .background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    filter: brightness(0.7); /* Assombrit légèrement l'image par défaut */
-    z-index: -2; /* Positionne l'image derrière tout le reste */
-    transform: scale(1.02); /* Léger scale initial */
-    transition: transform 0.4s ease-in-out, filter 0.4s ease-in-out;
-    border-radius: inherit; /* Inherit rounded corners from parent */
-  }
-
-  &:hover .background {
-    transform: scale(1.05); /* Zoom plus prononcé de l'image au survol */
-    filter: brightness(0.6); /* Rend l'image un peu plus sombre au survol pour plus de contraste */
-  }
-
-
-  /* Overlay pour assurer la lisibilité du texte, superposé à l'image */
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: inherit;
-    z-index: -1; /* Au-dessus de l'image (.background) mais sous le contenu */
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)); /* Gradient plus sombre */
-    transition: background 0.4s ease-in-out;
-  }
-
-  &:hover::after {
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)); /* Overlay plus prononcé au survol */
-  }
-
-  /* Styles spécifiques par catégorie - les images sont maintenant sur la classe .background */
-  &.fruits .background {
-    background-image: url('/assets/images/fruits.jpg');
-  }
-
-  &.legumes .background {
-    background-image: url('/assets/images/légumes.jpg');
-  }
-
-  &.autres .background {
-    background-image: url('/assets/images/autres.jpg');
-  }
-
-  .category-title {
-    color: var(--chefkit-background-white);
-    font-family: var(--chefkit-font-display);
-    font-size: 3.5rem;
-    font-weight: var(--chefkit-font-weight-heavy);
-    text-shadow: 0 3px 8px rgba(0, 0, 0, 0.8);
-    margin-bottom: 2.5rem;
-    letter-spacing: 0.1em;
-    z-index: 2; /* S'assure que le titre est bien visible */
-  }
-
-  .ingredients-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 0;
-    max-width: 90%;
-    z-index: 2; /* S'assure que la liste est bien visible */
-  }
-
-  .ingredient-button {
-    padding: 14px 30px;
-    font-family: var(--chefkit-font-family-sans);
-    font-size: 1.1rem;
-    background-color: rgba(var(--chefkit-background-white-rgb), 0.2);
-    color: var(--chefkit-background-white);
-    border: 1px solid rgba(var(--chefkit-background-white-rgb), 0.5);
-    border-radius: var(--border-radius-md);
+  .accordion-header {
+    position: relative;
+    padding: 2rem 2.5rem;
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    min-width: 120px;
     display: flex;
-    align-items: center;
     justify-content: center;
-    outline: none;
-    backdrop-filter: blur(2px);
+    align-items: center;
+    color: var(--chefkit-background-white);
+    overflow: hidden;
+    transition: all 0.4s ease-in-out;
 
-    &:hover {
-      background-color: rgba(var(--chefkit-background-white-rgb), 0.95);
-      color: var(--chefkit-primary);
-      border-color: var(--chefkit-primary);
-      transform: translateY(-3px);
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    &:hover .background {
+      transform: scale(1.1);
+    }
+
+    .background, &::after {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.4s ease-in-out, filter 0.4s ease-in-out;
+    }
+
+    .background {
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.7);
+      z-index: 1;
+      transform: scale(1.05);
+    }
+
+    &::after {
+      content: '';
+      z-index: 2;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5));
     }
     
-    &:focus {
-      box-shadow: 0 0 0 3px rgba(var(--chefkit-primary-rgb), 0.6);
-    }
+    &.fruits .background { background-image: url('/assets/images/fruits.jpg'); }
+    &.legumes .background { background-image: url('/assets/images/légumes.jpg'); }
+    &.autres .background { background-image: url('/assets/images/autres.jpg'); }
 
-    &.selected {
-      background-color: var(--chefkit-primary);
+    .category-title {
       color: var(--chefkit-background-white);
-      border: 2px solid var(--chefkit-primary-hover);
-      font-weight: var(--chefkit-font-weight-semibold);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(56, 161, 105, 0.6);
+      font-size: 2.5rem;
+      font-weight: var(--chefkit-font-weight-heavy);
+      text-shadow: 0 3px 8px rgba(0, 0, 0, 0.8);
+      margin: 0;
+      letter-spacing: 0.1em;
+      z-index: 3;
       position: relative;
-      
-      &::after {
-        content: '✔';
-        position: absolute;
-        top: 5px;
-        right: 5px;
-        font-size: 0.9em;
-        color: rgba(255, 255, 255, 0.9);
-        opacity: 0;
-        transform: scale(0.5);
-        transition: all 0.2s ease-out;
-      }
+    }
+    
+    .accordion-icon {
+      position: absolute;
+      right: 2.5rem;
+      top: 50%;
+      width: 14px;
+      height: 14px;
+      border: solid white;
+      border-width: 0 3px 3px 0;
+      transition: transform 0.4s ease;
+      transform: translateY(-50%) rotate(45deg);
+    }
+  }
 
-      &.selected::after {
-        opacity: 1;
-        transform: scale(1);
+  .accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+    padding: 0 2.5rem;
+
+    .ingredients-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      
+      .ingredient-button {
+        padding: 10px 25px;
+        font-size: 1rem;
+        background-color: var(--chefkit-background-light);
+        color: var(--chefkit-text-dark);
+        border: 1px solid var(--chefkit-border-light);
+        border-radius: var(--border-radius-md);
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+        box-shadow: none;
+
+        &:hover {
+          background-color: #e9ecef;
+          border-color: #ced4da;
+          transform: translateY(-2px);
+        }
+
+        &.selected {
+          background-color: var(--chefkit-primary);
+          color: var(--chefkit-background-white);
+          border-color: var(--chefkit-primary-hover);
+          font-weight: var(--chefkit-font-weight-semibold);
+          transform: translateY(0);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
       }
+    }
+  }
+
+  &.open {
+    .accordion-header .accordion-icon {
+      transform: translateY(-50%) rotate(-135deg);
+    }
+    .accordion-content {
+      max-height: 1000px;
+      padding: 2.5rem;
+      transition: max-height 0.5s ease-in, padding 0.5s ease-in;
     }
   }
 }
+
 
 
 /* Media queries pour la responsivité */

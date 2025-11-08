@@ -22,6 +22,13 @@ export class IngredientsComponent implements OnInit, OnDestroy {
   legumes: IngredientDetail[] = [];
   autres: IngredientDetail[] = [];
 
+  // State for accordion
+  accordionState: { [key: string]: boolean } = {
+    fruits: true,
+    legumes: false,
+    autres: false
+  };
+
   constructor(
     public authService: AuthService,
     private router: Router,
@@ -58,6 +65,18 @@ export class IngredientsComponent implements OnInit, OnDestroy {
   @HostListener('window:scroll', [])
   onWindowScroll() {
     this.isScrolled = window.pageYOffset > 50;
+  }
+
+  // Method to toggle accordion sections
+  toggleAccordion(section: string): void {
+    if (this.accordionState[section]) {
+      this.accordionState[section] = false;
+      return;
+    }
+    Object.keys(this.accordionState).forEach(key => {
+      this.accordionState[key] = false;
+    });
+    this.accordionState[section] = true;
   }
 
   // Méthode pour vérifier si un ingrédient est sélectionné
