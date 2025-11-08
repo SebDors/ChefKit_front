@@ -424,21 +424,71 @@ body {
     padding-top: calc(var(--spacing-md) + 10px + var(--spacing-xs));
     gap: 1.5rem;
   }
-  .category-section {
+  .accordion-item .accordion-header {
     padding: 1.8rem 1rem;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
   }
-  .category-title {
+  .accordion-item .accordion-header .category-title {
     font-size: 2rem;
-    margin-bottom: 1.5rem;
-    letter-spacing: 0.08em;
   }
-  .ingredients-list {
-    gap: 8px;
+  .accordion-item .accordion-content {
+    padding: 0 1rem;
   }
-  .ingredient-button {
+  .accordion-item.open .accordion-content {
+    padding: 1.5rem 1rem;
+  }
+  .accordion-item .accordion-content .ingredients-list .ingredient-button {
     padding: 9px 18px;
     font-size: 0.9rem;
-    min-width: unset;
+  }
+}
+
+/* --- TOASTER STYLES --- */
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--border-radius-md);
+  color: white;
+  font-weight: var(--chefkit-font-weight-medium);
+  z-index: 9999;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  animation: slideInOut 3s ease-in-out forwards;
+}
+
+.toast p {
+  margin: 0;
+  color: white;
+}
+
+.toast__icon {
+  font-size: 1.5rem;
+  line-height: 1;
+  color: white;
+}
+
+.toast.toast--success {
+  background-color: var(--chefkit-primary);
+}
+
+.toast.toast--error {
+  background-color: #dc3545;
+}
+
+@keyframes slideInOut {
+  0% {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+  10%, 90% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px);
+    opacity: 0;
   }
 }

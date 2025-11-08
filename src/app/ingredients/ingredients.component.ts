@@ -1,4 +1,3 @@
-// ingredients.component.ts
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Important pour ngFor, ngIf
 import { RouterModule, Router } from '@angular/router'; // Important pour routerLink
@@ -22,7 +21,12 @@ export class IngredientsComponent implements OnInit, OnDestroy {
   legumes: IngredientDetail[] = [];
   autres: IngredientDetail[] = [];
 
-  // State for accordion
+  // Toaster state
+  showToast = false;
+  toastMessage = '';
+  toastType: 'success' | 'error' = 'success';
+
+  // Accordion state
   accordionState: { [key: string]: boolean } = {
     fruits: true,
     legumes: false,
@@ -96,12 +100,23 @@ export class IngredientsComponent implements OnInit, OnDestroy {
     console.log('Ingrédients sélectionnés :', this.selectedIngredients);
   }
 
+  // Toaster trigger method
+  triggerToast(message: string, type: 'success' | 'error' = 'success') {
+    if (this.showToast) return;
+    this.toastMessage = message;
+    this.toastType = type;
+    this.showToast = true;
+    setTimeout(() => {
+      this.showToast = false;
+    }, 3000);
+  }
+
   // Méthode appelée lorsque l'utilisateur clique sur "Sauvegarder"
   saveSelectedIngredients(): void {
     const currentUser = this.authService.currentUser();
     if (!currentUser) {
-      alert("Vous devez être connecté pour sauvegarder votre frigo.");
-      this.router.navigate(['/login']);
+      this.triggerToast("Vous devez être connecté pour sauvegarder votre frigo.", 'error');
+      setTimeout(() => this.router.navigate(['/login']), 1500);
       return;
     }
 
@@ -118,8 +133,13 @@ export class IngredientsComponent implements OnInit, OnDestroy {
 
     // 3. Appeler le service pour sauvegarder les IDs dans le frigo de l'utilisateur
     this.ingredientsService.saveFridgeIngredients(currentUser.nomUtilisateur, selectedIds).subscribe({
-      next: () => alert('Votre frigo a été mis à jour avec succès !'),
-      error: (err) => alert('Une erreur est survenue lors de la sauvegarde : ' + err.message)
+      next: () => {
+        this.triggerToast('Votre frigo a été mis à jour avec succès !');
+        setTimeout(() => {
+          this.router.navigate(['/']);
+        }, 1500);
+      },
+      error: (err) => this.triggerToast('Une erreur est survenue lors de la sauvegarde : ' + err.message, 'error')
     });
   }
 

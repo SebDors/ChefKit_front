@@ -1,3 +1,9 @@
+<!-- Toaster -->
+<div *ngIf="showToast" class="toast toast--{{toastType}}">
+  <span *ngIf="toastType === 'success'" class="toast__icon">✔</span>
+  <p>{{ toastMessage }}</p>
+</div>
+
 <!-- HEADER -->
 <header class="app-header" [class.app-header--scrolled]="isScrolled">
   <div class="header__inner container">
@@ -36,7 +42,8 @@
       </div>
       <div class="accordion-content">
         <div class="ingredients-list">
-          <button *ngFor="let fruit of fruits" class="ingredient-button" [class.selected]="isSelected(fruit.nomIngredient)" (click)="toggleIngredient(fruit.nomIngredient)">
+          <button *ngFor="let fruit of fruits" class="ingredient-button"
+            [class.selected]="isSelected(fruit.nomIngredient)" (click)="toggleIngredient(fruit.nomIngredient)">
             {{ fruit.nomIngredient }}
           </button>
         </div>
@@ -52,7 +59,8 @@
       </div>
       <div class="accordion-content">
         <div class="ingredients-list">
-          <button *ngFor="let legume of legumes" class="ingredient-button" [class.selected]="isSelected(legume.nomIngredient)" (click)="toggleIngredient(legume.nomIngredient)">
+          <button *ngFor="let legume of legumes" class="ingredient-button"
+            [class.selected]="isSelected(legume.nomIngredient)" (click)="toggleIngredient(legume.nomIngredient)">
             {{ legume.nomIngredient }}
           </button>
         </div>
@@ -68,7 +76,8 @@
       </div>
       <div class="accordion-content">
         <div class="ingredients-list">
-          <button *ngFor="let autre of autres" class="ingredient-button" [class.selected]="isSelected(autre.nomIngredient)" (click)="toggleIngredient(autre.nomIngredient)">
+          <button *ngFor="let autre of autres" class="ingredient-button"
+            [class.selected]="isSelected(autre.nomIngredient)" (click)="toggleIngredient(autre.nomIngredient)">
             {{ autre.nomIngredient }}
           </button>
         </div>
