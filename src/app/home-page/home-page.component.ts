@@ -135,7 +135,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
   }
 
   
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize')
   onResize() {
     this.updateRecipesPerSlide();
   }
