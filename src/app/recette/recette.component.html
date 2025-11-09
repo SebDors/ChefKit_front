@@ -1,4 +1,3 @@
-<!-- HEADER -->
 <header class="app-header app-header--scrolled">
   <div class="header__inner container">
     <a routerLink="/" class="header__logo-link">
@@ -25,7 +24,7 @@
   </div>
 </header>
 
-<!-- SECTION CONTENU RECETTE -->
+
 <main class="recipe-page">
   <div *ngIf="isLoading" class="loading-indicator">
     <p>Chargement de la recette...</p>
@@ -38,7 +37,7 @@
 
   <ng-container *ngIf="!isLoading && recette">
     <div class="recipe-content-container container">
-      <!-- Colonne de gauche : Image et Méta-infos -->
+      
       <aside class="recipe-aside">
         <div class="recipe-image-container">
           <img [src]="recette.pathImage" [alt]="recette.titre" class="recipe-image">
@@ -62,7 +61,7 @@
         </div>
       </aside>
 
-      <!-- Colonne de droite : Titre, Description, Ingrédients, Instructions -->
+      
       <div class="recipe-main-content">
         <button (click)="goBack()" class="button button--secondary button--back">
           <svg fill="currentColor" viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
@@ -77,7 +76,7 @@
         <div class="recipe-ingredients">
           <h2 class="section-subtitle">Ingrédients</h2>
           
-          <!-- If user is logged in, show owned/missing lists -->
+          
           <ng-container *ngIf="isUserLoggedIn">
             <h3 class="subsection-title">Ce que vous avez :</h3>
             <ul class="ingredients-list ingredients-list--owned">
@@ -98,7 +97,7 @@
             </ul>
           </ng-container>
 
-          <!-- If user is not logged in, show the original full list -->
+          
           <ng-container *ngIf="!isUserLoggedIn">
             <ul class="ingredients-list">
               <li *ngFor="let ing of ingredients" class="ingredient-item">
@@ -123,7 +122,7 @@
   </ng-container>
 </main>
 
-<!-- FOOTER -->
+
 <footer class="app-footer">
   <div class="footer__inner container">
     <div class="footer__brand">

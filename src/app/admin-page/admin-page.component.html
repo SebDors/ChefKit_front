@@ -1,4 +1,3 @@
-<!-- HEADER -->
 <header class="app-header" [class.app-header--scrolled]="isScrolled">
   <div class="header__inner container">
     <a routerLink="/" class="header__logo-link">
@@ -20,7 +19,7 @@
   </div>
 </header>
 
-<!-- MAIN CONTENT -->
+
 <main class="admin-main">
   <section class="admin-hero">
     <div class="admin-hero__content container">
@@ -44,7 +43,7 @@
 
   <div class="container">
     <div class="admin-dashboard-layout">
-      <!-- Navigation latérale -->
+      
       <nav class="admin-sidebar">
         <button class="admin-sidebar__item" [class.admin-sidebar__item--active]="activeSection === 'users'"
           (click)="setActiveSection('users')">
@@ -60,13 +59,13 @@
         </button>
       </nav>
 
-      <!-- Contenu principal des sections CRUD -->
+      
       <div class="admin-content">
-        <!-- USERS -->
+        
         <div class="admin-card" *ngIf="activeSection === 'users'">
           <h2 class="admin-card__title">Gérer les Utilisateurs</h2>
 
-          <!-- Section "Voir un utilisateur" - EN HAUT -->
+          
           <div class="admin-view-section">
             <h4>Voir un utilisateur</h4>
             <div class="form-row">
@@ -86,9 +85,9 @@
             </div>
           </div>
 
-          <!-- Grille des autres opérations - EN DESSOUS -->
+          
           <div class="admin-forms-grid">
-            <!-- Formulaire Créer un utilisateur -->
+            
             <div class="form-section">
               <h4>Créer un utilisateur</h4>
               <input type="text" placeholder="Nom d'utilisateur" [(ngModel)]="createUserModel.nomUtilisateur"
@@ -103,7 +102,7 @@
               <button (click)="createUser()" class="button button--primary">Créer</button>
             </div>
 
-            <!-- Formulaire Modifier un utilisateur -->
+            
             <div class="form-section">
               <h4>Modifier un utilisateur</h4>
               <input type="text" placeholder="Nom d'utilisateur à modifier"
@@ -120,7 +119,7 @@
               <button (click)="updateUser()" class="button button--primary">Modifier</button>
             </div>
 
-            <!-- Formulaire Supprimer un utilisateur -->
+            
             <div class="form-section">
               <h4>Supprimer un utilisateur</h4>
               <input type="text" placeholder="Nom d'utilisateur à supprimer" [(ngModel)]="deleteUserModel.username"
@@ -130,11 +129,11 @@
           </div>
         </div>
 
-        <!-- RECETTES -->
+        
         <div class="admin-card" *ngIf="activeSection === 'recettes'">
           <h2 class="admin-card__title">Gérer les Recettes</h2>
 
-          <!-- Section "Voir une recette" - EN HAUT -->
+          
           <div class="admin-view-section">
             <h4>Voir une recette</h4>
             <div class="form-row">
@@ -157,9 +156,9 @@
             </div>
           </div>
 
-          <!-- Grille des autres opérations - EN DESSOUS -->
+          
           <div class="admin-forms-grid">
-            <!-- Formulaire Créer une recette -->
+            
             <div class="form-section">
               <h4>Créer une recette</h4>
               <input type="text" placeholder="Titre" [(ngModel)]="createRecetteModel.titre" class="form-input">
@@ -178,7 +177,7 @@
               <button (click)="createRecette()" class="button button--primary">Créer</button>
             </div>
 
-            <!-- Formulaire Modifier une recette -->
+            
             <div class="form-section">
               <h4>Modifier une recette</h4>
               <input type="text" placeholder="Titre à modifier" [(ngModel)]="updateRecetteModel.titleToUpdate"
@@ -199,7 +198,7 @@
               <button (click)="updateRecette()" class="button button--primary">Modifier</button>
             </div>
 
-            <!-- Formulaire Supprimer une recette -->
+            
             <div class="form-section">
               <h4>Supprimer une recette</h4>
               <input type="text" placeholder="Titre à supprimer" [(ngModel)]="deleteRecetteModel.title"
@@ -209,11 +208,11 @@
           </div>
         </div>
 
-        <!-- INGRÉDIENTS -->
+        
         <div class="admin-card" *ngIf="activeSection === 'ingredients'">
           <h2 class="admin-card__title">Gérer les Ingrédients</h2>
 
-          <!-- Section "Voir un ingrédient" - EN HAUT -->
+          
           <div class="admin-view-section">
             <h4>Voir un ingrédient</h4>
             <div class="form-row">
@@ -231,9 +230,9 @@
             </div>
           </div>
 
-          <!-- Grille des autres opérations - EN DESSOUS -->
+          
           <div class="admin-forms-grid">
-            <!-- Formulaire Créer un ingrédient -->
+            
             <div class="form-section">
               <h4>Créer un ingrédient</h4>
               <input type="text" placeholder="Nom de l'ingrédient" [(ngModel)]="createIngredientModel.nomIngredient"
@@ -243,7 +242,7 @@
               <button (click)="createIngredient()" class="button button--primary">Créer</button>
             </div>
 
-            <!-- Formulaire Modifier un ingrédient -->
+            
             <div class="form-section">
               <h4>Modifier un ingrédient</h4>
               <input type="text" placeholder="Ingrédient à modifier"
@@ -255,7 +254,7 @@
               <button (click)="updateIngredient()" class="button button--primary">Modifier</button>
             </div>
 
-            <!-- Formulaire Supprimer un ingrédient -->
+            
             <div class="form-section">
               <h4>Supprimer un ingrédient</h4>
               <input type="text" placeholder="Ingrédient à supprimer" [(ngModel)]="deleteIngredientModel.nom_ingredient"
@@ -269,7 +268,7 @@
   </div>
 </main>
 
-<!-- FOOTER (inchangé) -->
+
 <footer class="app-footer">
   <div class="footer__inner container">
     <div class="footer__brand">

@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, inject } from '@angular/core'; // Removed 'inject' as it wasn't used
+import { Component, OnInit, HostListener, inject } from '@angular/core'; 
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AdminService } from '../services/admin.service';
@@ -21,8 +21,8 @@ export class AdminPageComponent implements OnInit{
   isScrolled = false;
   currentYear = new Date().getFullYear();
 
-  // Nouvelle propriété pour gérer l'onglet actif
-  activeSection: 'users' | 'recettes' | 'ingredients' = 'users'; // Par défaut, afficher les utilisateurs
+  
+  activeSection: 'users' | 'recettes' | 'ingredients' = 'users'; 
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
@@ -33,7 +33,7 @@ export class AdminPageComponent implements OnInit{
   recettesCount:number = 0;
   ingredientsCount:number = 0;
 
-  // Models for the forms
+  
   readUserModel = { username: '' };
   readUserResult: User | null = null;
   userError: string = '';
@@ -41,7 +41,7 @@ export class AdminPageComponent implements OnInit{
   updateUserModel: Partial<User> & { usernameToUpdate: string } = { usernameToUpdate: '', nomUtilisateur: '', email: '', motDePasse: '', role: 'user' };
   deleteUserModel = { username: '' };
 
-  //recettes
+  
   readRecetteModel = { titre: '' };
   readRecetteResult: Recette | null = null;
   recetteError: string = '';
@@ -49,7 +49,7 @@ export class AdminPageComponent implements OnInit{
   updateRecetteModel: Partial<Recette> & { titleToUpdate: string } = { titleToUpdate: '', titre: '', description: '', instructions: '', tempsPreparationMinutes: 0, tempsCuissonMinutes: 0, nombrePersonnes: 0, pathImage: '' };
   deleteRecetteModel = { title: '' };
 
-  // Ingredients
+  
   readIngredientModel = { nom_ingredient: '' };
   readIngredientResult: IngredientDetail | null = null;
   ingredientError: string = '';
@@ -71,7 +71,7 @@ export class AdminPageComponent implements OnInit{
     });
   }
 
-  // Nouvelle méthode pour changer l'onglet actif
+  
   setActiveSection(section: 'users' | 'recettes' | 'ingredients'): void {
     this.activeSection = section;
   }
@@ -136,7 +136,7 @@ export class AdminPageComponent implements OnInit{
     );
   }
 
-  // Recette methods
+  
   getRecette(){
     this.adminService.getRecette(this.readRecetteModel.titre).subscribe(
       recette => {
@@ -195,7 +195,7 @@ export class AdminPageComponent implements OnInit{
     );
   }
 
-  // Ingredient methods
+  
   getIngredient() {
     this.adminService.getIngredientByName(this.readIngredientModel.nom_ingredient).subscribe(
       ingredient => {

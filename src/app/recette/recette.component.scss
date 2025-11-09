@@ -22,28 +22,28 @@
   margin-top: var(--spacing-lg);
 }
 
-/* --- NOUVEAU LAYOUT DE LA PAGE RECETTE --- */
+
 .recipe-content-container {
   display: grid;
-  grid-template-columns: 320px 1fr; // Colonne de gauche fixe, colonne de droite flexible
+  grid-template-columns: 320px 1fr; 
   gap: var(--spacing-xxl);
   padding-top: var(--spacing-xl);
   padding-bottom: var(--spacing-xxl);
 
   @media (max-width: 1024px) {
-    grid-template-columns: 1fr; // Passe à une seule colonne sur tablette et mobile
+    grid-template-columns: 1fr; 
     gap: var(--spacing-xl);
   }
 }
 
-/* --- COLONNE DE GAUCHE (ASIDE) --- */
+
 .recipe-aside {
   position: sticky;
-  top: 100px; // Doit être ajusté en fonction de la hauteur du header
-  align-self: start; // S'assure que la colonne ne s'étire pas
+  top: 100px; 
+  align-self: start; 
 
   @media (max-width: 1024px) {
-    position: static; // Le sticky est désactivé sur les petits écrans
+    position: static; 
   }
 }
 
@@ -96,9 +96,9 @@
   }
 }
 
-/* --- COLONNE DE DROITE (MAIN CONTENT) --- */
+
 .recipe-main-content {
-  padding: var(--spacing-sm) 0; // Un peu de padding pour l'alignement
+  padding: var(--spacing-sm) 0; 
 }
 
 .recipe-header {
@@ -133,7 +133,7 @@
   display: inline-block;
 }
 
-/* --- LISTE D'INGRÉDIENTS --- */
+
 .recipe-ingredients {
   margin-bottom: var(--spacing-xl);
 }
@@ -173,7 +173,7 @@
   color: var(--chefkit-primary);
 }
 
-/* --- INSTRUCTIONS --- */
+
 .recipe-instructions {
   margin-top: var(--spacing-xl);
 }
@@ -184,22 +184,22 @@
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-xl); // Augmenter l'espace entre les étapes
+  gap: var(--spacing-xl); 
 }
 
 .instruction-step {
   display: flex;
-  flex-direction: column; // Mettre en colonne
-  align-items: flex-start; // Aligner à gauche
-  gap: var(--spacing-sm); // Espace entre le numéro et le texte
+  flex-direction: column; 
+  align-items: flex-start; 
+  gap: var(--spacing-sm); 
   font-size: 1.1rem;
   line-height: 1.8;
 }
 
 .step-number {
   flex-shrink: 0;
-  width: auto; // Largeur auto
-  height: auto; // Hauteur auto
+  width: auto; 
+  height: auto; 
   padding: var(--spacing-xxs) var(--spacing-sm);
   display: flex;
   align-items: center;
@@ -216,7 +216,7 @@
   color: var(--chefkit-text-dark);
 }
 
-/* Bouton Retour */
+
 .button--back {
   margin-bottom: var(--spacing-lg);
   display: inline-flex;
@@ -250,4 +250,3 @@
   border-left: 4px solid #dc3545;
   background-color: #fff5f5;
 }
-

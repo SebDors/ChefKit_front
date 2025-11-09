@@ -1,6 +1,6 @@
 :host {
   display: block;
-  background-color: #f9fafb; // Light grey background for the whole page
+  background-color: #f9fafb; 
 }
 
 .button.deconnect {
@@ -14,7 +14,7 @@
   }
 }
 
-/* --- HEADER (inchangé) --- */
+
 .app-header {
   position: sticky;
   top: 0;
@@ -84,7 +84,7 @@
   gap: var(--spacing-sm);
 }
 
-/* --- MAIN CONTENT --- */
+
 .admin-main {
   padding: 0 0 var(--spacing-xl) 0;
   min-height: calc(100vh - 180px);
@@ -96,7 +96,7 @@
   padding: 0 var(--spacing-md);
 }
 
-/* --- ADMIN HERO SECTION (NEW) --- */
+
 .admin-hero {
   position: relative;
   min-height: 60vh;
@@ -106,7 +106,7 @@
   align-items: center;
   text-align: center;
   color: var(--chefkit-background-white);
-  background-image: url('/assets/images/admin-back.jpg'); /* Utilise ton image */
+  background-image: url('/assets/images/admin-back.jpg'); 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -189,7 +189,7 @@
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
 }
 
-/* --- ADMIN DASHBOARD LAYOUT (inchangé) --- */
+
 .admin-dashboard-layout {
   display: grid;
   grid-template-columns: 1fr;
@@ -259,20 +259,20 @@
 }
 
 .admin-content {
-  // Styles pour le conteneur du contenu des onglets
+  
 }
 
-/* --- ADMIN CARDS (MODIFIÉ) --- */
+
 .admin-card {
   background-color: var(--chefkit-background-white);
   border-radius: var(--border-radius-xl);
   padding: var(--spacing-lg);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
-  // Ajout du `display: flex` et `flex-direction: column`
-  // pour gérer l'espacement entre la section "Voir" et la grille des autres formulaires.
+  
+  
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-lg); // Espacement entre la section "Voir" et la grille
+  gap: var(--spacing-lg); 
 
   &:hover {
     transform: none;
@@ -284,22 +284,22 @@
   font-size: 1.8rem;
   font-weight: var(--chefkit-font-weight-bold);
   font-family: var(--chefkit-font-display);
-  margin-bottom: var(--spacing-md); // Réduit un peu le margin pour être cohérent avec le gap
+  margin-bottom: var(--spacing-md); 
   color: var(--chefkit-text-dark);
   text-align: center;
   border-bottom: 1px solid var(--chefkit-border-light);
   padding-bottom: var(--spacing-md);
 }
 
-// NOUVELLE SECTION POUR "VOIR"
+
 .admin-view-section {
-  background-color: var(--chefkit-background-light); // Une couleur de fond légèrement différente pour la distinguer
+  background-color: var(--chefkit-background-light); 
   border-radius: var(--border-radius-md);
   padding: var(--spacing-md);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03); // Ombre légère
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03); 
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-sm); // Espacement interne
+  gap: var(--spacing-sm); 
 
   h4 {
     font-size: 1.1rem;
@@ -311,34 +311,34 @@
   }
 }
 
-// Ligne pour l'input et le bouton "Voir" côte à côte
+
 .form-row {
   display: flex;
   gap: var(--spacing-sm);
   align-items: center;
 
   .form-input {
-    flex-grow: 1; // L'input prend le maximum d'espace disponible
+    flex-grow: 1; 
   }
   .button--secondary {
-    flex-shrink: 0; // Le bouton ne rétrécit pas
+    flex-shrink: 0; 
     width: auto;
   }
 }
 
 
-// GRILLE DES AUTRES FORMULAIRES (Créer, Modifier, Supprimer)
+
 .admin-forms-grid {
   display: grid;
-  grid-template-columns: 1fr; // Par défaut une colonne sur mobile
-  gap: var(--spacing-lg); // Espacement entre les formulaires
+  grid-template-columns: 1fr; 
+  gap: var(--spacing-lg); 
 
   @media (min-width: 768px) {
-    grid-template-columns: repeat(2, 1fr); // Deux colonnes sur tablette et desktop
+    grid-template-columns: repeat(2, 1fr); 
   }
 
   @media (min-width: 1024px) {
-    grid-template-columns: repeat(3, 1fr); // Trois colonnes sur les grands écrans
+    grid-template-columns: repeat(3, 1fr); 
   }
 }
 
@@ -361,12 +361,12 @@
   }
 
   .button {
-    width: 100%; // Les boutons dans cette grille reprennent 100% de la largeur de leur section
-    margin-top: var(--spacing-xs); // Petit espacement au-dessus des boutons
+    width: 100%; 
+    margin-top: var(--spacing-xs); 
   }
 }
 
-/* --- FORM ELEMENTS (inchangé) --- */
+
 .form-input {
   width: 100%;
   padding: var(--spacing-sm) var(--spacing-md);
@@ -386,7 +386,7 @@
   }
 }
 
-/* --- BUTTONS (MODIFIÉ) --- */
+
 .button {
   box-sizing: border-box;
   display: inline-block;
@@ -402,8 +402,8 @@
   transition: all 0.2s ease-in-out;
   user-select: none;
   line-height: 1.5;
-  // La largeur est gérée par les conteneurs parents (.form-row ou .form-section)
-  // pour plus de flexibilité. La valeur par défaut 'width: 100%' n'est plus nécessaire ici.
+  
+  
 }
 
 .button--primary {
@@ -441,7 +441,7 @@
   }
 }
 
-/* --- RESULT BOX (inchangé) --- */
+
 .result-box {
   background-color: var(--chefkit-background-light);
   border-radius: var(--border-radius-md);
@@ -457,7 +457,7 @@
   }
 }
 
-/* --- FOOTER (inchangé) --- */
+
 .app-footer {
   background-color: var(--chefkit-footer-bg);
   color: var(--chefkit-footer-text);

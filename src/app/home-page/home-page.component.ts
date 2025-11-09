@@ -17,40 +17,40 @@ import { UserService } from '../services/user.service';
   standalone: true,
   imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './home-page.component.html',
-  styleUrls: ['./home-page.component.scss'] // correction : styleUrls au pluriel
+  styleUrls: ['./home-page.component.scss'] 
 })
 export class HomePageComponent implements OnInit, OnDestroy {
-  // === Données dynamiques ===
+  
   recettes: Recette[] = [];
-  associatedRecipes: Recette[] = []; // Pour les recettes suggérées
-  featuredRecipes: Recette[] = []; // pour le carrousel
+  associatedRecipes: Recette[] = []; 
+  featuredRecipes: Recette[] = []; 
   isLoading = true;
   isLoadingAssociated = false;
   errorMsg = '';
 
-  // === Données pour la mise en page ===
+  
   currentYear: number = new Date().getFullYear();
   isScrolled = false;
 
-  // === Search ===
+  
   public searchInput: string = '';
   public searchTags: string[] = [];
 
-  // === Notification ===
+  
   public showNotification = false;
   public notificationMessage = '';
 
-  // === Carrousel ===
+  
   currentSlideIndex = 0;
   recipesPerSlide = 3;
   public Array = Array;
 
-  // === Accordion ===
+  
   accordionState: { [key: string]: boolean } = {
-    allrecipes: false, // Default to closed
+    allrecipes: false, 
   };
 
-  // === Souscription backend ===
+  
   private recetteSubscription: any;
 
 
@@ -63,10 +63,10 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.updateRecipesPerSlide();
-    this.getAllRecettes(); // On charge toujours toutes les recettes
+    this.getAllRecettes(); 
     const currentUser = this.authService.currentUser();
     if (currentUser) {
-      this.getAssociatedRecipes(currentUser.nomUtilisateur); // On charge les recettes suggérées en plus
+      this.getAssociatedRecipes(currentUser.nomUtilisateur); 
     }
   }
 
@@ -74,12 +74,12 @@ export class HomePageComponent implements OnInit, OnDestroy {
     if (this.recetteSubscription) this.recetteSubscription.unsubscribe();
   }
 
-  // === Récupération des recettes depuis le backend ===
+  
   getAssociatedRecipes(username: string): void {
     this.isLoadingAssociated = true;
     this.userService.getRecipesByFridge(username).subscribe({
       next: (data: Recette[]) => {
-        this.associatedRecipes = data || []; // On assigne toujours le résultat, même s'il est vide.
+        this.associatedRecipes = data || []; 
         this.isLoadingAssociated = false;
       },
       error: (err) => {
@@ -95,8 +95,8 @@ export class HomePageComponent implements OnInit, OnDestroy {
         this.recettes = data;
         this.isLoading = false;
 
-        // Choix des recettes mises en avant pour le carrousel
-        this.featuredRecipes = data.slice(0, 9); // 9 premières recettes
+        
+        this.featuredRecipes = data.slice(0, 9); 
       },
       error: (err) => {
         console.error('Erreur lors de la récupération des recettes :', err);
@@ -106,12 +106,12 @@ export class HomePageComponent implements OnInit, OnDestroy {
     });
   }
 
-  // === Navigation vers la page de détail ===
+  
   ouvrirRecette(idRecette: number): void {
     this.router.navigate(['/recette', idRecette]);
   }
 
-  // === Carrousel ===
+  
   get totalSlides(): number {
     return Math.ceil(this.featuredRecipes.length / this.recipesPerSlide);
   }
@@ -134,7 +134,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
     }
   }
 
-  // === Responsive : ajuste le nombre de recettes visibles ===
+  
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.updateRecipesPerSlide();
@@ -153,13 +153,13 @@ export class HomePageComponent implements OnInit, OnDestroy {
     }
   }
 
-  // === Scroll dynamique pour le header sticky ===
+  
   @HostListener('window:scroll', [])
   onWindowScroll() {
     this.isScrolled = window.pageYOffset > 50;
   }
 
-  // === Gestion de la recherche ===
+  
   addSearchTag(): void {
     const tags = this.searchInput.split(',').map(tag => tag.trim()).filter(tag => tag);
     let tagAdded = false;
@@ -187,10 +187,10 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.showNotification = true;
     setTimeout(() => {
       this.showNotification = false;
-    }, 5000); // Hide after 5 seconds
+    }, 5000); 
   }
 
-  // === Authentification ===
+  
   logout(): void {
     this.authService.logout();
   }

@@ -24,5 +24,3 @@ export class RecetteService {
     return this.http.get<Ingredient[]>(`${this.apiUrl}/${recetteId}/ingredients`);
   }
 }
-
-

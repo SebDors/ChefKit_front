@@ -1,32 +1,32 @@
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Important pour ngFor, ngIf
-import { RouterModule, Router } from '@angular/router'; // Important pour routerLink
-import { AuthService } from '../auth.service'; // Assurez-vous du bon chemin
+import { CommonModule } from '@angular/common'; 
+import { RouterModule, Router } from '@angular/router'; 
+import { AuthService } from '../auth.service'; 
 import { IngredientsService } from '../services/ingredients.service';
 import { IngredientDetail } from '../models/ingredient-detail.model';
 
 @Component({
   selector: 'app-ingredients',
   standalone: true,
-  imports: [CommonModule, RouterModule], // Ajoutez RouterModule ici
+  imports: [CommonModule, RouterModule], 
   templateUrl: './ingredients.component.html',
   styleUrls: ['./ingredients.component.scss']
 })
 export class IngredientsComponent implements OnInit, OnDestroy {
   isScrolled = false;
-  selectedIngredients: string[] = []; // Tableau pour stocker les noms des ingrédients sélectionnés
+  selectedIngredients: string[] = []; 
 
-  // Données d'ingrédients
+  
   fruits: IngredientDetail[] = [];
   legumes: IngredientDetail[] = [];
   autres: IngredientDetail[] = [];
 
-  // Toaster state
+  
   showToast = false;
   toastMessage = '';
   toastType: 'success' | 'error' = 'success';
 
-  // Accordion state
+  
   accordionState: { [key: string]: boolean } = {
     fruits: true,
     legumes: false,
@@ -42,20 +42,20 @@ export class IngredientsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     const currentUser = this.authService.currentUser();
     if (currentUser) {
-      // Charger les ingrédients du frigo de l'utilisateur
+      
       this.ingredientsService.getFridgeIngredients(currentUser.nomUtilisateur).subscribe(fridgeIngredients => {
         this.selectedIngredients = fridgeIngredients.map(ingredient => ingredient.nomIngredient);
-        // Une fois les ingrédients du frigo chargés, charger tous les ingrédients
+        
         this.loadIngredients();
       });
     } else {
-      // Si aucun utilisateur n'est connecté ou n'a pas d'ID, charger simplement tous les ingrédients
+      
       this.loadIngredients();
     }
   }
 
   ngOnDestroy(): void {
-    // Nettoyage si nécessaire
+    
   }
 
   loadIngredients(): void {
@@ -71,7 +71,7 @@ export class IngredientsComponent implements OnInit, OnDestroy {
     this.isScrolled = window.pageYOffset > 50;
   }
 
-  // Method to toggle accordion sections
+  
   toggleAccordion(section: string): void {
     if (this.accordionState[section]) {
       this.accordionState[section] = false;
@@ -83,12 +83,12 @@ export class IngredientsComponent implements OnInit, OnDestroy {
     this.accordionState[section] = true;
   }
 
-  // Méthode pour vérifier si un ingrédient est sélectionné
+  
   isSelected(ingredientName: string): boolean {
     return this.selectedIngredients.includes(ingredientName);
   }
 
-  // Méthode pour basculer la sélection d'un ingrédient
+  
   toggleIngredient(ingredientName: string): void {
     if (this.isSelected(ingredientName)) {
       this.selectedIngredients = this.selectedIngredients.filter(
@@ -100,7 +100,7 @@ export class IngredientsComponent implements OnInit, OnDestroy {
     console.log('Ingrédients sélectionnés :', this.selectedIngredients);
   }
 
-  // Toaster trigger method
+  
   triggerToast(message: string, type: 'success' | 'error' = 'success') {
     if (this.showToast) return;
     this.toastMessage = message;
@@ -111,7 +111,7 @@ export class IngredientsComponent implements OnInit, OnDestroy {
     }, 3000);
   }
 
-  // Méthode appelée lorsque l'utilisateur clique sur "Sauvegarder"
+  
   saveSelectedIngredients(): void {
     const currentUser = this.authService.currentUser();
     if (!currentUser) {
@@ -120,18 +120,18 @@ export class IngredientsComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // 1. Créer une liste complète de tous les ingrédients avec leurs IDs
+    
     const allIngredients = [...this.fruits, ...this.legumes, ...this.autres];
 
-    // 2. Mapper les noms des ingrédients sélectionnés à leurs IDs
+    
     const selectedIds = this.selectedIngredients.map(name => {
       const ingredient = allIngredients.find(ing => ing.nomIngredient === name);
       return ingredient ? ingredient.idIngredient : null;
-    }).filter(id => id !== null) as number[]; // Filtrer les nuls et typer en number[]
+    }).filter(id => id !== null) as number[]; 
 
     console.log('IDs à sauvegarder :', selectedIds);
 
-    // 3. Appeler le service pour sauvegarder les IDs dans le frigo de l'utilisateur
+    
     this.ingredientsService.saveFridgeIngredients(currentUser.nomUtilisateur, selectedIds).subscribe({
       next: () => {
         this.triggerToast('Votre frigo a été mis à jour avec succès !');

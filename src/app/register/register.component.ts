@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink } from '@angular/router'; // Import RouterLink
+import { Router, RouterLink } from '@angular/router'; 
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { AuthService } from '../auth.service';
   imports: [
     ReactiveFormsModule,
     CommonModule,
-    RouterLink // Add RouterLink here
+    RouterLink 
   ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
@@ -64,11 +64,11 @@ export class RegisterComponent {
     if (this.registerForm.valid) {
       const { nomUtilisateur, email, password } = this.registerForm.value;
       const userDataToSend = {
-        idUtilisateur: 0, // ou null, selon ce que le backend attend
+        idUtilisateur: 0, 
         nomUtilisateur: nomUtilisateur, 
         email: email,
         motDePasse: password,
-        dateCreation: new Date().toISOString() // ou une autre valeur par défaut appropriée
+        dateCreation: new Date().toISOString() 
       };
 
       console.log('Données envoyées au backend:', userDataToSend);

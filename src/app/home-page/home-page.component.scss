@@ -1,4 +1,3 @@
-/* --- HEADER --- */
 .app-header {
   position: sticky;
   top: 0;
@@ -120,7 +119,7 @@
 }
 
 
-/* --- SECTION HERO --- */
+
 .hero {
   min-height: 70vh;
   display: flex;
@@ -185,7 +184,7 @@
   }
 }
 
-// Conteneur intégré pour la recherche et les filtres (effet verre dépoli amélioré)
+
 .hero__integrated-search-container {
     background-color: rgba(var(--chefkit-background-white-rgb), 0.95);
 
@@ -346,7 +345,7 @@
 }
 
 
-/* --- SECTION RECETTES MISES EN AVANT - CARROUSEL --- */
+
 .featured-recipes {
   background-color: var(--chefkit-background-light);
   text-align: center;
@@ -368,20 +367,20 @@
   }
 }
 
-/* Styles Carrousel */
+
 .carousel-container {
     position: relative;
     max-width: 1120px;
     margin: var(--spacing-lg) auto 0;
     
-    /* RESTAURÉ le padding horizontal pour que les flèches aient de la place */
+    
     padding: 0 var(--spacing-xl); 
     
     display: flex;
     align-items: center;
     justify-content: center;
-    /* SUPPRIMÉ: 'overflow: hidden' ici cachait les flèches */
-    /* overflow: hidden; */ 
+    
+    
 
     @media (max-width: 1023px) {
         padding: 0 var(--spacing-lg);
@@ -392,9 +391,9 @@
 }
 
 .carousel-wrapper {
-    overflow: hidden; /* Garder l'overflow: hidden ici pour le contenu défilant */
+    overflow: hidden; 
     width: 100%;
-    border-radius: var(--border-radius-xl); /* Garder le border-radius ici pour le wrapper des slides */
+    border-radius: var(--border-radius-xl); 
 }
 
 .carousel-track {
@@ -403,13 +402,13 @@
 }
 
 .carousel-slide {
-  flex: 0 0 100%; /* Chaque slide (groupe de recettes) prend 100% de la largeur du wrapper */
-  display: flex; /* Pour que les recipe-card à l'intérieur s'alignent */
-  justify-content: center; /* Centrer les cartes si l'espace est plus grand */
-  align-items: stretch; /* Les cartes d'une même slide auront la même hauteur */
-  box-sizing: border-box; /* Padding et border inclus dans la largeur */
-  gap: var(--spacing-lg); /* ESPACEMENT ENTRE LES CARTES DE LA MÊME SLIDE */
-  padding: 0 var(--spacing-sm); /* Petit padding intérieur pour éviter que les cartes touchent les bords du wrapper */
+  flex: 0 0 100%; 
+  display: flex; 
+  justify-content: center; 
+  align-items: stretch; 
+  box-sizing: border-box; 
+  gap: var(--spacing-lg); 
+  padding: 0 var(--spacing-sm); 
 }
 
 .carousel-item {
@@ -418,14 +417,14 @@
     margin: 0;
 }
 
-/* Styles de la carte de recette, adaptés pour le carrousel */
+
 .recipe-card {
   display: flex;
   flex-direction: column;
   background-color: var(--chefkit-background-white);
   border-radius: var(--border-radius-xl);
   box-shadow: none;
-  overflow: hidden; /* ESSENTIEL pour le clipping global de la carte */
+  overflow: hidden; 
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
   text-decoration: none;
@@ -439,19 +438,19 @@
 }
 
 .carousel-slide .recipe-card {
-    /* Largeur par défaut pour 3 recettes par slide */
-    flex: 0 0 calc(33.333% - (var(--spacing-lg) * 2 / 3)); /* 3 cartes - 2/3 du gap total */
+    
+    flex: 0 0 calc(33.333% - (var(--spacing-lg) * 2 / 3)); 
     max-width: calc(33.333% - (var(--spacing-lg) * 2 / 3));
-    /* Les marges internes sont maintenant gérées par le gap du .carousel-slide */
+    
 }
 
 .recipe-card__image-container {
     width: 100%;
     height: 190px;
-    overflow: hidden; /* ESSENTIEL pour que l'image enfant respecte les bordures parentes arrondies. */
-    /* SUPPRIMÉ: Laisser le parent .recipe-card gérer le border-radius global */
-    /* border-top-left-radius: var(--border-radius-xl); */
-    /* border-top-right-radius: var(--border-radius-xl); */
+    overflow: hidden; 
+    
+    
+    
     border-bottom: none;
     flex-shrink: 0;
 }
@@ -463,12 +462,12 @@
     object-position: center;
     display: block;
     transition: transform 0.3s ease;
-    /* NOUVEAU: Force l'accélération matérielle pour le rendu des coins */
+    
     transform: translateZ(0); 
 }
 
 .recipe-card:hover .recipe-card__image {
-    transform: scale(1.08) translateZ(0); /* Appliquer translateZ(0) aussi sur le hover */
+    transform: scale(1.08) translateZ(0); 
 }
 
 .recipe-card__content {
@@ -531,12 +530,12 @@
 }
 
 .carousel-arrow--left {
-    /* Positionne les flèches aux bords du padding du carousel-container */
+    
     left: 0;
 }
 
 .carousel-arrow--right {
-    /* Positionne les flèches aux bords du padding du carousel-container */
+    
     right: 0;
 }
 
@@ -546,79 +545,77 @@
     height: 28px;
 }
 
-/* SUPPRIMÉ: Styles pour les indicateurs de carrousel */
+
 .carousel-indicators {
     display: none; 
 }
 
-/* SUPPRIMÉ: Styles pour les points indicateurs */
+
 .indicator-dot {
     display: none;
 }
 
-/* Masque l'ancienne grille statique */
+
 .recipes-grid-static {
     display: none;
 }
 
-/* NOUVEAUX STYLES POUR LA GRILLE DE TOUTES LES RECETTES */
+
 .all-recipes {
-    background-color: var(--chefkit-background-white); /* Ou une autre couleur de fond si vous voulez la différencier */
+    background-color: var(--chefkit-background-white); 
     padding-top: var(--spacing-xl);
     padding-bottom: var(--spacing-xxl);
 }
 
 .recipes-grid {
     display: grid;
-    /* Ajustez les valeurs minmax selon le nombre de colonnes souhaité et la taille des cartes */
+    
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-    gap: var(--spacing-lg); /* Espacement entre les cartes */
+    gap: var(--spacing-lg); 
     margin-top: var(--spacing-lg);
 
     @media (max-width: 768px) {
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         gap: var(--spacing-md);
-        padding: 0 var(--spacing-md); /* Pour ajouter un peu d'espace sur mobile */
+        padding: 0 var(--spacing-md); 
     }
 
     @media (max-width: 480px) {
-      grid-template-columns: 1fr; /* Une seule colonne sur les très petits écrans */
+      grid-template-columns: 1fr; 
       padding: 0 var(--spacing-sm);
     }
 }
 
-/* Vous pouvez légèrement modifier l'apparence des recipe-card dans la grille
-   par rapport à celles du carrousel si vous le souhaitez.
-   Par exemple, une ombre plus prononcée : */
+
 .all-recipes .recipe-card {
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08); /* Ombre par défaut */
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08); 
   &:hover {
-    box-shadow: 0 18px 55px rgba(0, 0, 0, 0.12); /* Ombre plus forte au survol */
+    box-shadow: 0 18px 55px rgba(0, 0, 0, 0.12); 
   }
 }
 
-@media (max-width: 1023px) { /* Correspond à recipesPerSlide = 2 */
+@media (max-width: 1023px) { 
   .carousel-slide {
-    gap: var(--spacing-md); /* Ajuster le gap pour 2 cartes */
+    gap: var(--spacing-md); 
   }
   .carousel-slide .recipe-card {
-    flex: 0 0 calc(50% - (var(--spacing-md) / 2)); /* 2 cartes par slide - 1/2 du gap total */
+    flex: 0 0 calc(50% - (var(--spacing-md) / 2)); 
     max-width: calc(50% - (var(--spacing-md) / 2));
   }
 }
 
-@media (max-width: 767px) { /* Correspond à recipesPerSlide = 1 */
+@media (max-width: 767px) { 
   .carousel-slide {
-    gap: var(--spacing-sm); /* Ajuster le gap pour 1 carte (ou pas de gap significatif) */
+    gap: var(--spacing-sm); 
   }
   .carousel-slide .recipe-card {
-    flex: 0 0 calc(100% - var(--spacing-lg)); /* 1 carte par slide, avec un peu de padding/espace */
+    flex: 0 0 calc(100% - var(--spacing-lg)); 
     max-width: calc(100% - var(--spacing-lg));
   }
 }
 
 
-/* --- FOOTER --- */
+
 .app-footer {
   background-color: var(--chefkit-footer-bg);
   color: var(--chefkit-footer-text);
@@ -707,7 +704,7 @@
 
   
 
-  /* --- TOASTER NOTIFICATION --- */
+  
 
   .toaster-notification {
 
@@ -799,7 +796,7 @@
 
   
 
-  /* --- ACCORDION FOR ALL RECIPES --- */
+  
 
   
 
@@ -1051,7 +1048,7 @@
 
   
 
-        max-height: 5000px; /* Adjust as needed */
+        max-height: 5000px; 
 
   
 
@@ -1072,9 +1069,3 @@
   
 
   }
-
-  
-
-  
-
-  

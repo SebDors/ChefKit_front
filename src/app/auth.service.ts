@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, tap, catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 
-// Interface to define possible shapes of the user data from the API
+
 interface UserResponse {
   nomUtilisateur?: string;
   username?: string;
@@ -52,7 +52,7 @@ export class AuthService {
           }
         }
 
-        // Create a clean user object, using the username from the login form as requested.
+        
         const user = {
             nomUtilisateur: credentials.nomUtilisateur,
             role: role

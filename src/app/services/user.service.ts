@@ -7,7 +7,7 @@ import { Recette } from '../models/recette.model';
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'http://localhost:8080/users'; // Assurez-vous que l'URL de base est correcte
+  private apiUrl = 'http://localhost:8080/users'; 
 
   constructor(private http: HttpClient) { }
 

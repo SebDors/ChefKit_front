@@ -1,4 +1,4 @@
-/* --- Styles globaux / utilitaires pour le conteneur --- */
+
 .container {
     max-width: 1200px;
     margin-left: auto;
@@ -66,7 +66,7 @@
   }
 }
 
-/* --- HEADER --- */
+
 .app-header {
   position: sticky;
   top: 0;
@@ -155,9 +155,6 @@
 }
 
 
-/* --- Le reste de vos styles ingredients.component.scss --- */
-
-/* Fond de page global */
 
 
 .page-container {
@@ -172,7 +169,7 @@
   box-sizing: border-box;
 }
 
-/* NOUVEAU STYLE POUR LE TITRE PRINCIPAL DE LA PAGE */
+
 .main-page-title {
   color: var(--chefkit-text-dark);
   font-family: var(--chefkit-font-display);
@@ -319,7 +316,7 @@
 
 
 
-/* Media queries pour la responsivité */
+
 @media (max-width: 992px) {
 
   .category-section {
@@ -387,7 +384,7 @@
   }
 }
 
-/* --- TOASTER STYLES --- */
+
 .toast {
   position: fixed;
   top: 20px;

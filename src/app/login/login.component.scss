@@ -1,7 +1,6 @@
-/* Importation des styles du header depuis la home-page pour la cohérence */
 @import '../home-page/home-page.component.scss';
 
-/* Conteneur principal de la page d'authentification */
+
 .auth-page-container {
   display: flex;
   align-items: center;
@@ -25,7 +24,7 @@
   }
 }
 
-/* Carte d'authentification flottante */
+
 .auth-card {
   position: relative;
   z-index: 2;
@@ -58,7 +57,7 @@
   margin-bottom: var(--spacing-lg);
 }
 
-/* Styles du formulaire */
+
 
 
 .form-group {
@@ -107,7 +106,7 @@
   }
 }
 
-/* Messages d'erreur */
+
 .error-message {
   font-size: 0.85rem;
   color: #d32f2f;
@@ -128,7 +127,7 @@
   font-weight: var(--chefkit-font-weight-medium);
 }
 
-/* masquer le mot de passe */
+
 .password-wrapper {
   position: relative;
   width: 100%;
@@ -169,7 +168,7 @@
   }
 }
 
-/* Bouton de soumission */
+
 .auth-form__submit-button {
   width: 100%;
   font-size: 1.1rem;
@@ -181,7 +180,7 @@
   min-height: 50px;
 }
 
-/* Footer de la carte (lien vers l'inscription) */
+
 .auth-card__footer {
   margin-top: var(--spacing-lg);
   font-size: 0.9rem;
@@ -198,7 +197,7 @@
   }
 }
 
-/* Spinner de chargement pour le bouton */
+
 .loading-spinner {
   width: 24px;
   height: 24px;
@@ -214,7 +213,7 @@
   }
 }
 
-/* Bouton de retour */
+
 .back-button {
   position: absolute;
   top: var(--spacing-md);

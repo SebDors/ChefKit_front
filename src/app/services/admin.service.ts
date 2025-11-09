@@ -13,7 +13,7 @@ export class AdminService {
 
   constructor(private http: HttpClient) { }
 
-  //getCount
+  
   getUserCount(): Observable<number> {
     return this.http.get<number>(`${this.apiUrl}/users/count`);
   }
@@ -26,7 +26,7 @@ export class AdminService {
     return this.http.get<number>(`${this.apiUrl}/ingredients/count`);
   }
 
-  //user
+  
   getUser(username: string): Observable<User> {
     return this.http.get<User>(`${this.apiUrl}/users/username/${username}`);
   }
@@ -41,7 +41,7 @@ export class AdminService {
     return this.http.delete(`${this.apiUrl}/users/delete/${username}`);
   }
 
-  //recettes
+  
   getRecette(titre: string): Observable<Recette> {
     return this.http.get<Recette>(`${this.apiUrl}/recettes/titre/${titre}`);
   }
@@ -58,7 +58,7 @@ export class AdminService {
     return this.http.delete(`${this.apiUrl}/recettes/titre/${titre}`);
   }
 
-  //ingredients
+  
   getIngredientByName(name: string): Observable<IngredientDetail> {
     return this.http.get<IngredientDetail>(`${this.apiUrl}/ingredients/nom/${name}`);
   }

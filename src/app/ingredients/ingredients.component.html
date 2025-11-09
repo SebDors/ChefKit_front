@@ -1,10 +1,9 @@
-<!-- Toaster -->
 <div *ngIf="showToast" class="toast toast--{{toastType}}">
   <span *ngIf="toastType === 'success'" class="toast__icon">✔</span>
   <p>{{ toastMessage }}</p>
 </div>
 
-<!-- HEADER -->
+
 <header class="app-header" [class.app-header--scrolled]="isScrolled">
   <div class="header__inner container">
     <a routerLink="/" class="header__logo-link">
@@ -29,11 +28,11 @@
 
 
 <div class="page-container">
-  <!-- TITRE PRINCIPAL DE LA PAGE -->
+  
   <h1 class="main-page-title">Sélectionnez les ingrédients que vous avez !</h1>
 
   <div class="accordion-container">
-    <!-- Fruits -->
+    
     <div class="accordion-item" [class.open]="accordionState['fruits']">
       <div class="accordion-header fruits" (click)="toggleAccordion('fruits')">
         <div class="background"></div>
@@ -50,7 +49,7 @@
       </div>
     </div>
 
-    <!-- Légumes -->
+    
     <div class="accordion-item" [class.open]="accordionState['legumes']">
       <div class="accordion-header legumes" (click)="toggleAccordion('legumes')">
         <div class="background"></div>
@@ -67,7 +66,7 @@
       </div>
     </div>
 
-    <!-- Autres -->
+    
     <div class="accordion-item" [class.open]="accordionState['autres']">
       <div class="accordion-header autres" (click)="toggleAccordion('autres')">
         <div class="background"></div>
@@ -85,7 +84,7 @@
     </div>
   </div>
 
-  <!-- NOUVEAU BOUTON : Sauvegarder les ingrédients -->
+  
   <button class="button button--primary" style="margin-top: var(--spacing-xl); width: auto;"
     (click)="saveSelectedIngredients()">
     Sauvegarder les ingrédients sélectionnés

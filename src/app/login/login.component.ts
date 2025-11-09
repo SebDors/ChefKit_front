@@ -17,8 +17,8 @@ export class LoginComponent {
   passwordVisible = signal(false);
 
   loginForm = new FormGroup({
-    // CHANGEMENT ICI : Utilise nomUtilisateur au lieu de email
-    nomUtilisateur: new FormControl('', [Validators.required, Validators.minLength(3)]), // Ajoute une validation de longueur minimale si tu le souhaites
+    
+    nomUtilisateur: new FormControl('', [Validators.required, Validators.minLength(3)]), 
     password: new FormControl('', [Validators.required])
   });
 
@@ -36,7 +36,7 @@ export class LoginComponent {
     this.errorMessage.set('');
 
     if (this.loginForm.valid) {
-      // CHANGEMENT ICI : Récupère nomUtilisateur au lieu de email
+      
       const { nomUtilisateur, password } = this.loginForm.value;
 
       const credentialsToSend = {
@@ -49,7 +49,7 @@ export class LoginComponent {
           next: (response) => {
             this.isLoading.set(false);
             console.log('Connexion réussie !', response);
-            this.router.navigate(['/homepage']); // Rediriger
+            this.router.navigate(['/homepage']); 
           },
           error: (error) => {
             this.isLoading.set(false);
