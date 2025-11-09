@@ -158,16 +158,7 @@
 /* --- Le reste de vos styles ingredients.component.scss --- */
 
 /* Fond de page global */
-body {
-  margin: 0;
-  font-family: var(--chefkit-font-family-sans);
-  background-image: url('/assets/images/fond_ingredients.jpg'); /* Votre IMAGE DE FOND GLOBALE */
-  background-size: cover;
-  background-position: center center;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  background-color: var(--chefkit-background-light); /* Couleur de secours */
-}
+
 
 .page-container {
   display: flex;
@@ -175,36 +166,23 @@ body {
   align-items: center;
   min-height: 100vh;
   padding: 3rem 1.5rem;
-  /* Espacement ajusté pour le titre principal */
   padding-top: calc(var(--spacing-lg));
-  background-color: transparent;
-  gap: 1.5rem; // Adjusted gap for accordion
+  background-color: var(--chefkit-background-light);
+  gap: 1.5rem;
   box-sizing: border-box;
 }
 
 /* NOUVEAU STYLE POUR LE TITRE PRINCIPAL DE LA PAGE */
 .main-page-title {
-  color: #ffffff; /* Couleur blanche pour un bon contraste avec le fond global */
+  color: var(--chefkit-text-dark);
   font-family: var(--chefkit-font-display);
-  font-size: 4rem; /* Grande taille pour le titre principal */
-  font-weight: var(--chefkit-font-weight-heavy); /* Très gras */
-  text-shadow: 0 3px 8px rgba(0, 0, 0, 0.6); /* Ombre portée plus douce et moins brillante */
+  font-size: 2.9rem;
+  font-weight: var(--chefkit-font-weight-heavy);
   text-align: center;
-  /* Marge sous le titre principal réduite */
-  margin-bottom: var(--spacing-sm);
-  padding: 0 var(--spacing-md); /* Petits paddings latéraux pour les bords */
-
-  @media (max-width: 992px) {
-    font-size: 3.5rem;
-    margin-bottom: var(--spacing-sm);
-  }
+  margin-bottom: 0;
   @media (max-width: 768px) {
-    font-size: 3rem;
-    margin-bottom: var(--spacing-xs);
-  }
-  @media (max-width: 480px) {
     font-size: 2.2rem;
-    margin-bottom: var(--spacing-xs);
+    margin-bottom: var(--spacing-md);
   }
 }
 
@@ -267,7 +245,6 @@ body {
       color: var(--chefkit-background-white);
       font-size: 2.5rem;
       font-weight: var(--chefkit-font-weight-heavy);
-      text-shadow: 0 3px 8px rgba(0, 0, 0, 0.8);
       margin: 0;
       letter-spacing: 0.1em;
       z-index: 3;

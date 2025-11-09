@@ -189,13 +189,13 @@
 .hero__integrated-search-container {
     background-color: rgba(var(--chefkit-background-white-rgb), 0.95);
 
-    backdrop-filter: blur(20px) saturate(2.5);
-    -webkit-backdrop-filter: blur(20px) saturate(2.5);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
 
     border-radius: var(--border-radius-xl);
-    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15); /* Ombre légère et diffuse */
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
 
-    padding: var(--spacing-md) var(--spacing-md) var(--spacing-lg); /* Top, côtés, Bottom (spacing-lg est plus grand que md) */
+    padding: 20px;
     max-width: 700px;
     width: 100%;
     margin-left: auto;
