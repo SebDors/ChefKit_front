@@ -763,20 +763,318 @@
 
   
 
-  @keyframes fade-out {
+    @keyframes fade-out {
 
-    from {
+  
 
-      opacity: 1;
+      from {
+
+  
+
+        opacity: 1;
+
+  
+
+      }
+
+  
+
+      to {
+
+  
+
+        opacity: 0;
+
+  
+
+      }
+
+  
 
     }
 
-    to {
+  
 
-      opacity: 0;
+  
 
-    }
+  
+
+  /* --- ACCORDION FOR ALL RECIPES --- */
+
+  
+
+  .all-recipes .accordion-container {
+
+  
+
+    width: 100%;
+
+  
+
+    display: flex;
+
+  
+
+    flex-direction: column;
+
+  
 
   }
+
+  
+
+  
+
+  
+
+  .all-recipes .accordion-item {
+
+  
+
+    border-radius: var(--border-radius-xl);
+
+  
+
+    overflow: hidden;
+
+  
+
+    background-color: var(--chefkit-background-white);
+
+  
+
+    border: 1px solid var(--chefkit-border-light);
+
+  
+
+    transition: box-shadow 0.3s ease;
+
+  
+
+  
+
+  
+
+    &:hover {
+
+  
+
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+
+  
+
+    }
+
+  
+
+  
+
+  
+
+    .accordion-header {
+
+  
+
+      padding: var(--spacing-md) var(--spacing-lg);
+
+  
+
+      cursor: pointer;
+
+  
+
+      display: flex;
+
+  
+
+      justify-content: space-between;
+
+  
+
+      align-items: center;
+
+  
+
+      transition: background-color 0.3s ease;
+
+  
+
+  
+
+  
+
+      &:hover {
+
+  
+
+        background-color: var(--chefkit-background-light);
+
+  
+
+      }
+
+  
+
+  
+
+  
+
+      .section-title {
+
+  
+
+        margin-bottom: 0;
+
+  
+
+      }
+
+  
+
+  
+
+  
+
+      .accordion-icon {
+
+  
+
+        width: 12px;
+
+  
+
+        height: 12px;
+
+  
+
+        border: solid var(--chefkit-text-dark);
+
+  
+
+        border-width: 0 3px 3px 0;
+
+  
+
+        transition: transform 0.4s ease;
+
+  
+
+        transform: translateY(-25%) rotate(45deg);
+
+  
+
+        flex-shrink: 0;
+
+  
+
+        margin-left: var(--spacing-md);
+
+  
+
+      }
+
+  
+
+    }
+
+  
+
+  
+
+  
+
+    .accordion-content {
+
+  
+
+      max-height: 0;
+
+  
+
+      overflow: hidden;
+
+  
+
+      transition: max-height 0.5s ease-out, padding 0.4s ease-out;
+
+  
+
+      padding: 0 var(--spacing-lg);
+
+  
+
+  
+
+  
+
+      .recipes-grid {
+
+  
+
+        margin-top: 0;
+
+  
+
+        padding-bottom: var(--spacing-lg);
+
+  
+
+      }
+
+  
+
+    }
+
+  
+
+  
+
+  
+
+    &.open {
+
+  
+
+      .accordion-header .accordion-icon {
+
+  
+
+        transform: translateY(0) rotate(-135deg);
+
+  
+
+      }
+
+  
+
+      .accordion-content {
+
+  
+
+        max-height: 5000px; /* Adjust as needed */
+
+  
+
+        padding-top: var(--spacing-sm);
+
+  
+
+        transition: max-height 0.6s ease-in, padding 0.4s ease-in;
+
+  
+
+      }
+
+  
+
+    }
+
+  
+
+  }
+
+  
+
+  
 
   

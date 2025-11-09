@@ -45,6 +45,11 @@ export class HomePageComponent implements OnInit, OnDestroy {
   recipesPerSlide = 3;
   public Array = Array;
 
+  // === Accordion ===
+  accordionState: { [key: string]: boolean } = {
+    allrecipes: false, // Default to closed
+  };
+
   // === Souscription backend ===
   private recetteSubscription: any;
 
@@ -188,5 +193,9 @@ export class HomePageComponent implements OnInit, OnDestroy {
   // === Authentification ===
   logout(): void {
     this.authService.logout();
+  }
+
+  toggleAccordion(section: string): void {
+    this.accordionState[section] = !this.accordionState[section];
   }
 }
