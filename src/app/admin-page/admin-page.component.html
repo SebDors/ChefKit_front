@@ -71,7 +71,7 @@
             <h4>Voir un utilisateur</h4>
             <div class="form-row">
               <input type="text" placeholder="Nom d'utilisateur" [(ngModel)]="readUserModel.username"
-                class="form-input">
+                class="form-input" (keyup.enter)="getUser()">
               <button (click)="getUser()" class="button button--secondary">Voir</button>
             </div>
             <div *ngIf="readUserResult" class="result-box">
@@ -139,7 +139,7 @@
             <h4>Voir une recette</h4>
             <div class="form-row">
               <input type="text" placeholder="Titre de la recette" [(ngModel)]="readRecetteModel.titre"
-                class="form-input">
+                class="form-input" (keyup.enter)="getRecette()">
               <button (click)="getRecette()" class="button button--secondary">Voir</button>
             </div>
             <div *ngIf="readRecetteResult" class="result-box">
@@ -218,7 +218,7 @@
             <h4>Voir un ingrédient</h4>
             <div class="form-row">
               <input type="text" placeholder="Nom de l'ingrédient" [(ngModel)]="readIngredientModel.nom_ingredient"
-                class="form-input">
+                class="form-input" (keyup.enter)="getIngredient()">
               <button (click)="getIngredient()" class="button button--secondary">Voir</button>
             </div>
             <div *ngIf="readIngredientResult" class="result-box">
